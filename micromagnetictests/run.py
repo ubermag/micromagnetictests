@@ -1,13 +1,9 @@
 import pytest
 
 
-def run(calculator):
+def run(calc):
     @pytest.fixture(scope='module')
     def calculator():
-        return oc
+        return calc
 
-    files = [f for f in os.listdir('.') if os.path.isfile(f)]
-    for f in files:
-        if f != '__init__' and f != 'run.py':
-        return pytest.main(['-v', '--pyargs',
-                            'micromagnetictests'])  # pragma: no cover
+    return pytest.main(['-v', 'calculatortests'])
