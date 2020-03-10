@@ -1,6 +1,6 @@
 PROJECT=micromagnetictests
 IPYNBPATH=docs/ipynb/*.ipynb
-CODECOVTOKEN=eae96112-f8ac-4f24-b90b-6b3debfa8689
+CODECOVTOKEN=50a28eca-4327-46fb-9756-5bd791c05500
 PYTHON?=python3
 
 test:
