@@ -1,6 +1,6 @@
 import pytest
 import pkg_resources
-from .run import run
+import micromagnetictests.calculatortests
 
 
 def test():

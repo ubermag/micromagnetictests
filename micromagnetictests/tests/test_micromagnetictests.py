@@ -7,5 +7,4 @@ def test_micromagnetictests():
         assert isinstance(name, str)
         if inspect.isclass(object):
             starting_strings = ['__', 'test_', 'Test']
-            print(name)
             assert any([name.startswith(s) for s in starting_strings])
