@@ -7,4 +7,5 @@ Tutorials
    :caption: Contents:
 
    ipynb/tutorial-installation-testing-upgrade
+   ipynb/tutorial-using-micromagnetictests
    ipynb/tutorial-other
