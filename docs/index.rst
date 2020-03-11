@@ -6,3 +6,4 @@ micromagnetictests
    :caption: Contents:
 
    tutorials
+   api-reference

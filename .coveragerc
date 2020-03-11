@@ -1,2 +1,4 @@
 [run]
-omit = micromagnetictests/*
+omit =
+  micromagnetictests/calculatortests/*
+  micromagnetictests/tests/*
