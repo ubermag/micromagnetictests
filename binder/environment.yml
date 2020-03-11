@@ -5,4 +5,4 @@ dependencies:
   - python==3.8
   - pip
   - pip:
-    - micromagnetictests==0.0.1
+    - micromagnetictests==0.1
