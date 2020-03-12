@@ -16,7 +16,7 @@ Marijan Beg<sup>1,2</sup> and Hans Fangohr<sup>2,1</sup>
 | Platforms | [![Platforms](https://anaconda.org/conda-forge/micromagnetictests/badges/platforms.svg)](https://anaconda.org/conda-forge/micromagnetictests) |
 | Downloads | [![Downloads](https://anaconda.org/conda-forge/micromagnetictests/badges/downloads.svg)](https://anaconda.org/conda-forge/micromagnetictests) |
 | License | [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause) |
-| DOI | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3539480.svg)](https://doi.org/10.5281/zenodo.3539480) |
+| DOI | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3707737.svg)](https://doi.org/10.5281/zenodo.3707737) |
 
 ## About
 
@@ -52,7 +52,7 @@ If you use this package, please cite it as:
 
 1. M. Beg, R. A. Pepper, and H. Fangohr. User interfaces for computational science: A domain specific language for OOMMF embedded in Python. [*AIP Advances* **7**, 56025 (2017)](http://aip.scitation.org/doi/10.1063/1.4977225).
 
-2. COMING SOON... (M. Beg and H. Fangohr. ubermag/micromagnetictests: Python domain-specific language for defining micromagnetic models. Zenodo. DOI: [10.5281/zenodo.3539480](http://doi.org/10.5281/zenodo.3539480) (2020).)
+2. M. Beg and H. Fangohr. ubermag/micromagnetictests: Micromagnetic tests for Ubermag calculators. Zenodo. DOI: [10.5281/zenodo.3707737](https://doi.org/10.5281/zenodo.3707737) (2020).
 
 ## Acknowledgements
 
