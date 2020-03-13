@@ -48,16 +48,16 @@ class TestZeeman:
 
         mesh = df.Mesh(region=self.region, cell=self.cell,
                        subregions=self.subregions)
-        system.m = df.Field(mesh, dim=3, value=(0, 1, 0), norm=Ms)
+        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        value = system.m((-2e-9, -2e-9, -2e-9))
-        assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1e-3
+        assert np.linalg.norm(np.subtract(system.m['r1'].average,
+                                          (Ms, 0, 0))) < 1
 
-        value = system.m((2e-9, 2e-9, 2e-9))
-        assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+        assert np.linalg.norm(np.subtract(system.m['r2'].average,
+                                          (0, 0, Ms))) < 1
 
     def test_field(self):
         name = 'zeeman_field'

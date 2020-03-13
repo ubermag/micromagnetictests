@@ -1,5 +1,4 @@
 import pytest
-import random
 import numpy as np
 import discretisedfield as df
 import micromagneticmodel as mm
@@ -20,8 +19,12 @@ class TestExchange:
                            'r2': df.Region(p1=(-5e-9, 0, -3e-9),
                                            p2=(5e-9, 5e-9, 3e-9))}
 
-    def random_m(self, pos):
-        return [2*random.random()-1 for i in range(3)]
+    def m_init(self, pos):
+        x, y, z = pos
+        if x <= 0:
+            return (0, 0.5, 1)
+        else:
+            return (0, -0.5, 1)
 
     def test_scalar(self):
         name = 'exchange_scalar'
@@ -33,17 +36,17 @@ class TestExchange:
         system.energy = mm.Exchange(A=A)
 
         mesh = df.Mesh(region=self.region, n=self.n)
-        system.m = df.Field(mesh, dim=3, value=self.random_m, norm=Ms)
+        system.m = df.Field(mesh, dim=3, value=self.m_init, norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        assert abs(np.linalg.norm(system.m.average) - Ms) < 1e-3
+        assert abs(np.linalg.norm(system.m.average) - Ms) < 1
 
     def test_dict(self):
         name = 'exchange_dict'
 
-        A = {'r1': 0, 'r2': 1e-12, 'r1:r2': 1e-12, 'default': 2e-12}
+        A = {'r1': 0, 'r2': 1e-12}
         Ms = 1e6
 
         system = mm.System(name=name)
@@ -51,20 +54,16 @@ class TestExchange:
 
         mesh = df.Mesh(region=self.region, n=self.n,
                        subregions=self.subregions)
-        system.m = df.Field(mesh, dim=3, value=self.random_m, norm=Ms)
+        system.m = df.Field(mesh, dim=3, value=self.m_init, norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
 
         # A=0 region
-        value1 = system.m((1e-9, -4e-9, 2e-9))
-        value2 = system.m((1e-9, -2e-9, 2e-9))
-        assert np.linalg.norm(np.subtract(value1, value2)) > 1
+        assert abs(np.linalg.norm(system.m['r1'].average) - Ms) > 1e3
 
         # A!=0 region
-        value1 = system.m((1e-9, 4e-9, 2e-9))
-        value2 = system.m((1e-9, 2e-9, 2e-9))
-        assert np.linalg.norm(np.subtract(value1, value2)) < 1
+        assert abs(np.linalg.norm(system.m['r2'].average) - Ms) < 1
 
     def test_field(self):
         name = 'exchange_field'
@@ -83,9 +82,9 @@ class TestExchange:
         system = mm.System(name=name)
         system.energy = mm.Exchange(A=A)
 
-        system.m = df.Field(mesh, dim=3, value=self.random_m, norm=Ms)
+        system.m = df.Field(mesh, dim=3, value=self.m_init, norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        assert abs(np.linalg.norm(system.m.average) - Ms) < 1e-3
+        assert abs(np.linalg.norm(system.m.average) - Ms) < 1
