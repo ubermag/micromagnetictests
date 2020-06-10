@@ -14,7 +14,7 @@ class TestMesh:
         p2 = (7e-9, 5e-9, 4e-9)
         self.region = df.Region(p1=p1, p2=p2)
         self.cell = (1e-9, 1e-9, 1e-9)
-        self.pbc = 'xyz'
+        self.bc = 'xyz'
         self.subregions = {'r1': df.Region(p1=(-7e-9, -5e-9, -4e-9),
                                            p2=(7e-9, 0, 4e-9)),
                            'r2': df.Region(p1=(-7e-9, 0, -4e-9),
@@ -65,7 +65,7 @@ class TestMesh:
         Ms = 1e6
         H = (0, 0, 5e6)
 
-        mesh = df.Mesh(region=self.region, cell=self.cell, pbc=self.pbc)
+        mesh = df.Mesh(region=self.region, cell=self.cell, bc=self.bc)
 
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
@@ -84,7 +84,7 @@ class TestMesh:
         H = (0, 0, 5e6)
 
         mesh = df.Mesh(region=self.region, cell=self.cell,
-                       pbc=self.pbc, subregions=self.subregions)
+                       bc=self.bc, subregions=self.subregions)
 
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)

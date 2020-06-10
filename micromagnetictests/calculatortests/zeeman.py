@@ -59,7 +59,7 @@ class TestZeeman:
         assert np.linalg.norm(np.subtract(system.m['r2'].average,
                                           (0, 0, Ms))) < 1
 
-    def test_field(self, skip_condition):
+    def test_field(self):
         name = 'zeeman_field'
 
         def value_fun(pos):

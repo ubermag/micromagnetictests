@@ -65,7 +65,7 @@ class TestExchange:
         # A!=0 region
         assert abs(np.linalg.norm(system.m['r2'].average) - Ms) < 1
 
-    def test_field(self, skip_condition):
+    def test_field(self):
         name = 'exchange_field'
 
         def A_fun(pos):
