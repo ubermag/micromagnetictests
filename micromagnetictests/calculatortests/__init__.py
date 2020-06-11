@@ -3,7 +3,6 @@ from .dmi import TestDMI
 from .uniaxialanisotropy import TestUniaxialAnisotropy
 from .cubicanisotropy import TestCubicAnisotropy
 from .demag import TestDemag
-from .magnetoelastic import TestMagnetoElastic
 from .zeeman import TestZeeman
 from .energy import TestEnergy
 from .precession import TestPrecession

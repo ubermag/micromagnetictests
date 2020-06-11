@@ -5,7 +5,7 @@ with open('README.md', encoding='utf-8') as f:
 
 setuptools.setup(
     name='micromagnetictests',
-    version='0.1',
+    version='0.1.1',
     description=('Micromagnetic tests for Ubermag calculators'),
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -13,15 +13,20 @@ setuptools.setup(
     author='Marijan Beg and Hans Fangohr',
     packages=setuptools.find_packages(),
     include_package_data=True,
-    install_requires=['micromagneticmodel',
-                      'scipy'],
-    classifiers=['Development Status :: 3 - Alpha',
+    python_requires='>=3.6',
+    install_requires=['micromagneticmodel==0.8.18',
+                      'scipy>=1.4'],
+    classifiers=['Development Status :: 5 - Production/Stable',
+                 'Intended Audience :: Education',
+                 'Intended Audience :: Developers',
+                 'Intended Audience :: Science/Research',
                  'License :: OSI Approved :: BSD License',
-                 'Programming Language :: Python :: 3 :: Only',
-                 'Operating System :: Unix',
+                 'Natural Language :: English',
                  'Operating System :: MacOS',
                  'Operating System :: Microsoft :: Windows',
+                 'Operating System :: Unix',
+                 'Programming Language :: Python :: 3 :: Only',
                  'Topic :: Scientific/Engineering :: Physics',
-                 'Intended Audience :: Science/Research',
-                 'Natural Language :: English']
+                 'Topic :: Scientific/Engineering :: Mathematics',
+                 'Topic :: Scientific/Engineering :: Visualization']
 )
