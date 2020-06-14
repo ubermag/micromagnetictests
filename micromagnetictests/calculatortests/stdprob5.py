@@ -43,7 +43,7 @@ def test_stdprob5(calculator):
     td = calculator.TimeDriver()
     td.drive(system, t=8e-9, n=100)
 
-    mx = system.table['mx'].values
+    mx = system.table.data['mx'].values
 
     assert -0.35 < mx.min() < -0.30
     assert -0.03 < mx.max() < 0

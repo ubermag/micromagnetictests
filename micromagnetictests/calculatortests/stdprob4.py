@@ -33,8 +33,8 @@ def test_stdprob4(calculator):
     td = calculator.TimeDriver()
     td.drive(system, t=1e-9, n=200)
 
-    t = system.table['t'].values
-    my = system.table['my'].values
+    t = system.table.data['t'].values
+    my = system.table.data['my'].values
 
     assert abs(min(t) - 5e-12) < 1e-20
     assert abs(max(t) - 1e-9) < 1e-20

@@ -60,8 +60,8 @@ def test_stdprob3(calculator):
         vortex = minimise_system_energy(L, m_init_vortex)
         flower = minimise_system_energy(L, m_init_flower)
 
-        Evortex = vortex.table.tail(1)['E'][0]
-        Eflower = flower.table.tail(1)['E'][0]
+        Evortex = vortex.table.data.tail(1)['E'][0]
+        Eflower = flower.table.data.tail(1)['E'][0]
 
         return Evortex - Eflower
 
