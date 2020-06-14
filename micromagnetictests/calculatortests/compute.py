@@ -33,6 +33,7 @@ class TestCompute:
                 term.energy, self.system), float)
         assert isinstance(self.calculator.compute(
             self.system.energy.energy, self.system), float)
+        self.calculator.delete(self.system)
 
     def test_energy_density(self):
         for term in self.system.energy:
@@ -40,6 +41,7 @@ class TestCompute:
                 term.density, self.system), df.Field)
         assert isinstance(self.calculator.compute(
             self.system.energy.density, self.system), df.Field)
+        self.calculator.delete(self.system)
 
     def test_effective_field(self):
         for term in self.system.energy:
@@ -47,6 +49,7 @@ class TestCompute:
                 term.effective_field, self.system), df.Field)
         assert isinstance(self.calculator.compute(
             self.system.energy.effective_field, self.system), df.Field)
+        self.calculator.delete(self.system)
 
     def test_invalid_func(self):
         with pytest.raises(ValueError):
@@ -65,3 +68,4 @@ class TestCompute:
                     term.density, self.system), df.Field)
                 assert isinstance(self.calculator.compute(
                     term.effective_field, self.system), df.Field)
+            self.calculator.delete(self.system)
