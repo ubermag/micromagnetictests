@@ -5,7 +5,7 @@ import micromagneticmodel as mm
 
 
 def test_multiple_drives(calculator):
-    name = 'multiple_runs'
+    name = 'multiple_drives'
 
     p1 = (0, 0, 0)
     p2 = (5e-9, 5e-9, 5e-9)
@@ -23,7 +23,7 @@ def test_multiple_drives(calculator):
     system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
 
     md = calculator.MinDriver()
-    md.drive(system, save=True, overwrite=True)
+    md.drive(system)
 
     dirname = os.path.join(name, 'drive-0')
     assert os.path.exists(dirname)
@@ -31,9 +31,26 @@ def test_multiple_drives(calculator):
     system.energy.zeeman.H = (1e6, 0, 0)
 
     td = calculator.TimeDriver()
-    td.drive(system, t=100e-12, n=10, save=True)
+    td.drive(system, t=100e-12, n=10)
 
     dirname = os.path.join(name, 'drive-1')
     assert os.path.exists(dirname)
+
+    E = calculator.compute(system.energy.zeeman.energy, system)
+
+    dirname = os.path.join(name, 'compute-0')
+    assert os.path.exists(dirname)
+
+    td.drive(system, t=100e-12, n=10)
+
+    dirname = os.path.join(name, 'drive-2')
+    assert os.path.exists(dirname)
+
+    Heff = calculator.compute(system.energy.zeeman.effective_field, system)
+
+    dirname = os.path.join(name, 'compute-1')
+    assert os.path.exists(dirname)
+
+    assert len(os.listdir(name)) == 5
 
     calculator.delete(system)

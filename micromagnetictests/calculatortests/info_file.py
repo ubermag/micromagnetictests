@@ -28,7 +28,7 @@ def test_info_file(calculator):
 
     # First (0) drive
     td = calculator.TimeDriver()
-    td.drive(system, t=25e-12, n=10, save=True, overwrite=True)
+    td.drive(system, t=25e-12, n=10)
 
     dirname = os.path.join(name, 'drive-0')
     infofile = os.path.join(dirname, 'info.json')
@@ -53,7 +53,7 @@ def test_info_file(calculator):
 
     # Second (1) drive
     md = calculator.MinDriver()
-    md.drive(system, save=True)
+    md.drive(system)
 
     dirname = os.path.join(name, 'drive-1')
     infofile = os.path.join(dirname, 'info.json')
@@ -67,6 +67,7 @@ def test_info_file(calculator):
     assert 'time' in info.keys()
     assert 'driver' in info.keys()
     assert 'args' in info.keys()
+    print(info['args'].keys())
 
     assert info['drive_number'] == 1
     assert re.findall(r'\d{4}-\d{2}-\d{2}', info['date']) is not []
