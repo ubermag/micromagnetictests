@@ -3,5 +3,4 @@ channels:
   - conda-forge
 dependencies:
   - python==3.8
-  - pip
-  - micromagnetictests==0.1.2
+  - micromagnetictests==0.1.3
