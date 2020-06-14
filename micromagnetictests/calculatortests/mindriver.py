@@ -36,6 +36,8 @@ class TestMinDriver:
         value = system.m(self.mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-3
 
+        self.calculator.delete(system)
+
     def test_evolver_nodriver(self):
         name = 'mindriver_evolver_nodriver'
 
@@ -50,6 +52,8 @@ class TestMinDriver:
         value = system.m(self.mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-3
 
+        self.calculator.delete(system)
+
     def test_noevolver_driver(self):
         name = 'mindriver_noevolver_driver'
 
@@ -62,6 +66,8 @@ class TestMinDriver:
 
         value = system.m(self.mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-3
+
+        self.calculator.delete(system)
 
     def test_evolver_driver(self):
         name = 'mindriver_evolver_driver'
@@ -76,6 +82,8 @@ class TestMinDriver:
 
         value = system.m(self.mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-3
+
+        self.calculator.delete(system)
 
     def test_output_files(self):
         name = 'mindriver_output_files'
@@ -107,3 +115,5 @@ class TestMinDriver:
 
         with pytest.raises(TypeError):
             md.drive(system)
+
+        self.calculator.delete(system)

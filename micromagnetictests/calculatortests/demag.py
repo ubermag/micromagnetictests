@@ -30,6 +30,8 @@ class TestDemag:
 
         # Check if it runs. Tests to be added here.
 
+        self.calculator.delete(system)
+
     def test_demag_asymptotic_radius(self):
         name = 'demag_asymptotic_radius'
 
@@ -44,3 +46,5 @@ class TestDemag:
         md.drive(system)
 
         # Check if it runs. Tests to be added here.
+
+        self.calculator.delete(system)

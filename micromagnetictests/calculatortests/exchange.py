@@ -43,6 +43,8 @@ class TestExchange:
 
         assert abs(np.linalg.norm(system.m.average) - Ms) < 1
 
+        self.calculator.delete(system)
+
     def test_dict(self):
         name = 'exchange_dict'
 
@@ -64,6 +66,8 @@ class TestExchange:
 
         # A!=0 region
         assert abs(np.linalg.norm(system.m['r2'].average) - Ms) < 1
+
+        self.calculator.delete(system)
 
     def test_field(self):
         name = 'exchange_field'
@@ -88,3 +92,5 @@ class TestExchange:
         md.drive(system)
 
         assert abs(np.linalg.norm(system.m.average) - Ms) < 1
+
+        self.calculator.delete(system)

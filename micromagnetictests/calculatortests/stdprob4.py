@@ -42,3 +42,5 @@ def test_stdprob4(calculator):
     # Eye-norm test.
     assert 0.7 < max(my) < 0.8
     assert -0.5 < min(my) < -0.4
+
+    calculator.delete(system)

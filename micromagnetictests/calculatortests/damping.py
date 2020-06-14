@@ -40,6 +40,8 @@ class TestDamping:
         value = system.m(mesh.region.random_point())
         assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
 
+        self.calculator.delete(system)
+
     def test_dict(self):
         name = 'damping_dict'
 
@@ -65,6 +67,8 @@ class TestDamping:
         # alpha!=0 region
         value = system.m((1e-9, 4e-9, 3e-9))
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+
+        self.calculator.delete(system)
 
     def test_field(self):
         name = 'damping_field'
@@ -97,3 +101,5 @@ class TestDamping:
         # alpha!=0 region
         value = system.m((1e-9, 4e-9, 3e-9))
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+
+        self.calculator.delete(system)

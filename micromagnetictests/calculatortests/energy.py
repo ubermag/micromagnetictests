@@ -38,6 +38,8 @@ class TestEnergy:
         value = system.m(mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1e-3
 
+        self.calculator.delete(system)
+
     def test_exchange_uniaxialanisotropy(self):
         name = 'exchange_uniaxialanisotropy'
 
@@ -59,6 +61,8 @@ class TestEnergy:
 
         value = system.m(mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1e-3
+
+        self.calculator.delete(system)
 
     def test_exchange_cubicanisotropy(self):
         name = 'exchange_cubicanisotropy'
@@ -82,6 +86,8 @@ class TestEnergy:
 
         value = system.m(mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1e-3
+
+        self.calculator.delete(system)
 
     def test_exchange_dmi_zeeman(self):
         name = 'exchange_dmi_zeeman'
@@ -107,6 +113,8 @@ class TestEnergy:
 
         value = system.m(mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1
+
+        self.calculator.delete(system)
 
     def test_exchange_dmi_zeeman_uniaxialanisotropy_demag(self):
         name = 'exchange_dmi_zeeman_uniaxialanisotropy'
@@ -136,3 +144,5 @@ class TestEnergy:
 
         value = system.m(mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1
+
+        self.calculator.delete(system)

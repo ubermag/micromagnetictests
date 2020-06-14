@@ -43,6 +43,8 @@ class TestDMI:
         # 0.
         assert np.linalg.norm(system.m.average) < 1
 
+        self.calculator.delete(system)
+
     def test_dict(self):
         name = 'dmi_dict'
 
@@ -63,6 +65,8 @@ class TestDMI:
         # There are 4N cells in the region with D!=0. Because of that
         # the average should be 0.
         assert np.linalg.norm(system.m['r2'].average) < 1
+
+        self.calculator.delete(system)
 
     @pytest.mark.skipif(sys.platform == 'win32',
                         reason=('Different crystalclasses are not '
@@ -87,3 +91,5 @@ class TestDMI:
             # There are 4N cells in the mesh. Because of that the
             # average should be 0.
             assert np.linalg.norm(system.m.average) < 1
+
+        self.calculator.delete(system)

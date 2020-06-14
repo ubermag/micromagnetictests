@@ -37,6 +37,8 @@ class TestZeeman:
         value = system.m(mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
+        self.calculator.delete(system)
+
     def test_dict(self):
         name = 'zeeman_dict'
 
@@ -58,6 +60,8 @@ class TestZeeman:
 
         assert np.linalg.norm(np.subtract(system.m['r2'].average,
                                           (0, 0, Ms))) < 1
+
+        self.calculator.delete(system)
 
     def test_field(self):
         name = 'zeeman_field'
@@ -86,3 +90,5 @@ class TestZeeman:
 
         value = system.m((2e-9, 2e-9, 2e-9))
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+
+        self.calculator.delete(system)

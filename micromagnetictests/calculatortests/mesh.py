@@ -40,6 +40,8 @@ class TestMesh:
         value = system.m(mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
+        self.calculator.delete(system)
+
     def test_multi_nopbc(self):
         name = 'mesh_multi_nopbc'
 
@@ -59,6 +61,8 @@ class TestMesh:
         value = system.m(mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
+        self.calculator.delete(system)
+
     def test_single_pbc(self):
         name = 'mesh_single_pbc'
 
@@ -76,6 +80,8 @@ class TestMesh:
 
         value = system.m(mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+
+        self.calculator.delete(system)
 
     def test_multi_pbc(self):
         name = 'mesh_multi_pbc'
@@ -95,3 +101,5 @@ class TestMesh:
 
         value = system.m(mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+
+        self.calculator.delete(system)

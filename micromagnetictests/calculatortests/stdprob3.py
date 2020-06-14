@@ -54,6 +54,8 @@ def test_stdprob3(calculator):
         md = calculator.MinDriver()
         md.drive(system)
 
+        calculator.delete(system)
+
         return system
 
     def energy_difference(L):

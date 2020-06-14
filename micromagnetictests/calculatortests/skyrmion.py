@@ -49,3 +49,5 @@ def test_skyrmion(calculator):
     # Check the magnetisation at the sample edge.
     value = system.m((50e-9, 0, 0))
     assert value[2]/Ms > 0.5
+
+    self.calculator.delete(system)

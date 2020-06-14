@@ -39,6 +39,8 @@ class TestTimeDriver:
         value = system.m(self.mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1
 
+        self.calculator.delete(system)
+
     def test_rungekutta_evolver_nodriver(self):
         name = 'timedriver_rungekutta_evolver_nodriver'
 
@@ -53,6 +55,8 @@ class TestTimeDriver:
 
         value = system.m(self.mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1
+
+        self.calculator.delete(system)
 
     def test_euler_evolver_nodriver(self):
         name = 'timedriver_euler_evolver_nodriver'
@@ -69,6 +73,8 @@ class TestTimeDriver:
         value = system.m(self.mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1
 
+        self.calculator.delete(system)
+
     def test_noevolver_driver(self):
         name = 'timedriver_noevolver_driver'
 
@@ -82,6 +88,8 @@ class TestTimeDriver:
 
         value = system.m(self.mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1
+
+        self.calculator.delete(system)
 
     def test_noprecession(self):
         name = 'timedriver_noprecession'
@@ -97,6 +105,8 @@ class TestTimeDriver:
         value = system.m(self.mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1
 
+        self.calculator.delete(system)
+
     def test_nodamping(self):
         name = 'timedriver_nodamping'
 
@@ -110,6 +120,8 @@ class TestTimeDriver:
 
         value = system.m(self.mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) > 1e3
+
+        self.calculator.delete(system)
 
     def test_output_files(self):
         name = 'timedriver_output_files'
@@ -156,3 +168,5 @@ class TestTimeDriver:
 
         with pytest.raises(TypeError):
             td.drive(system, t=1e-12, n=1)
+
+        self.calculator.delete(system)

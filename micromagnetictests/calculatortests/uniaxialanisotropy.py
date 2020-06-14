@@ -38,6 +38,8 @@ class TestUniaxialAnisotropy:
         value = system.m(mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
+        self.calculator.delete(system)
+
     def test_field_vector(self):
         name = 'uniaxialanisotropy_field_vector'
 
@@ -67,6 +69,8 @@ class TestUniaxialAnisotropy:
         value = system.m((2e-9, 2e-9, 2e-9))
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
+        self.calculator.delete(system)
+
     def test_scalar_field(self):
         name = 'uniaxialanisotropy_scalar_field'
 
@@ -95,6 +99,8 @@ class TestUniaxialAnisotropy:
 
         value = system.m((2e-9, 2e-9, 2e-9))
         assert np.linalg.norm(np.subtract(value, (0, Ms, 0))) < 1e-3
+
+        self.calculator.delete(system)
 
     def test_field_field(self):
         name = 'uniaxialanisotropy_field_field'
@@ -135,6 +141,8 @@ class TestUniaxialAnisotropy:
         value = system.m((0, 0, 0))
         assert np.linalg.norm(np.cross(value, (Ms, Ms, 0))) < 1e-3
 
+        self.calculator.delete(system)
+
     def test_dict_vector(self):
         name = 'uniaxialanisotropy_dict_vector'
 
@@ -156,6 +164,8 @@ class TestUniaxialAnisotropy:
 
         value = system.m((2e-9, 2e-9, 2e-9))
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+
+        self.calculator.delete(system)
 
     def test_field_dict(self):
         name = 'uniaxialanisotropy_field_dict'
@@ -195,3 +205,5 @@ class TestUniaxialAnisotropy:
 
         value = system.m((0, 0, 0))
         assert np.linalg.norm(np.cross(value, (Ms, Ms, 0))) < 1e-3
+
+        self.calculator.delete(system)

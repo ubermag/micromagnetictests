@@ -47,3 +47,5 @@ def test_stdprob5(calculator):
 
     assert -0.35 < mx.min() < -0.30
     assert -0.03 < mx.max() < 0
+
+    calculator.delete(system)

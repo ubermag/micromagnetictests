@@ -43,6 +43,8 @@ class TestSlonczewski:
 
         # Check if it runs.
 
+        self.calculator.delete(system)
+
     def test_dict_values(self):
         name = 'slonczewski_scalar_values'
 
@@ -68,6 +70,8 @@ class TestSlonczewski:
 
         # Check if it runs.
 
+        self.calculator.delete(system)
+
     def test_field_values(self):
         name = 'slonczewski_scalar_values'
 
@@ -91,3 +95,5 @@ class TestSlonczewski:
         td.drive(system, t=0.2e-9, n=20)
 
         # Check if it runs.
+
+        self.calculator.delete(system)
