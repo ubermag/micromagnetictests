@@ -21,10 +21,10 @@ class TestExchange:
 
     def m_init(self, pos):
         x, y, z = pos
-        if x <= 0:
-            return (0, 0.5, 1)
+        if y <= 0:
+            return (0, 0.2, 1)
         else:
-            return (0, -0.5, 1)
+            return (0, -0.7, -0.4)
 
     def test_scalar(self):
         name = 'exchange_scalar'
@@ -48,7 +48,7 @@ class TestExchange:
     def test_dict(self):
         name = 'exchange_dict'
 
-        A = {'r1': 0, 'r2': 1e-12}
+        A = {'r1': 3e-12, 'r2': 1e-12, 'r1:r2': -1e-12}
         Ms = 1e6
 
         system = mm.System(name=name)
@@ -61,11 +61,13 @@ class TestExchange:
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        # A=0 region
-        assert abs(np.linalg.norm(system.m['r1'].average) - Ms) > 1e3
-
-        # A!=0 region
+        # r1
+        assert abs(np.linalg.norm(system.m['r1'].average) - Ms) < 1
+        # r2
         assert abs(np.linalg.norm(system.m['r2'].average) - Ms) < 1
+
+        assert abs(np.dot(system.m['r1'].orientation.average,
+                          system.m['r2'].orientation.average) - (-1)) < 1e-3
 
         self.calculator.delete(system)
 
