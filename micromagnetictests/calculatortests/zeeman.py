@@ -39,8 +39,17 @@ class TestZeeman:
         value = system.m(mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
-        # time-dependent
+        # time-dependent - sine
         system.energy = mm.Zeeman(H=H, wave='sin', f=1e9, t0=1e-12)
+
+        mesh = df.Mesh(region=self.region, cell=self.cell)
+        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+
+        td = self.calculator.TimeDriver()
+        td.drive(system, t=0.1e-9, n=20)
+
+        # time-dependent - sinc
+        system.energy = mm.Zeeman(H=H, wave='sinc', f=1e9, t0=0)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
         system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
@@ -72,8 +81,18 @@ class TestZeeman:
         assert np.linalg.norm(np.subtract(system.m['r2'].average,
                                           (0, 0, Ms))) < 1
 
-        # time-dependent
+        # time-dependent - sine
         system.energy = mm.Zeeman(H=H, wave='sin', f=1e9, t0=1e-12)
+
+        mesh = df.Mesh(region=self.region, cell=self.cell,
+                       subregions=self.subregions)
+        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+
+        td = self.calculator.TimeDriver()
+        td.drive(system, t=0.1e-9, n=20)
+
+        # time-dependent - sinc
+        system.energy = mm.Zeeman(H=H, wave='sinc', f=50e9, t0=1e-12)
 
         mesh = df.Mesh(region=self.region, cell=self.cell,
                        subregions=self.subregions)
@@ -112,7 +131,7 @@ class TestZeeman:
         value = system.m((2e-9, 2e-9, 2e-9))
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
-        # time-dependent
+        # time-dependent - sine
         system.energy = mm.Zeeman(H=H, wave='sin', f=1e9, t0=1e-12)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
@@ -120,5 +139,14 @@ class TestZeeman:
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.1e-9, n=20)
+
+        # time-dependent - sinc
+        system.energy = mm.Zeeman(H=H, wave='sinc', f=1e9, t0=1e-12)
+
+        mesh = df.Mesh(region=self.region, cell=self.cell)
+        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+
+        td = self.calculator.TimeDriver()
+        td.drive(system, t=0.3e-9, n=200)
 
         self.calculator.delete(system)
