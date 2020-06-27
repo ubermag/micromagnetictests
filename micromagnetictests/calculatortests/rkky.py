@@ -44,6 +44,7 @@ class TestRKKY:
         md = self.calculator.MinDriver()
         md.drive(system)
 
+        # AFM
         m1 = system.m.orientation((0, -0.5e-9, 0))
         m2 = system.m.orientation((0, 0.5e-9, 0))
         assert abs(np.dot(m1, m2) - (-1)) < 1e-3
@@ -55,6 +56,7 @@ class TestRKKY:
 
         md.drive(system)
 
+        # FM
         m1 = system.m.orientation((0, -0.5e-9, 0))
         m2 = system.m.orientation((0, 0.5e-9, 0))
         assert abs(np.dot(m1, m2) - 1) < 1e-3
