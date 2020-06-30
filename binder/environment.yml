@@ -1,6 +1,8 @@
 name: binder-environment
+
 channels:
   - conda-forge
+
 dependencies:
   - python==3.8
-  - micromagnetictests==0.1.3
+  - micromagnetictests==0.1.4
