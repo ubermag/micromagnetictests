@@ -207,3 +207,25 @@ class TestUniaxialAnisotropy:
         assert np.linalg.norm(np.cross(value, (Ms, Ms, 0))) < 1e-3
 
         self.calculator.delete(system)
+
+    def test_higher_order_scalar_vector(self):
+        name = 'uniaxialanisotropy_higher_order_scalar_vector'
+
+        K1 = 1e5
+        K2 = 2e3
+        u = (0, 0, 1)
+        Ms = 1e6
+
+        system = mm.System(name=name)
+        system.energy = mm.UniaxialAnisotropy(K1=K1, K2=K2, u=u)
+
+        mesh = df.Mesh(region=self.region, cell=self.cell)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.3, 1), norm=Ms)
+
+        md = self.calculator.MinDriver()
+        md.drive(system)
+
+        value = system.m(mesh.region.random_point())
+        assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+
+        self.calculator.delete(system)
