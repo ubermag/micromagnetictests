@@ -84,7 +84,8 @@ class TestZeeman:
         # time-dependent - sin
         system.energy = mm.Zeeman(H=H, wave='sin', f=1e9, t0=1e-12)
 
-        mesh = df.Mesh(region=self.region, cell=self.cell)
+        mesh = df.Mesh(region=self.region, cell=self.cell,
+                       subregions=self.subregions)
         system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
@@ -93,7 +94,8 @@ class TestZeeman:
         # time-dependent - sinc
         system.energy = mm.Zeeman(H=H, wave='sinc', f=1e9, t0=0)
 
-        mesh = df.Mesh(region=self.region, cell=self.cell)
+        mesh = df.Mesh(region=self.region, cell=self.cell,
+                       subregions=self.subregions)
         system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
