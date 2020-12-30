@@ -1,3 +1,4 @@
+"""Calculator tests"""
 from .exchange import TestExchange
 from .dmi import TestDMI
 from .uniaxialanisotropy import TestUniaxialAnisotropy
