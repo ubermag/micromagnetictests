@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 setuptools.setup(
     name='micromagnetictests',
-    version='0.1.7',
+    version='0.1.8',
     description='Testing package for computational magnetism tools.',
     author='Marijan Beg and Hans Fangohr',
     long_description=long_description,
