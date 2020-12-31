@@ -13,7 +13,7 @@ class TestZhangLi:
         p1 = (-5e-9, -5e-9, -3e-9)
         p2 = (5e-9, 5e-9, 3e-9)
         self.region = df.Region(p1=p1, p2=p2)
-        self.n = (5, 5, 5)
+        self.cell = (1e-9, 1e-9, 3e-9)
         self.subregions = {'r1': df.Region(p1=(-5e-9, -5e-9, -3e-9),
                                            p2=(5e-9, 0, 3e-9)),
                            'r2': df.Region(p1=(-5e-9, 0, -3e-9),
@@ -27,7 +27,7 @@ class TestZhangLi:
         H = (0, 0, 1e5)
         Ms = 1e6
 
-        mesh = df.Mesh(region=self.region, n=self.n)
+        mesh = df.Mesh(region=self.region, cell=self.cell)
 
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
@@ -51,7 +51,7 @@ class TestZhangLi:
         beta = 0.5
         Ms = 1e6
 
-        mesh = df.Mesh(region=self.region, n=self.n,
+        mesh = df.Mesh(region=self.region, cell=self.cell,
                        subregions=self.subregions)
 
         system = mm.System(name=name)
@@ -75,7 +75,7 @@ class TestZhangLi:
     def test_field_scalar(self):
         name = 'zhangli_field_scalar'
 
-        mesh = df.Mesh(region=self.region, n=self.n)
+        mesh = df.Mesh(region=self.region, cell=self.cell)
 
         def u_fun(pos):
             x, y, z = pos

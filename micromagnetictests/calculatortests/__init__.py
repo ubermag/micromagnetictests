@@ -18,6 +18,7 @@ from .mesh import TestMesh
 from .compute import TestCompute
 from .info_file import test_info_file
 from .multiple_drives import test_multiple_drives
+from .fixedsubregions import TestFixedSubregions
 from .stdprob3 import test_stdprob3
 from .stdprob4 import test_stdprob4
 from .stdprob5 import test_stdprob5
