@@ -14,6 +14,7 @@ from .slonczewski import TestSlonczewski
 from .dynamics import TestDynamics
 from .mindriver import TestMinDriver
 from .timedriver import TestTimeDriver
+from .hysteresisdriver import TestHysteresisDriver
 from .mesh import TestMesh
 from .compute import TestCompute
 from .info_file import test_info_file
