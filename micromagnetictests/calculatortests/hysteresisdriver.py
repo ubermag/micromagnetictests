@@ -38,4 +38,6 @@ class TestHysteresisDriver:
 
         assert len(system.table.data.index) == 5
 
+        assert system.table.x == 'B'
+
         self.calculator.delete(system)

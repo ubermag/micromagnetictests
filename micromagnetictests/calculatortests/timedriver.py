@@ -39,6 +39,8 @@ class TestTimeDriver:
         value = system.m(self.mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1
 
+        assert system.table.x == 't'
+
         self.calculator.delete(system)
 
     def test_rungekutta_evolver_nodriver(self):

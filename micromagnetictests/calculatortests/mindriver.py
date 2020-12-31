@@ -36,6 +36,8 @@ class TestMinDriver:
         value = system.m(self.mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-3
 
+        assert system.table.x == 'iteration'
+
         self.calculator.delete(system)
 
     def test_evolver_nodriver(self):
