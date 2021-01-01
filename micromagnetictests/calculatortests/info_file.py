@@ -41,15 +41,13 @@ def test_info_file(calculator):
     assert 'date' in info.keys()
     assert 'time' in info.keys()
     assert 'driver' in info.keys()
-    assert 'args' in info.keys()
 
     assert info['drive_number'] == 0
     assert re.findall(r'\d{4}-\d{2}-\d{2}', info['date']) is not []
     assert re.findall(r'\d{2}:\d{2}-\d{2}', info['time']) is not []
     assert info['driver'] == 'TimeDriver'
-    assert isinstance(info['args'], dict)
-    assert info['args']['t'] == 25e-12
-    assert info['args']['n'] == 10
+    assert info['t'] == 25e-12
+    assert info['n'] == 10
 
     # Second (1) drive
     md = calculator.MinDriver()
@@ -66,14 +64,10 @@ def test_info_file(calculator):
     assert 'date' in info.keys()
     assert 'time' in info.keys()
     assert 'driver' in info.keys()
-    assert 'args' in info.keys()
-    print(info['args'].keys())
 
     assert info['drive_number'] == 1
     assert re.findall(r'\d{4}-\d{2}-\d{2}', info['date']) is not []
     assert re.findall(r'\d{2}:\d{2}-\d{2}', info['time']) is not []
     assert info['driver'] == 'MinDriver'
-    assert isinstance(info['args'], dict)
-    assert info['args'] == {}
 
     calculator.delete(system)
