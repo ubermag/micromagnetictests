@@ -3,7 +3,7 @@ import micromagnetictests as mt
 
 
 def get_tests():
-    """Generator listing all available tests.
+    """Generator yielding all available test names.
 
     Returns
     -------
