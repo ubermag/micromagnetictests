@@ -5,7 +5,6 @@ import micromagnetictests.calculatortests
 from .get_tests import get_tests
 
 __version__ = pkg_resources.get_distribution(__name__).version
-__dependencies__ = pkg_resources.require(__name__)
 
 
 def test():
