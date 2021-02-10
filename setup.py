@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 setuptools.setup(
     name='micromagnetictests',
-    version='0.3',
+    version='0.3.1',
     description='Testing package for computational magnetism tools.',
     author='Marijan Beg, Martin Lang, and Hans Fangohr',
     long_description=long_description,
@@ -14,7 +14,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     include_package_data=True,
     python_requires='>=3.8',
-    install_requires=['micromagneticmodel==0.11',
+    install_requires=['micromagneticmodel==0.11.1',
                       'scipy>=1.5'],
     classifiers=['Development Status :: 5 - Production/Stable',
                  'Intended Audience :: Education',
