@@ -31,7 +31,7 @@ class TestDMI:
         Ms = 1e6
 
         system = mm.System(name=name)
-        system.energy = mm.DMI(D=D, crystalclass='Cnv')
+        system.energy = mm.DMI(D=D, crystalclass='Cnv_z')
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
         system.m = df.Field(mesh, dim=3, value=self.random_m, norm=Ms)
@@ -52,7 +52,7 @@ class TestDMI:
         Ms = 1e6
 
         system = mm.System(name=name)
-        system.energy = mm.DMI(D=D, crystalclass='Cnv')
+        system.energy = mm.DMI(D=D, crystalclass='Cnv_z')
 
         mesh = df.Mesh(region=self.region, cell=self.cell,
                        subregions=self.subregions)
@@ -79,7 +79,10 @@ class TestDMI:
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
 
-        for crystalclass in ['Cnv', 'T', 'O', 'D2d']:
+        for crystalclass in ['Cnv_x', 'Cnv_y', 'Cnv_z', 'T', 'O',
+                             'D2d_x', 'D2d_y', 'D2d_z',
+                             'Cnv', 'D2d'  # legacy crystalclass names
+                             ]:
             system = mm.System(name=name)
             system.energy = mm.DMI(D=D, crystalclass=crystalclass)
 
