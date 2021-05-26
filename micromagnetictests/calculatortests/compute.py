@@ -60,7 +60,8 @@ class TestCompute:
         if sys.platform != 'win32':
             self.system.energy += mm.DMI(D=5e-3, crystalclass='T')
             term = self.system.energy.dmi
-            for crystalclass in ['T', 'Cnv', 'D2d']:
+            for crystalclass in ['T', 'Cnv_x', 'Cnv_y', 'Cnv_z',
+                                 'D2d_x', 'D2d_y', 'D2d_z']:
                 term.crystalclass = crystalclass
                 assert isinstance(self.calculator.compute(
                     term.energy, self.system), float)

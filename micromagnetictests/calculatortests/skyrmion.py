@@ -19,7 +19,7 @@ def test_skyrmion(calculator):
     mesh = df.Mesh(p1=p1, p2=p2, cell=cell)
 
     system = mm.System(name=name)
-    system.energy = (mm.Exchange(A=A) + mm.DMI(D=D, crystalclass='Cnv') +
+    system.energy = (mm.Exchange(A=A) + mm.DMI(D=D, crystalclass='Cnv_z') +
                      mm.UniaxialAnisotropy(K=K, u=u) + mm.Demag() +
                      mm.Zeeman(H=H))
 

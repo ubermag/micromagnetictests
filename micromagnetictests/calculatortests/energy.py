@@ -104,7 +104,7 @@ class TestEnergy:
 
         system = mm.System(name=name)
         system.energy = mm.Exchange(A=A) + \
-            mm.DMI(D=D, crystalclass='Cnv') + \
+            mm.DMI(D=D, crystalclass='Cnv_z') + \
             mm.Zeeman(H=H)
         system.m = df.Field(mesh, dim=3, value=(1, 0.3, 0), norm=Ms)
 
@@ -133,7 +133,7 @@ class TestEnergy:
 
         system = mm.System(name=name)
         system.energy = mm.Exchange(A=A) + \
-            mm.DMI(D=D, crystalclass='Cnv') + \
+            mm.DMI(D=D, crystalclass='Cnv_z') + \
             mm.UniaxialAnisotropy(K=K, u=u) + \
             mm.Zeeman(H=H) + \
             mm.Demag()
