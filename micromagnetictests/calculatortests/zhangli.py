@@ -41,6 +41,11 @@ class TestZhangLi:
         value = system.m(mesh.region.random_point())
         assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
 
+        system.dynamics -= mm.ZhangLi(u=u, beta=beta)
+        td.drive(system, t=0.2e-9, n=50)
+
+        # Check if it runs.
+
         self.calculator.delete(system)
 
     def test_dict_scalar(self):

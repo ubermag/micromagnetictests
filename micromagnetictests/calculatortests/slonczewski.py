@@ -43,6 +43,14 @@ class TestSlonczewski:
 
         # Check if it runs.
 
+        # remove current -> needs different evolver
+        system.dynamics -= mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
+                                          eps_prime=eps_prime)
+
+        td.drive(system, t=0.2e-9, n=20)
+
+        # Check if it runs.
+
         self.calculator.delete(system)
 
     def test_dict_values(self):
