@@ -77,6 +77,23 @@ class TestTimeDriver:
 
         self.calculator.delete(system)
 
+    def test_theta_evolver_nodriver(self):
+        name = 'timedriver_theta_evolver_nodriver'
+
+        system = mm.System(name=name)
+        system.energy = self.energy
+        system.dynamics = self.precession + self.damping
+        system.m = self.m
+        system.T = 10
+
+        evolver = self.calculator.UHH_ThetaEvolver(fixed_timestep=2e-13)
+        td = self.calculator.TimeDriver(evolver=evolver)
+        td.drive(system, t=0.2e-9, n=50)
+
+        # Check if it runs.
+
+        self.calculator.delete(system)
+
     def test_noevolver_driver(self):
         name = 'timedriver_noevolver_driver'
 
