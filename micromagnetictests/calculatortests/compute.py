@@ -69,4 +69,19 @@ class TestCompute:
                     term.density, self.system), df.Field)
                 assert isinstance(self.calculator.compute(
                     term.effective_field, self.system), df.Field)
+            assert isinstance(self.calculator.compute(
+                self.system.energy.energy, self.system), float)
             self.calculator.delete(self.system)
+
+    def test_slonzewski(self):
+        self.system.dynamics = mm.Slonzewski(J=7.5e12, mp=(1, 0, 0),
+                                             P=0.4, Lambda=2)
+        assert isinstance(self.calculator.compute(
+            self.system.energy.energy, self.system), float)
+        self.calculator.delete(self.system)
+
+    def test_zhang_li(self):
+        self.system.dynamics = mm.ZhangLi(beta=0.01, u=5e6)
+        assert isinstance(self.calculator.compute(
+            self.system.energy.energy, self.system), float)
+        self.calculator.delete(self.system)
