@@ -53,6 +53,41 @@ class TestSlonczewski:
 
         self.calculator.delete(system)
 
+    def test_single_values_finite_temperature(self):
+        name = 'slonczewski_scalar_values_finite_temperature'
+
+        J = 1e12
+        mp = (1, 0, 0)
+        P = 0.4
+        Lambda = 2
+        eps_prime = 0
+        H = (0, 0, 1e6)
+        Ms = 1e6
+
+        mesh = df.Mesh(region=self.region, n=self.n)
+
+        system = mm.System(name=name)
+        system.energy = mm.Zeeman(H=H)
+        system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
+                                         eps_prime=eps_prime)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.T = 10
+
+        td = self.calculator.TimeDriver()
+        td.drive(system, t=0.2e-9, n=20)
+
+        # Check if it runs.
+
+        # remove current -> needs different evolver
+        system.dynamics -= mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
+                                          eps_prime=eps_prime)
+
+        td.drive(system, t=0.2e-9, n=20)
+
+        # Check if it runs.
+
+        self.calculator.delete(system)
+
     def test_dict_values(self):
         name = 'slonczewski_scalar_values'
 
