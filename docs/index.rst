@@ -1,14 +1,32 @@
-NEW WEBSITE: https://ubermag.github.io
-======================================
+.. mdinclude:: ../README.md
+    :start-line: 0
+    :end-line: 6
 
-``Micromagnetictests`` is part of the ``ubermag`` metapackage. Recently, the
-websites for the different subpackages have been centralised. Please use the new
-`documentation <https://ubermag.github.io/documentation/micromagnetictests.html>`_
-and `API reference <https://ubermag.github.io/api/micromagnetictests.html>`_ in
-the future. 
+.. mdinclude:: ../README.md
+    :start-line: 22
+    :end-line: 29
 
-You should be redirected in 5 seconds automatically.
+.. toctree::
+    :maxdepth: 1
+    :caption: Tutorials
 
-.. raw:: html
+    ipynb/installation-testing-update
+    ipynb/usage
+    ipynb/other
 
-     <meta http-equiv="Refresh" content="5; url=https://ubermag.github.io/documentation/micromagnetictests.html" />
+API Reference
+-------------
+.. autosummary::
+    :nosignatures:
+    :toctree: _autosummary
+    :caption: API Reference
+    :template: module-template.rst
+    :recursive:
+
+    micromagnetictests
+    micromagnetictests.calculatortests
+
+Index
+-----
+
+- :ref:`genindex`
