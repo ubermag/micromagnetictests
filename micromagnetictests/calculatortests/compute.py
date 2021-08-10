@@ -60,7 +60,8 @@ class TestCompute:
         if sys.platform != 'win32':
             self.system.energy += mm.DMI(D=5e-3, crystalclass='T')
             term = self.system.energy.dmi
-            for crystalclass in ['T', 'Cnv', 'D2d']:
+            for crystalclass in ['T', 'Cnv_x', 'Cnv_y', 'Cnv_z',
+                                 'D2d_x', 'D2d_y', 'D2d_z']:
                 term.crystalclass = crystalclass
                 assert isinstance(self.calculator.compute(
                     term.energy, self.system), float)
@@ -68,4 +69,19 @@ class TestCompute:
                     term.density, self.system), df.Field)
                 assert isinstance(self.calculator.compute(
                     term.effective_field, self.system), df.Field)
+            assert isinstance(self.calculator.compute(
+                self.system.energy.energy, self.system), float)
             self.calculator.delete(self.system)
+
+    def test_slonzewski(self):
+        self.system.dynamics = mm.Slonzewski(J=7.5e12, mp=(1, 0, 0),
+                                             P=0.4, Lambda=2)
+        assert isinstance(self.calculator.compute(
+            self.system.energy.energy, self.system), float)
+        self.calculator.delete(self.system)
+
+    def test_zhang_li(self):
+        self.system.dynamics = mm.ZhangLi(beta=0.01, u=5e6)
+        assert isinstance(self.calculator.compute(
+            self.system.energy.energy, self.system), float)
+        self.calculator.delete(self.system)
