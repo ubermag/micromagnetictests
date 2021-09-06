@@ -73,15 +73,8 @@ class TestSlonczewski:
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
         system.T = 10
 
-        td = self.calculator.TimeDriver()
-        td.drive(system, t=0.2e-9, n=20)
-
-        # Check if it runs.
-
-        # remove current -> needs different evolver
-        system.dynamics -= mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
-                                          eps_prime=eps_prime)
-
+        evolver = self.calculator.Xf_ThermSpinEvolver()
+        td = self.calculator.TimeDriver(evolver=evolver)
         td.drive(system, t=0.2e-9, n=20)
 
         # Check if it runs.
