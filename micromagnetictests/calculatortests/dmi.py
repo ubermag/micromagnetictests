@@ -79,8 +79,7 @@ class TestDMI:
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
 
-        for crystalclass in ['Cnv_x', 'Cnv_y', 'Cnv_z', 'T', 'O',
-                             'D2d_x', 'D2d_y', 'D2d_z',
+        for crystalclass in ['Cnv_z', 'T', 'O', 'D2d_z',
                              'Cnv', 'D2d'  # legacy crystalclass names
                              ]:
             system = mm.System(name=name)
