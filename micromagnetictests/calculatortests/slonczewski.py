@@ -73,7 +73,7 @@ class TestSlonczewski:
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
         system.T = 10
 
-        evolver = self.calculator.Xf_ThermSpinEvolver()
+        evolver = self.calculator.Xf_ThermSpinXferEvolver()
         td = self.calculator.TimeDriver(evolver=evolver)
         td.drive(system, t=0.2e-9, n=20)
 
