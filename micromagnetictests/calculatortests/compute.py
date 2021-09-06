@@ -73,9 +73,9 @@ class TestCompute:
                 self.system.energy.energy, self.system), float)
             self.calculator.delete(self.system)
 
-    def test_slonzewski(self):
-        self.system.dynamics = mm.Slonzewski(J=7.5e12, mp=(1, 0, 0),
-                                             P=0.4, Lambda=2)
+    def test_slonczewski(self):
+        self.system.dynamics = mm.Slonczewski(J=7.5e12, mp=(1, 0, 0),
+                                              P=0.4, Lambda=2)
         assert isinstance(self.calculator.compute(
             self.system.energy.energy, self.system), float)
         self.calculator.delete(self.system)
