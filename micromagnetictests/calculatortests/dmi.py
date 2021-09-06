@@ -86,7 +86,8 @@ class TestDMI:
             system.energy = mm.DMI(D=D, crystalclass=crystalclass)
 
             if crystalclass.endswith(('x', 'y')):
-                mesh = df.Mesh(p1=(0, 0, -100e-9), p2=(1e-9, 1e-9, 100e-9))
+                mesh = df.Mesh(p1=(0, 0, -100e-9), p2=(1e-9, 1e-9, 100e-9),
+                               cell=self.cell)
             else:
                 mesh = df.Mesh(region=self.region, cell=self.cell)
 
