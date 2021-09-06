@@ -121,11 +121,8 @@ class TestTimeDriver:
         system.T = 10
 
         td = self.calculator.TimeDriver()
-        td.drive(system, t=0.2e-9, n=50)
-
-        # Check if it runs.
-
-        self.calculator.delete(system)
+        with pytest.raises(RuntimeError):
+            td.drive(system, t=0.2e-9, n=50)
 
     def test_noevolver_driver(self):
         name = 'timedriver_noevolver_driver'
