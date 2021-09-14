@@ -3,8 +3,8 @@ requires = ["setuptools>=40.8.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = micromagnetictests
-version = 0.3.1
+name = "micromagnetictests"
+version = "0.3.1"
 description = "Testing package for computational magnetism tools."
 readme = "README.md"
 requires-python = ">=3.8"
