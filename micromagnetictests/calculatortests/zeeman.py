@@ -59,6 +59,25 @@ class TestZeeman:
 
         self.calculator.delete(system)
 
+        # time-dependent - function
+        def t_func(t):
+            if t < 1e-10:
+                return 1
+            elif t < 5e-10:
+                return (5e-10 - t) / 4e-10
+            else:
+                return 0
+
+        system.energy = mm.Zeeman(H=H, time_dependence=t_func, tstep=1e-13)
+
+        mesh = df.Mesh(region=self.region, cell=self.cell)
+        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+
+        td = self.calculator.TimeDriver()
+        td.drive(system, t=0.1e-9, n=20)
+
+        self.calculator.delete(system)
+
     def test_dict(self):
         name = 'zeeman_dict'
 
@@ -93,6 +112,24 @@ class TestZeeman:
 
         # time-dependent - sinc
         system.energy = mm.Zeeman(H=H, wave='sinc', f=1e9, t0=0)
+
+        mesh = df.Mesh(region=self.region, cell=self.cell,
+                       subregions=self.subregions)
+        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+
+        td = self.calculator.TimeDriver()
+        td.drive(system, t=0.1e-9, n=20)
+
+        # time-dependent - function
+        def t_func(t):
+            if t < 1e-10:
+                return 1
+            elif t < 5e-10:
+                return (5e-10 - t) / 4e-10
+            else:
+                return 0
+
+        system.energy = mm.Zeeman(H=H, time_dependence=t_func, tstep=1e-13)
 
         mesh = df.Mesh(region=self.region, cell=self.cell,
                        subregions=self.subregions)
@@ -142,6 +179,21 @@ class TestZeeman:
 
         # time-dependent - sinc
         system.energy = mm.Zeeman(H=H, wave='sinc', f=1e9, t0=0)
+
+        mesh = df.Mesh(region=self.region, cell=self.cell)
+        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+
+        td = self.calculator.TimeDriver()
+        td.drive(system, t=0.1e-9, n=20)
+
+        # time-dependent - function
+        def t_func(t):
+            omega = 2*np.pi * 1e9
+            return [np.cos(omega * t), -np.sin(omega * t), 0,
+                    np.sin(omega * t), np.cos(omega * t), 0,
+                    0, 0, 1]
+
+        system.energy = mm.Zeeman(H=H, time_dependence=t_func, tstep=1e-13)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
         system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
