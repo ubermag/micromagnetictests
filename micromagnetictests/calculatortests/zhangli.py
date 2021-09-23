@@ -67,7 +67,7 @@ class TestZhangLi:
         }
         '''
         tcl_strings['proc_args'] = 'total_time'
-        tcl_strings['proc_nam'] = 'TimeFunction'
+        tcl_strings['proc_name'] = 'TimeFunction'
 
         system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
@@ -132,7 +132,7 @@ class TestZhangLi:
         }
         '''
         tcl_strings['proc_args'] = 'total_time'
-        tcl_strings['proc_nam'] = 'TimeFunction'
+        tcl_strings['proc_name'] = 'TimeFunction'
 
         system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
@@ -207,7 +207,7 @@ class TestZhangLi:
         }
         '''
         tcl_strings['proc_args'] = 'total_time'
-        tcl_strings['proc_nam'] = 'TimeFunction'
+        tcl_strings['proc_name'] = 'TimeFunction'
 
         system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)

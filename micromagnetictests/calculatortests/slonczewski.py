@@ -71,7 +71,7 @@ class TestSlonczewski:
         }
         '''
         tcl_strings['proc_args'] = 'total_time'
-        tcl_strings['proc_nam'] = 'TimeFunction'
+        tcl_strings['proc_name'] = 'TimeFunction'
 
         system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
                                          eps_prime=eps_prime,
@@ -130,7 +130,7 @@ class TestSlonczewski:
         }
         '''
         tcl_strings['proc_args'] = 'total_time'
-        tcl_strings['proc_nam'] = 'TimeFunction'
+        tcl_strings['proc_name'] = 'TimeFunction'
 
         system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
                                          eps_prime=eps_prime,
@@ -188,7 +188,7 @@ class TestSlonczewski:
         }
         '''
         tcl_strings['proc_args'] = 'total_time'
-        tcl_strings['proc_nam'] = 'TimeFunction'
+        tcl_strings['proc_name'] = 'TimeFunction'
 
         system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
                                          eps_prime=eps_prime,
@@ -245,7 +245,7 @@ class TestSlonczewski:
         }
         '''
         tcl_strings['proc_args'] = 'total_time'
-        tcl_strings['proc_nam'] = 'TimeFunction'
+        tcl_strings['proc_name'] = 'TimeFunction'
 
         system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
                                          eps_prime=eps_prime,
