@@ -46,6 +46,38 @@ class TestZhangLi:
 
         # Check if it runs.
 
+        # time-dependence - function
+        def time_dep(t):
+            return np.sin(t * 1e10)
+
+        system.dynamics = mm.ZhangLi(u=u, beta=beta, time_dependence=time_dep,
+                                     tstep=1e-13)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+
+        td.drive(system, t=0.2e-9, n=50)
+
+        # u is zero, nothing should change.
+        value = system.m(mesh.region.random_point())
+        assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
+
+        # time-dependence - tcl strings
+        tcl_strings = {}
+        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+            return $total_time
+        }
+        '''
+        tcl_strings['proc_args'] = 'total_time'
+        tcl_strings['proc_nam'] = 'TimeFunction'
+
+        system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+
+        td.drive(system, t=0.2e-9, n=50)
+
+        # u is zero, nothing should change.
+        value = system.m(mesh.region.random_point())
+        assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
+
         self.calculator.delete(system)
 
     def test_dict_scalar(self):
@@ -65,6 +97,46 @@ class TestZhangLi:
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
+        td.drive(system, t=0.2e-9, n=50)
+
+        # u=0 region
+        value = system.m((1e-9, -4e-9, 3e-9))
+        assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
+
+        # u!=0 region
+        value = system.m((1e-9, 4e-9, 3e-9))
+        assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) > 1
+
+        # time-dependence - function
+        def time_dep(t):
+            return np.sin(t * 1e10)
+
+        system.dynamics = mm.ZhangLi(u=u, beta=beta, time_dependence=time_dep,
+                                     tstep=1e-13)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+
+        td.drive(system, t=0.2e-9, n=50)
+
+        # u=0 region
+        value = system.m((1e-9, -4e-9, 3e-9))
+        assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
+
+        # u!=0 region
+        value = system.m((1e-9, 4e-9, 3e-9))
+        assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) > 1
+
+        # time-dependence - tcl strings
+        tcl_strings = {}
+        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+            return $total_time
+        }
+        '''
+        tcl_strings['proc_args'] = 'total_time'
+        tcl_strings['proc_nam'] = 'TimeFunction'
+
+        system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+
         td.drive(system, t=0.2e-9, n=50)
 
         # u=0 region
@@ -100,6 +172,46 @@ class TestZhangLi:
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
+        td.drive(system, t=0.2e-9, n=50)
+
+        # u=0 region
+        value = system.m((1e-9, -4e-9, 3e-9))
+        assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
+
+        # u!=0 region
+        value = system.m((1e-9, 4e-9, 3e-9))
+        assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) > 1
+
+        # time-dependence - function
+        def time_dep(t):
+            return np.sin(t * 1e10)
+
+        system.dynamics = mm.ZhangLi(u=u, beta=beta, time_dependence=time_dep,
+                                     tstep=1e-13)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+
+        td.drive(system, t=0.2e-9, n=50)
+
+        # u=0 region
+        value = system.m((1e-9, -4e-9, 3e-9))
+        assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
+
+        # u!=0 region
+        value = system.m((1e-9, 4e-9, 3e-9))
+        assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) > 1
+
+        # time-dependence - tcl strings
+        tcl_strings = {}
+        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+            return $total_time
+        }
+        '''
+        tcl_strings['proc_args'] = 'total_time'
+        tcl_strings['proc_nam'] = 'TimeFunction'
+
+        system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+
         td.drive(system, t=0.2e-9, n=50)
 
         # u=0 region

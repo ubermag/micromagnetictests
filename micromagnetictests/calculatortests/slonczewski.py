@@ -51,6 +51,37 @@ class TestSlonczewski:
 
         # Check if it runs.
 
+        # time-dependence - function
+        def time_dep(t):
+            return np.sin(t * 1e10)
+
+        system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
+                                         eps_prime=eps_prime, tstep=1e-13,
+                                         time_dependence=time_dep)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+
+        td.drive(system, t=0.2e-9, n=50)
+
+        # Check if it runs.
+
+        # time-dependence - tcl strings
+        tcl_strings = {}
+        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+            return $total_time
+        }
+        '''
+        tcl_strings['proc_args'] = 'total_time'
+        tcl_strings['proc_nam'] = 'TimeFunction'
+
+        system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
+                                         eps_prime=eps_prime,
+                                         tcl_strings=tcl_strings)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+
+        td.drive(system, t=0.2e-9, n=50)
+
+        # Check if it runs.
+
         self.calculator.delete(system)
 
     def test_single_values_finite_temperature(self):
@@ -76,6 +107,37 @@ class TestSlonczewski:
         evolver = self.calculator.Xf_ThermSpinXferEvolver()
         td = self.calculator.TimeDriver(evolver=evolver)
         td.drive(system, t=0.2e-9, n=20)
+
+        # Check if it runs.
+
+        # time-dependence - function
+        def time_dep(t):
+            return np.sin(t * 1e10)
+
+        system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
+                                         eps_prime=eps_prime, tstep=1e-13,
+                                         time_dependence=time_dep)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+
+        td.drive(system, t=0.2e-9, n=50)
+
+        # Check if it runs.
+
+        # time-dependence - tcl strings
+        tcl_strings = {}
+        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+            return $total_time
+        }
+        '''
+        tcl_strings['proc_args'] = 'total_time'
+        tcl_strings['proc_nam'] = 'TimeFunction'
+
+        system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
+                                         eps_prime=eps_prime,
+                                         tcl_strings=tcl_strings)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+
+        td.drive(system, t=0.2e-9, n=50)
 
         # Check if it runs.
 
@@ -106,6 +168,37 @@ class TestSlonczewski:
 
         # Check if it runs.
 
+        # time-dependence - function
+        def time_dep(t):
+            return np.sin(t * 1e10)
+
+        system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
+                                         eps_prime=eps_prime, tstep=1e-13,
+                                         time_dependence=time_dep)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+
+        td.drive(system, t=0.2e-9, n=50)
+
+        # Check if it runs.
+
+        # time-dependence - tcl strings
+        tcl_strings = {}
+        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+            return $total_time
+        }
+        '''
+        tcl_strings['proc_args'] = 'total_time'
+        tcl_strings['proc_nam'] = 'TimeFunction'
+
+        system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
+                                         eps_prime=eps_prime,
+                                         tcl_strings=tcl_strings)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+
+        td.drive(system, t=0.2e-9, n=50)
+
+        # Check if it runs.
+
         self.calculator.delete(system)
 
     def test_field_values(self):
@@ -129,6 +222,37 @@ class TestSlonczewski:
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=20)
+
+        # Check if it runs.
+
+        # time-dependence - function
+        def time_dep(t):
+            return np.sin(t * 1e10)
+
+        system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
+                                         eps_prime=eps_prime, tstep=1e-13,
+                                         time_dependence=time_dep)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+
+        td.drive(system, t=0.2e-9, n=50)
+
+        # Check if it runs.
+
+        # time-dependence - tcl strings
+        tcl_strings = {}
+        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+            return $total_time
+        }
+        '''
+        tcl_strings['proc_args'] = 'total_time'
+        tcl_strings['proc_nam'] = 'TimeFunction'
+
+        system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
+                                         eps_prime=eps_prime,
+                                         tcl_strings=tcl_strings)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+
+        td.drive(system, t=0.2e-9, n=50)
 
         # Check if it runs.
 
