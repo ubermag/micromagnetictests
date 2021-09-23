@@ -76,6 +76,26 @@ class TestZeeman:
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.1e-9, n=20)
 
+        # time-dependent - tcl strings
+        tcl_strings = {}
+        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+            set Hx = sin($total_time * 1e10)
+            set dHx = 1e10 * cos($total_time * 1e10)
+            return [list $Hx 0 0 $dHx 0 0]
+        }
+        '''
+        tcl_strings['energy'] = 'Oxs_ScriptUZeeman'
+        tcl_strings['script_args'] = 'total_time'
+        tcl_strings['script'] = 'TimeFunction'
+
+        system.energy = mm.Zeeman(H=H, tcl_strings=tcl_strings)
+
+        mesh = df.Mesh(region=self.region, cell=self.cell)
+        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+
+        td = self.calculator.TimeDriver()
+        td.drive(system, t=0.1e-9, n=20)
+
         self.calculator.delete(system)
 
     def test_dict(self):
@@ -194,6 +214,35 @@ class TestZeeman:
                     0, 0, 1]
 
         system.energy = mm.Zeeman(H=H, time_dependence=t_func, tstep=1e-13)
+
+        mesh = df.Mesh(region=self.region, cell=self.cell)
+        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+
+        td = self.calculator.TimeDriver()
+        td.drive(system, t=0.1e-9, n=20)
+
+        # time-dependent - tcl strings
+        tcl_strings = {}
+        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+            set PI [expr {4*atan(1.)}]
+            set w [expr {1e9*2*$PI}]
+            set ct [expr {cos($w*$total_time)}]
+            set mct [expr {-1*$ct}]      ;# "mct" is "minus cosine (w)t"
+            set st [expr {sin($w*$total_time)}]
+            set mst [expr {-1*$st}]      ;# "mst" is "minus sine (w)t"
+            return [list  $ct $mst  0 \
+                          $st $ct   0 \
+                          0   0   1 \
+                          [expr {$w*$mst}] [expr {$w*$mct}] 0 \
+                          [expr {$w*$ct}]  [expr {$w*$mst}] 0 \
+                              0                0         0]
+        }'''
+        tcl_strings['energy'] = 'Oxs_TransformZeeman'
+        tcl_strings['type'] = 'general'
+        tcl_strings['script_args'] = 'total_time'
+        tcl_strings['script'] = 'TimeFunction'
+
+        system.energy = mm.Zeeman(H=H, tcl_strings=tcl_strings)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
         system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
