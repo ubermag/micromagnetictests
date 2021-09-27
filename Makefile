@@ -1,5 +1,5 @@
 PROJECT=micromagnetictests
-IPYNBPATH=docs/ipynb/*.ipynb
+IPYNBPATH=docs/*.ipynb
 PYTHON?=python
 
 test-unittests:
