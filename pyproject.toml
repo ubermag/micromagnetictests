@@ -61,4 +61,4 @@ about = """
 """
 
 [tool.coverage.run]
-omit = ["micromagnetictests/tests/*"]
+omit = ["micromagnetictests/tests/*", "micromagnetictests/calculatortests/*"]
