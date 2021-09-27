@@ -79,8 +79,8 @@ class TestZeeman:
         # time-dependent - tcl strings
         tcl_strings = {}
         tcl_strings['proc'] = '''proc TimeFunction { total_time } {
-            set Hx sin($total_time * 1e10)
-            set dHx 1e10 * cos($total_time * 1e10)
+            set Hx [expr {sin($total_time * 1e10)}]
+            set dHx [expr {1e10 * cos($total_time * 1e10)}]
             return [list $Hx 0 0 $dHx 0 0]
         }
         '''
