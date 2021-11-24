@@ -68,9 +68,6 @@ class TestDMI:
 
         self.calculator.delete(system)
 
-    @pytest.mark.skipif(sys.platform == 'win32',
-                        reason=('Different crystalclasses are not '
-                                'available on Windows.'))
     def test_crystalclass(self):
         name = 'dmi_crystalclass'
 
