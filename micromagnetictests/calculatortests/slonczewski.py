@@ -56,8 +56,8 @@ class TestSlonczewski:
             return np.sin(t * 1e10)
 
         system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
-                                         eps_prime=eps_prime, tstep=1e-13,
-                                         time_dependence=time_dep)
+                                         eps_prime=eps_prime, dt=1e-13,
+                                         func=time_dep)
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
@@ -115,8 +115,8 @@ class TestSlonczewski:
             return np.sin(t * 1e10)
 
         system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
-                                         eps_prime=eps_prime, tstep=1e-13,
-                                         time_dependence=time_dep)
+                                         eps_prime=eps_prime, dt=1e-13,
+                                         func=time_dep)
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
@@ -173,8 +173,8 @@ class TestSlonczewski:
             return np.sin(t * 1e10)
 
         system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
-                                         eps_prime=eps_prime, tstep=1e-13,
-                                         time_dependence=time_dep)
+                                         eps_prime=eps_prime, dt=1e-13,
+                                         func=time_dep)
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
@@ -230,8 +230,8 @@ class TestSlonczewski:
             return np.sin(t * 1e10)
 
         system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
-                                         eps_prime=eps_prime, tstep=1e-13,
-                                         time_dependence=time_dep)
+                                         eps_prime=eps_prime, dt=1e-13,
+                                         func=time_dep)
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)

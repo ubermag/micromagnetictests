@@ -40,7 +40,7 @@ class TestZeeman:
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
         # time-dependent - sin
-        system.energy = mm.Zeeman(H=H, wave='sin', f=1e9, t0=1e-12)
+        system.energy = mm.Zeeman(H=H, func='sin', f=1e9, t0=1e-12)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
         system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
@@ -49,7 +49,7 @@ class TestZeeman:
         td.drive(system, t=0.1e-9, n=20)
 
         # time-dependent - sinc
-        system.energy = mm.Zeeman(H=H, wave='sinc', f=1e9, t0=0)
+        system.energy = mm.Zeeman(H=H, func='sinc', f=1e9, t0=0)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
         system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
@@ -68,7 +68,7 @@ class TestZeeman:
             else:
                 return 0
 
-        system.energy = mm.Zeeman(H=H, time_dependence=t_func, tstep=1e-13)
+        system.energy = mm.Zeeman(H=H, func=t_func, dt=1e-13)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
         system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
@@ -121,7 +121,7 @@ class TestZeeman:
                                           (0, 0, Ms))) < 1
 
         # time-dependent - sin
-        system.energy = mm.Zeeman(H=H, wave='sin', f=1e9, t0=1e-12)
+        system.energy = mm.Zeeman(H=H, func='sin', f=1e9, t0=1e-12)
 
         mesh = df.Mesh(region=self.region, cell=self.cell,
                        subregions=self.subregions)
@@ -131,7 +131,7 @@ class TestZeeman:
         td.drive(system, t=0.1e-9, n=20)
 
         # time-dependent - sinc
-        system.energy = mm.Zeeman(H=H, wave='sinc', f=1e9, t0=0)
+        system.energy = mm.Zeeman(H=H, func='sinc', f=1e9, t0=0)
 
         mesh = df.Mesh(region=self.region, cell=self.cell,
                        subregions=self.subregions)
@@ -149,7 +149,7 @@ class TestZeeman:
             else:
                 return 0
 
-        system.energy = mm.Zeeman(H=H, time_dependence=t_func, tstep=1e-13)
+        system.energy = mm.Zeeman(H=H, func=t_func, dt=1e-13)
 
         mesh = df.Mesh(region=self.region, cell=self.cell,
                        subregions=self.subregions)
@@ -189,7 +189,7 @@ class TestZeeman:
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
         # time-dependent - sin
-        system.energy = mm.Zeeman(H=H, wave='sin', f=1e9, t0=1e-12)
+        system.energy = mm.Zeeman(H=H, func='sin', f=1e9, t0=1e-12)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
         system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
@@ -198,7 +198,7 @@ class TestZeeman:
         td.drive(system, t=0.1e-9, n=20)
 
         # time-dependent - sinc
-        system.energy = mm.Zeeman(H=H, wave='sinc', f=1e9, t0=0)
+        system.energy = mm.Zeeman(H=H, func='sinc', f=1e9, t0=0)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
         system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
@@ -213,7 +213,7 @@ class TestZeeman:
                     np.sin(omega * t), np.cos(omega * t), 0,
                     0, 0, 1]
 
-        system.energy = mm.Zeeman(H=H, time_dependence=t_func, tstep=1e-13)
+        system.energy = mm.Zeeman(H=H, func=t_func, dt=1e-13)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
         system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)

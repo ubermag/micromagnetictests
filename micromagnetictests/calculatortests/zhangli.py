@@ -50,15 +50,14 @@ class TestZhangLi:
         def time_dep(t):
             return np.sin(t * 1e10)
 
-        system.dynamics = mm.ZhangLi(u=u, beta=beta, time_dependence=time_dep,
-                                     tstep=1e-13)
+        system.dynamics = mm.ZhangLi(u=u, beta=beta, func=time_dep, dt=1e-13)
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
 
         # u is zero, nothing should change.
         value = system.m(mesh.region.random_point())
-        assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
+        assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
 
         # time-dependence - tcl strings
         tcl_strings = {}
@@ -111,8 +110,7 @@ class TestZhangLi:
         def time_dep(t):
             return np.sin(t * 1e10)
 
-        system.dynamics = mm.ZhangLi(u=u, beta=beta, time_dependence=time_dep,
-                                     tstep=1e-13)
+        system.dynamics = mm.ZhangLi(u=u, beta=beta, func=time_dep, dt=1e-13)
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
@@ -186,8 +184,7 @@ class TestZhangLi:
         def time_dep(t):
             return np.sin(t * 1e10)
 
-        system.dynamics = mm.ZhangLi(u=u, beta=beta, time_dependence=time_dep,
-                                     tstep=1e-13)
+        system.dynamics = mm.ZhangLi(u=u, beta=beta, func=time_dep, dt=1e-13)
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
