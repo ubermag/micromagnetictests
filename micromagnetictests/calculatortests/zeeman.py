@@ -78,7 +78,7 @@ class TestZeeman:
 
         # time-dependent - tcl strings
         tcl_strings = {}
-        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+        tcl_strings['script'] = '''proc TimeFunction { total_time } {
             set Hx [expr {sin($total_time * 1e10)}]
             set dHx [expr {1e10 * cos($total_time * 1e10)}]
             return [list $Hx 0 0 $dHx 0 0]
@@ -86,7 +86,7 @@ class TestZeeman:
         '''
         tcl_strings['energy'] = 'Oxs_ScriptUZeeman'
         tcl_strings['script_args'] = 'total_time'
-        tcl_strings['script'] = 'TimeFunction'
+        tcl_strings['script_name'] = 'TimeFunction'
 
         system.energy = mm.Zeeman(H=H, tcl_strings=tcl_strings)
 
@@ -223,7 +223,7 @@ class TestZeeman:
 
         # time-dependent - tcl strings
         tcl_strings = {}
-        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+        tcl_strings['script'] = '''proc TimeFunction { total_time } {
             set PI [expr {4*atan(1.)}]
             set w [expr {1e9*2*$PI}]
             set ct [expr {cos($w*$total_time)}]
@@ -240,7 +240,7 @@ class TestZeeman:
         tcl_strings['energy'] = 'Oxs_TransformZeeman'
         tcl_strings['type'] = 'general'
         tcl_strings['script_args'] = 'total_time'
-        tcl_strings['script'] = 'TimeFunction'
+        tcl_strings['script_name'] = 'TimeFunction'
 
         system.energy = mm.Zeeman(H=H, tcl_strings=tcl_strings)
 

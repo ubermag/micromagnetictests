@@ -66,12 +66,12 @@ class TestSlonczewski:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+        tcl_strings['script'] = '''proc TimeFunction { total_time } {
             return $total_time
         }
         '''
-        tcl_strings['proc_args'] = 'total_time'
-        tcl_strings['proc_name'] = 'TimeFunction'
+        tcl_strings['script_args'] = 'total_time'
+        tcl_strings['script_name'] = 'TimeFunction'
 
         system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
                                          eps_prime=eps_prime,
@@ -125,12 +125,12 @@ class TestSlonczewski:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+        tcl_strings['script'] = '''proc TimeFunction { total_time } {
             return $total_time
         }
         '''
-        tcl_strings['proc_args'] = 'total_time'
-        tcl_strings['proc_name'] = 'TimeFunction'
+        tcl_strings['script_args'] = 'total_time'
+        tcl_strings['script_name'] = 'TimeFunction'
 
         system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
                                          eps_prime=eps_prime,
@@ -183,12 +183,12 @@ class TestSlonczewski:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+        tcl_strings['script'] = '''proc TimeFunction { total_time } {
             return $total_time
         }
         '''
-        tcl_strings['proc_args'] = 'total_time'
-        tcl_strings['proc_name'] = 'TimeFunction'
+        tcl_strings['script_args'] = 'total_time'
+        tcl_strings['script_name'] = 'TimeFunction'
 
         system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
                                          eps_prime=eps_prime,
@@ -240,12 +240,12 @@ class TestSlonczewski:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+        tcl_strings['script'] = '''proc TimeFunction { total_time } {
             return $total_time
         }
         '''
-        tcl_strings['proc_args'] = 'total_time'
-        tcl_strings['proc_name'] = 'TimeFunction'
+        tcl_strings['script_args'] = 'total_time'
+        tcl_strings['script_name'] = 'TimeFunction'
 
         system.dynamics = mm.Slonczewski(J=J, mp=mp, P=P, Lambda=Lambda,
                                          eps_prime=eps_prime,

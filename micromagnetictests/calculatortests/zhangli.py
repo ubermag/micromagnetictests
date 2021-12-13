@@ -61,12 +61,12 @@ class TestZhangLi:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+        tcl_strings['script'] = '''proc TimeFunction { total_time } {
             return $total_time
         }
         '''
-        tcl_strings['proc_args'] = 'total_time'
-        tcl_strings['proc_name'] = 'TimeFunction'
+        tcl_strings['script_args'] = 'total_time'
+        tcl_strings['script_name'] = 'TimeFunction'
 
         system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
@@ -125,12 +125,12 @@ class TestZhangLi:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+        tcl_strings['script'] = '''proc TimeFunction { total_time } {
             return $total_time
         }
         '''
-        tcl_strings['proc_args'] = 'total_time'
-        tcl_strings['proc_name'] = 'TimeFunction'
+        tcl_strings['script_args'] = 'total_time'
+        tcl_strings['script_name'] = 'TimeFunction'
 
         system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
@@ -199,12 +199,12 @@ class TestZhangLi:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings['proc'] = '''proc TimeFunction { total_time } {
+        tcl_strings['script'] = '''proc TimeFunction { total_time } {
             return $total_time
         }
         '''
-        tcl_strings['proc_args'] = 'total_time'
-        tcl_strings['proc_name'] = 'TimeFunction'
+        tcl_strings['script_args'] = 'total_time'
+        tcl_strings['script_name'] = 'TimeFunction'
 
         system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
