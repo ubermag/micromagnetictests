@@ -146,3 +146,29 @@ class TestEnergy:
         assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1
 
         self.calculator.delete(system)
+
+    def test_zeeman_zeeman(self):
+        name = 'multi_zeeman_field'
+
+        def value_fun(pos):
+            x, _, _ = pos
+            if x <= 0:
+                return (1e6, 0, 0)
+            else:
+                return (0, 0, 1e6)
+
+        mesh = df.Mesh(region=self.region, cell=self.cell)
+
+        H1 = df.Field(mesh, dim=3, value=value_fun)
+        H2 = df.Field(mesh, dim=3, value=(0, 1e6, 0))
+        Ms = 1e6
+
+        system = mm.System(name=name)
+        system.energy = (mm.Zeeman(H=H1, name='zeeman1')
+                         + mm.Zeeman(H=H2, name='zeeman2'))
+        system.m = df.Field(mesh, dim=3, value=(0, 1, 0), norm=Ms)
+
+        md = self.calculator.MinDriver()
+        md.drive(system)
+
+        # test if it runs
