@@ -172,3 +172,5 @@ class TestEnergy:
         md.drive(system)
 
         # test if it runs
+
+        self.calculator.delete(system)
