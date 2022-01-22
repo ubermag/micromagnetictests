@@ -12,10 +12,10 @@ requires-python = ">=3.8"
 license = {file = "LICENSE"}
 
 authors = [
-  {name = "Marijan Beg"},
-  {name = "Martin Lang"},
-  {name = "Samuel Holt"},
-  {name = "Hans Fangohr"}
+    {name = "Marijan Beg"},
+    {name = "Martin Lang"},
+    {name = "Samuel Holt"},
+    {name = "Hans Fangohr"}
 ]
 
 classifiers = [
@@ -35,17 +35,28 @@ classifiers = [
 ]
 
 dependencies = [
-  "micromagneticmodel~=0.60.0",
-  "scipy>=1.5"
+    "micromagneticmodel~=0.60.0",
+    "scipy>=1.5"
 ]
 
-# [project.optional-dependencies]
-# test = [...]
+[project.optional-dependencies]
+dev = [
+    "build",
+    "pre-commit",
+    "twine"
+]
+test = [
+    "nbval",
+    "pytest",
+    "pytest-cov"
+]
 
 [project.urls]
 homepage = "https://ubermag.github.io"
 documentation = "https://ubermag.github.io/documentation/micromagnetictests"
 repository = "https://github.com/ubermag/micromagnetictests"
+
+
 
 # to define additional information we use a custom table
 # we need to own the entry for tool.NAME on PyPI
@@ -54,11 +65,10 @@ repository = "https://github.com/ubermag/micromagnetictests"
 doi = "10.5281/zenodo.3707736"
 copyright_holder = "Marijan Beg and Hans Fangohr"
 contributors = [
-
 ]
 about = """
 - A collection of computational magnetism tests for testing different calculators
 """
 
 [tool.coverage.run]
-omit = ["micromagnetictests/tests/*", "micromagnetictests/calculatortests/*"]
+omit = ["micromagnetictests/tests/*"]
