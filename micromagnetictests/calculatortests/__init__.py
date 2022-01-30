@@ -26,3 +26,4 @@ from .dirname import test_dirname
 from .stdprob3 import test_stdprob3
 from .stdprob4 import test_stdprob4
 from .stdprob5 import test_stdprob5
+from .outputformat import test_format
