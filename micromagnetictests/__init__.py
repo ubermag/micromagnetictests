@@ -1,4 +1,4 @@
-"""Main package."""
+"""Test computational magnetism tools."""
 import pytest
 import pkg_resources
 import micromagnetictests.calculatortests
