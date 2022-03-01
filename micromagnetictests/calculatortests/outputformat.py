@@ -1,4 +1,3 @@
-import os
 import discretisedfield as df
 import micromagneticmodel as mm
 import pytest

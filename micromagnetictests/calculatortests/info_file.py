@@ -1,9 +1,7 @@
+import json
 import os
 import re
-import glob
-import json
-import shutil
-import pytest
+
 import discretisedfield as df
 import micromagneticmodel as mm
 
