@@ -1,7 +1,8 @@
 import sys
-import pytest
+
 import discretisedfield as df
 import micromagneticmodel as mm
+import pytest
 
 
 class TestCompute:

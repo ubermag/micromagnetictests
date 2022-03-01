@@ -1,9 +1,10 @@
-import sys
-import pytest
 import random
-import numpy as np
+import sys
+
 import discretisedfield as df
 import micromagneticmodel as mm
+import numpy as np
+import pytest
 
 
 class TestDMI:

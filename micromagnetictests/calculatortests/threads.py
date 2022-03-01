@@ -1,9 +1,10 @@
-import os
 import glob
-import pytest
-import numpy as np
+import os
+
 import discretisedfield as df
 import micromagneticmodel as mm
+import numpy as np
+import pytest
 
 
 class TestThreads:

@@ -1,5 +1,6 @@
 import os
 import shutil
+
 import discretisedfield as df
 import micromagneticmodel as mm
 

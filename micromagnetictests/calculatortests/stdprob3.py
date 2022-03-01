@@ -1,6 +1,6 @@
-import numpy as np
 import discretisedfield as df
 import micromagneticmodel as mm
+import numpy as np
 from scipy.optimize import bisect  # This is why scipy is a dependency.
 
 

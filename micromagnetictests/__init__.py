@@ -1,7 +1,9 @@
 """Test computational magnetism tools."""
-import pytest
 import pkg_resources
+import pytest
+
 import micromagnetictests.calculatortests
+
 from .get_tests import get_tests
 
 __version__ = pkg_resources.get_distribution(__name__).version
