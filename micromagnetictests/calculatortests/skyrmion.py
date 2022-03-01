@@ -15,7 +15,6 @@ def test_skyrmion(calculator):
     p1 = (-50e-9, -50e-9, 0)
     p2 = (50e-9, 50e-9, 10e-9)
     cell = (5e-9, 5e-9, 5e-9)
-    region = df.Region(p1=p1, p2=p2)
     mesh = df.Mesh(p1=p1, p2=p2, cell=cell)
 
     system = mm.System(name=name)
@@ -50,4 +49,4 @@ def test_skyrmion(calculator):
     value = system.m((50e-9, 0, 0))
     assert value[2]/Ms > 0.5
 
-    self.calculator.delete(system)
+    calculator.delete(system)

@@ -1,6 +1,3 @@
-import glob
-import os
-
 import discretisedfield as df
 import micromagneticmodel as mm
 import numpy as np

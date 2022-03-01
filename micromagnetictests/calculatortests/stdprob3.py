@@ -9,7 +9,7 @@ def test_stdprob3(calculator):
 
     # Function for initiaising the flower state.
     def m_init_flower(pos):
-        x, y, z = pos[0]/1e-9, pos[1]/1e-9, pos[2]/1e-9
+        _, y, z = pos[0]/1e-9, pos[1]/1e-9, pos[2]/1e-9
         mx = 0
         my = 2*z - 1
         mz = -2*y + 1
@@ -21,7 +21,7 @@ def test_stdprob3(calculator):
 
     # Function for initialising the vortex state.
     def m_init_vortex(pos):
-        x, y, z = pos[0]/1e-9, pos[1]/1e-9, pos[2]/1e-9
+        x, _, _ = pos[0]/1e-9, pos[1]/1e-9, pos[2]/1e-9
         mx = 0
         my = np.sin(np.pi/2 * (x-0.5))
         mz = np.cos(np.pi/2 * (x-0.5))

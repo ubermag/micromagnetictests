@@ -1,5 +1,4 @@
 import os
-import shutil
 
 import discretisedfield as df
 import micromagneticmodel as mm
@@ -37,7 +36,7 @@ def test_multiple_drives(calculator):
     dirname = os.path.join(name, 'drive-1')
     assert os.path.exists(dirname)
 
-    E = calculator.compute(system.energy.zeeman.energy, system)
+    calculator.compute(system.energy.zeeman.energy, system)
 
     dirname = os.path.join(name, 'compute-0')
     assert os.path.exists(dirname)
@@ -47,7 +46,7 @@ def test_multiple_drives(calculator):
     dirname = os.path.join(name, 'drive-2')
     assert os.path.exists(dirname)
 
-    Heff = calculator.compute(system.energy.zeeman.effective_field, system)
+    calculator.compute(system.energy.zeeman.effective_field, system)
 
     dirname = os.path.join(name, 'compute-1')
     assert os.path.exists(dirname)

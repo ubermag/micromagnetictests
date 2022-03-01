@@ -1,5 +1,4 @@
 import random
-import sys
 
 import discretisedfield as df
 import micromagneticmodel as mm

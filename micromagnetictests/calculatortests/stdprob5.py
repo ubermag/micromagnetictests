@@ -29,7 +29,7 @@ def test_stdprob5(calculator):
     system.energy = mm.Exchange(A=A) + mm.Demag()
 
     def m_vortex(pos):
-        x, y, z = pos[0]/1e-9-50, pos[1]/1e-9-50, pos[2]/1e-9
+        x, y, _ = pos[0]/1e-9-50, pos[1]/1e-9-50, pos[2]/1e-9
         return (-y, x, 10)
 
     system.m = df.Field(mesh, dim=3, value=m_vortex, norm=Ms)

@@ -1,12 +1,9 @@
-import glob
 import json
 import os
 import re
-import shutil
 
 import discretisedfield as df
 import micromagneticmodel as mm
-import pytest
 
 
 def test_info_file(calculator):

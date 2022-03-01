@@ -54,7 +54,7 @@ class TestCompute:
 
     def test_invalid_func(self):
         with pytest.raises(ValueError):
-            val = self.calculator.compute(
+            self.calculator.compute(
                 self.system.energy.__len__, self.system)
 
     def test_dmi(self):
