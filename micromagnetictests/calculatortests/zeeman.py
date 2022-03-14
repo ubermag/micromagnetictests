@@ -78,7 +78,7 @@ class TestZeeman:
 
         # time-dependent - two terms
         f = 10e9
-        
+
         def cos_wave(t):
             return np.cos(2 * np.pi * f * t)
 
@@ -94,7 +94,7 @@ class TestZeeman:
 
         assert not np.allclose(system.table.data['Bx_xdir'], 0)
         assert np.allclose(system.table.data['By_xdir'], 0)
-        
+
         assert np.allclose(system.table.data['Bx_ydir'], 0)
         assert not np.allclose(system.table.data['By_ydir'], 0)
 
@@ -110,7 +110,7 @@ class TestZeeman:
 
         assert not np.allclose(system.table.data['Bx_xdir'], 0)
         assert np.allclose(system.table.data['By_xdir'], 0)
-        
+
         assert np.allclose(system.table.data['Bx_ydir'], 0)
         assert not np.allclose(system.table.data['By_ydir'], 0)
 
