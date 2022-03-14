@@ -76,6 +76,47 @@ class TestZeeman:
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.1e-9, n=20)
 
+        # time-dependent - two terms
+        f = 10e9
+        
+        def cos_wave(t):
+            return np.cos(2 * np.pi * f * t)
+
+        def sin_wave(t):
+            return np.sin(2 * np.pi * f * t)
+
+        H_x = (1e6, 0, 0)
+        H_y = (0, 1e6, 0)
+        system.energy = (
+            mm.Zeeman(H=H_x, func=cos_wave, dt=5e-12, name='xdir')
+            + mm.Zeeman(H=H_y, func='sin', t0=0, f=f, name='ydir'))
+        td.drive(system, t=0.1e-9, n=100)
+
+        assert not np.allclose(system.table.data['Bx_xdir'], 0)
+        assert np.allclose(system.table.data['By_xdir'], 0)
+        
+        assert np.allclose(system.table.data['Bx_ydir'], 0)
+        assert not np.allclose(system.table.data['By_ydir'], 0)
+
+        assert np.isclose(np.max(system.table.data['Bx_xdir']),
+                          np.max(system.table.data['By_ydir']))
+
+        H_x = (1e6, 0, 0)
+        H_y = (0, 1e6, 0)
+        system.energy = (
+            mm.Zeeman(H=H_x, func=cos_wave, dt=5e-12, name='xdir')
+            + mm.Zeeman(H=H_y, func=sin_wave, dt=5e-12, name='ydir'))
+        td.drive(system, t=0.1e-9, n=100)
+
+        assert not np.allclose(system.table.data['Bx_xdir'], 0)
+        assert np.allclose(system.table.data['By_xdir'], 0)
+        
+        assert np.allclose(system.table.data['Bx_ydir'], 0)
+        assert not np.allclose(system.table.data['By_ydir'], 0)
+
+        assert np.isclose(np.max(system.table.data['Bx_xdir']),
+                          np.max(system.table.data['By_ydir']))
+
         # time-dependent - tcl strings
         tcl_strings = {}
         tcl_strings['script'] = '''proc TimeFunction { total_time } {
