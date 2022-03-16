@@ -72,27 +72,28 @@ test_collection = Collection('test')
 def unittest(c):
     """Run unittests."""
     import micromagnetictests
-    micromagnetictests.test()
+    return micromagnetictests.test()
 
 
 @task
 def coverage(c):
     """Run unittests with coverage."""
-    pytest.main(['-v', '--cov', 'micromagnetictests', '--cov-report', 'xml'])
+    return pytest.main(['-v', '--cov', 'micromagnetictests', '--cov-report',
+                        'xml'])
 
 
 @task
 def docs(c):
     """Run doctests."""
-    pytest.main(['-v', '--doctest-modules', '--ignore',
-                 'micromagnetictests/tests', 'micromagnetictests'])
+    return pytest.main(['-v', '--doctest-modules', '--ignore',
+                        'micromagnetictests/tests', 'micromagnetictests'])
 
 
 @task
 def ipynb(c):
     """Test notebooks."""
-    pytest.main(['-v', '--nbval', '--sanitize-with', 'nbval.cfg',
-                 'docs'])
+    return pytest.main(['-v', '--nbval', '--sanitize-with', 'nbval.cfg',
+                        'docs'])
 
 
 @task
