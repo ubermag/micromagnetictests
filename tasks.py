@@ -73,8 +73,7 @@ def unittest(c):
     """Run unittests."""
     import micromagnetictests
     result = micromagnetictests.test()
-    print(result)
-    return result
+    raise Exit(code=result)
 
 
 @task
@@ -82,28 +81,23 @@ def coverage(c):
     """Run unittests with coverage."""
     result = pytest.main(['-v', '--cov', 'micromagnetictests', '--cov-report',
                           'xml'])
-    print(result)
-    return int(result)
-
-
-@task
-def failure(c):
-    import sys
-    sys.exit(1)
+    raise Exit(code=result)
 
 
 @task
 def docs(c):
     """Run doctests."""
-    return pytest.main(['-v', '--doctest-modules', '--ignore',
-                        'micromagnetictests/tests', 'micromagnetictests'])
+    result = pytest.main(['-v', '--doctest-modules', '--ignore',
+                          'micromagnetictests/tests', 'micromagnetictests'])
+    raise Exit(code=result)
 
 
 @task
 def ipynb(c):
     """Test notebooks."""
-    return pytest.main(['-v', '--nbval', '--sanitize-with', 'nbval.cfg',
-                        'docs'])
+    result = pytest.main(['-v', '--nbval', '--sanitize-with', 'nbval.cfg',
+                          'docs'])
+    raise Exit(code=result)
 
 
 @task
@@ -126,5 +120,4 @@ test_collection.add_task(docs)
 test_collection.add_task(ipynb)
 test_collection.add_task(pycodestyle)
 test_collection.add_task(all)
-test_collection.add_task(failure)
 ns.add_collection(test_collection)
