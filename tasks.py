@@ -83,7 +83,13 @@ def coverage(c):
     result = pytest.main(['-v', '--cov', 'micromagnetictests', '--cov-report',
                           'xml'])
     print(result)
-    return result
+    return int(result)
+
+
+@task
+def failure(c):
+    import sys
+    sys.exit(1)
 
 
 @task
@@ -120,4 +126,5 @@ test_collection.add_task(docs)
 test_collection.add_task(ipynb)
 test_collection.add_task(pycodestyle)
 test_collection.add_task(all)
+test_collection.add_task(failure)
 ns.add_collection(test_collection)
