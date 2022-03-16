@@ -72,14 +72,18 @@ test_collection = Collection('test')
 def unittest(c):
     """Run unittests."""
     import micromagnetictests
-    return micromagnetictests.test()
+    result = micromagnetictests.test()
+    print(result)
+    return result
 
 
 @task
 def coverage(c):
     """Run unittests with coverage."""
-    return pytest.main(['-v', '--cov', 'micromagnetictests', '--cov-report',
-                        'xml'])
+    result = pytest.main(['-v', '--cov', 'micromagnetictests', '--cov-report',
+                          'xml'])
+    print(result)
+    return result
 
 
 @task
