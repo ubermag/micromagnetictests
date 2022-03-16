@@ -37,6 +37,9 @@ jobs:
       run: invoke test.coverage
       if: matrix.os == 'ubuntu-latest'
 
+    - name: test returncode
+      run: python -c "import sys; sys.exit(1)"
+  
     - name: Documentation tests
       run: invoke test.docs
 
