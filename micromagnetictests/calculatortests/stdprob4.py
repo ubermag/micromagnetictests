@@ -3,9 +3,9 @@ import micromagneticmodel as mm
 
 
 def test_stdprob4(calculator):
-    name = 'stdprob4'
+    name = "stdprob4"
 
-    L, d, th = 500e-9, 125e-9, 3e-9   # (m)
+    L, d, th = 500e-9, 125e-9, 3e-9  # (m)
     cell = (5e-9, 5e-9, 3e-9)  # (m)
     p1 = (0, 0, 0)
     p2 = (L, d, th)
@@ -27,14 +27,14 @@ def test_stdprob4(calculator):
     md = calculator.MinDriver()
     md.drive(system)  # updates system.m in-place
 
-    H = (-24.6e-3/mm.consts.mu0, 4.3e-3/mm.consts.mu0, 0)
+    H = (-24.6e-3 / mm.consts.mu0, 4.3e-3 / mm.consts.mu0, 0)
     system.energy += mm.Zeeman(H=H)
 
     td = calculator.TimeDriver()
     td.drive(system, t=1e-9, n=200)
 
-    t = system.table.data['t'].values
-    my = system.table.data['my'].values
+    t = system.table.data["t"].values
+    my = system.table.data["my"].values
 
     assert abs(min(t) - 5e-12) < 1e-20
     assert abs(max(t) - 1e-9) < 1e-20

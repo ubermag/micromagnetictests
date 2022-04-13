@@ -3,7 +3,7 @@ import micromagneticmodel as mm
 
 
 def test_stdprob5(calculator):
-    name = 'stdprob5'
+    name = "stdprob5"
 
     # Geometry
     lx = 100e-9  # x dimension of the sample(m)
@@ -29,7 +29,7 @@ def test_stdprob5(calculator):
     system.energy = mm.Exchange(A=A) + mm.Demag()
 
     def m_vortex(pos):
-        x, y, _ = pos[0]/1e-9-50, pos[1]/1e-9-50, pos[2]/1e-9
+        x, y, _ = pos[0] / 1e-9 - 50, pos[1] / 1e-9 - 50, pos[2] / 1e-9
         return (-y, x, 10)
 
     system.m = df.Field(mesh, dim=3, value=m_vortex, norm=Ms)
@@ -37,13 +37,16 @@ def test_stdprob5(calculator):
     md = calculator.MinDriver()
     md.drive(system)
 
-    system.dynamics += (mm.Precession(gamma0=gamma0) +
-                        mm.Damping(alpha=alpha) + mm.ZhangLi(u=ux, beta=beta))
+    system.dynamics += (
+        mm.Precession(gamma0=gamma0)
+        + mm.Damping(alpha=alpha)
+        + mm.ZhangLi(u=ux, beta=beta)
+    )
 
     td = calculator.TimeDriver()
     td.drive(system, t=8e-9, n=100)
 
-    mx = system.table.data['mx'].values
+    mx = system.table.data["mx"].values
 
     assert -0.35 < mx.min() < -0.30
     assert -0.03 < mx.max() < 0

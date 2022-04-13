@@ -14,13 +14,13 @@ class TestUniaxialAnisotropy:
         p2 = (7e-9, 5e-9, 4e-9)
         self.region = df.Region(p1=p1, p2=p2)
         self.cell = (1e-9, 1e-9, 1e-9)
-        self.subregions = {'r1': df.Region(p1=(-7e-9, -5e-9, -4e-9),
-                                           p2=(0, 5e-9, 4e-9)),
-                           'r2': df.Region(p1=(0, -5e-9, -4e-9),
-                                           p2=(7e-9, 5e-9, 4e-9))}
+        self.subregions = {
+            "r1": df.Region(p1=(-7e-9, -5e-9, -4e-9), p2=(0, 5e-9, 4e-9)),
+            "r2": df.Region(p1=(0, -5e-9, -4e-9), p2=(7e-9, 5e-9, 4e-9)),
+        }
 
     def test_scalar_vector(self):
-        name = 'uniaxialanisotropy_scalar_vector'
+        name = "uniaxialanisotropy_scalar_vector"
 
         K = 1e5
         u = (0, 0, 1)
@@ -41,7 +41,7 @@ class TestUniaxialAnisotropy:
         self.calculator.delete(system)
 
     def test_field_vector(self):
-        name = 'uniaxialanisotropy_field_vector'
+        name = "uniaxialanisotropy_field_vector"
 
         def value_fun(pos):
             x, y, z = pos
@@ -64,7 +64,7 @@ class TestUniaxialAnisotropy:
         md.drive(system)
 
         value = system.m((-2e-9, -2e-9, -2e-9))
-        assert np.linalg.norm(np.cross(value, (0, 0.3*Ms, Ms))) < 1e-3
+        assert np.linalg.norm(np.cross(value, (0, 0.3 * Ms, Ms))) < 1e-3
 
         value = system.m((2e-9, 2e-9, 2e-9))
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
@@ -72,7 +72,7 @@ class TestUniaxialAnisotropy:
         self.calculator.delete(system)
 
     def test_scalar_field(self):
-        name = 'uniaxialanisotropy_scalar_field'
+        name = "uniaxialanisotropy_scalar_field"
 
         def value_fun(pos):
             x, y, z = pos
@@ -103,7 +103,7 @@ class TestUniaxialAnisotropy:
         self.calculator.delete(system)
 
     def test_field_field(self):
-        name = 'uniaxialanisotropy_field_field'
+        name = "uniaxialanisotropy_field_field"
 
         def K_fun(pos):
             x, y, z = pos
@@ -144,11 +144,10 @@ class TestUniaxialAnisotropy:
         self.calculator.delete(system)
 
     def test_dict_vector(self):
-        name = 'uniaxialanisotropy_dict_vector'
+        name = "uniaxialanisotropy_dict_vector"
 
-        mesh = df.Mesh(region=self.region, cell=self.cell,
-                       subregions=self.subregions)
-        K = {'r1': 0, 'r2': 1e5}
+        mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
+        K = {"r1": 0, "r2": 1e5}
         u = (0, 0, 1)
         Ms = 1e6
 
@@ -160,7 +159,7 @@ class TestUniaxialAnisotropy:
         md.drive(system)
 
         value = system.m((-2e-9, -2e-9, -2e-9))
-        assert np.linalg.norm(np.cross(value, (0, 0.3*Ms, Ms))) < 1e-3
+        assert np.linalg.norm(np.cross(value, (0, 0.3 * Ms, Ms))) < 1e-3
 
         value = system.m((2e-9, 2e-9, 2e-9))
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
@@ -168,7 +167,7 @@ class TestUniaxialAnisotropy:
         self.calculator.delete(system)
 
     def test_field_dict(self):
-        name = 'uniaxialanisotropy_field_dict'
+        name = "uniaxialanisotropy_field_dict"
 
         def K_fun(pos):
             x, y, z = pos
@@ -209,7 +208,7 @@ class TestUniaxialAnisotropy:
         self.calculator.delete(system)
 
     def test_higher_order_scalar_vector(self):
-        name = 'uniaxialanisotropy_higher_order_scalar_vector'
+        name = "uniaxialanisotropy_higher_order_scalar_vector"
 
         K1 = 1e5
         K2 = 2e3

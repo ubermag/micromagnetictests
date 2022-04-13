@@ -4,7 +4,7 @@ import pytest
 
 
 def test_format(calculator):
-    name = 'output_format'
+    name = "output_format"
 
     p1 = (0, 0, 0)
     p2 = (5e-9, 5e-9, 5e-9)
@@ -23,9 +23,9 @@ def test_format(calculator):
 
     # test if it runs
     md.drive(system)  # 'bin8' (default)
-    md.drive(system, ovf_format='bin4')
-    md.drive(system, ovf_format='txt')
+    md.drive(system, ovf_format="bin4")
+    md.drive(system, ovf_format="txt")
     with pytest.raises(ValueError):
-        md.drive(system, ovf_format='unknown')
+        md.drive(system, ovf_format="unknown")
 
     calculator.delete(system)

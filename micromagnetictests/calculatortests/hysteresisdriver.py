@@ -22,7 +22,7 @@ class TestHysteresisDriver:
         self.m = df.Field(self.mesh, dim=3, value=(0, 1, 0), norm=self.Ms)
 
     def test_noevolver_nodriver(self):
-        name = 'hysteresisdriver_noevolver_nodriver'
+        name = "hysteresisdriver_noevolver_nodriver"
 
         system = mm.System(name=name)
         system.energy = self.energy
@@ -36,6 +36,6 @@ class TestHysteresisDriver:
 
         assert len(system.table.data.index) == 5
 
-        assert system.table.x == 'B_hysteresis'
+        assert system.table.x == "B_hysteresis"
 
         self.calculator.delete(system)

@@ -14,13 +14,13 @@ class TestZhangLi:
         p2 = (5e-9, 5e-9, 3e-9)
         self.region = df.Region(p1=p1, p2=p2)
         self.cell = (1e-9, 1e-9, 3e-9)
-        self.subregions = {'r1': df.Region(p1=(-5e-9, -5e-9, -3e-9),
-                                           p2=(5e-9, 0, 3e-9)),
-                           'r2': df.Region(p1=(-5e-9, 0, -3e-9),
-                                           p2=(5e-9, 5e-9, 3e-9))}
+        self.subregions = {
+            "r1": df.Region(p1=(-5e-9, -5e-9, -3e-9), p2=(5e-9, 0, 3e-9)),
+            "r2": df.Region(p1=(-5e-9, 0, -3e-9), p2=(5e-9, 5e-9, 3e-9)),
+        }
 
     def test_scalar_scalar(self):
-        name = 'zhangli_scalar_scalar'
+        name = "zhangli_scalar_scalar"
 
         u = 0
         beta = 0.5
@@ -39,7 +39,7 @@ class TestZhangLi:
 
         # u is zero, nothing should change.
         value = system.m(mesh.region.random_point())
-        assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
+        assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
 
         system.dynamics -= mm.ZhangLi(u=u, beta=beta)
         td.drive(system, t=0.2e-9, n=50)
@@ -61,12 +61,14 @@ class TestZhangLi:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings['script'] = '''proc TimeFunction { total_time } {
+        tcl_strings[
+            "script"
+        ] = """proc TimeFunction { total_time } {
             return $total_time
         }
-        '''
-        tcl_strings['script_args'] = 'total_time'
-        tcl_strings['script_name'] = 'TimeFunction'
+        """
+        tcl_strings["script_args"] = "total_time"
+        tcl_strings["script_name"] = "TimeFunction"
 
         system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
@@ -75,20 +77,19 @@ class TestZhangLi:
 
         # u is zero, nothing should change.
         value = system.m(mesh.region.random_point())
-        assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
+        assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
 
         self.calculator.delete(system)
 
     def test_dict_scalar(self):
-        name = 'zhangli_dict_scalar'
+        name = "zhangli_dict_scalar"
 
         H = (0, 0, 1e6)
-        u = {'r1': 0, 'r2': 1}
+        u = {"r1": 0, "r2": 1}
         beta = 0.5
         Ms = 1e6
 
-        mesh = df.Mesh(region=self.region, cell=self.cell,
-                       subregions=self.subregions)
+        mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
 
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
@@ -100,7 +101,7 @@ class TestZhangLi:
 
         # u=0 region
         value = system.m((1e-9, -4e-9, 3e-9))
-        assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
+        assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
 
         # u!=0 region
         value = system.m((1e-9, 4e-9, 3e-9))
@@ -117,7 +118,7 @@ class TestZhangLi:
 
         # u=0 region
         value = system.m((1e-9, -4e-9, 3e-9))
-        assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
+        assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
 
         # u!=0 region
         value = system.m((1e-9, 4e-9, 3e-9))
@@ -125,12 +126,14 @@ class TestZhangLi:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings['script'] = '''proc TimeFunction { total_time } {
+        tcl_strings[
+            "script"
+        ] = """proc TimeFunction { total_time } {
             return $total_time
         }
-        '''
-        tcl_strings['script_args'] = 'total_time'
-        tcl_strings['script_name'] = 'TimeFunction'
+        """
+        tcl_strings["script_args"] = "total_time"
+        tcl_strings["script_name"] = "TimeFunction"
 
         system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
@@ -139,7 +142,7 @@ class TestZhangLi:
 
         # u=0 region
         value = system.m((1e-9, -4e-9, 3e-9))
-        assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
+        assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
 
         # u!=0 region
         value = system.m((1e-9, 4e-9, 3e-9))
@@ -148,7 +151,7 @@ class TestZhangLi:
         self.calculator.delete(system)
 
     def test_field_scalar(self):
-        name = 'zhangli_field_scalar'
+        name = "zhangli_field_scalar"
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
 
@@ -174,7 +177,7 @@ class TestZhangLi:
 
         # u=0 region
         value = system.m((1e-9, -4e-9, 3e-9))
-        assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
+        assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
 
         # u!=0 region
         value = system.m((1e-9, 4e-9, 3e-9))
@@ -191,7 +194,7 @@ class TestZhangLi:
 
         # u=0 region
         value = system.m((1e-9, -4e-9, 3e-9))
-        assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
+        assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
 
         # u!=0 region
         value = system.m((1e-9, 4e-9, 3e-9))
@@ -199,12 +202,14 @@ class TestZhangLi:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings['script'] = '''proc TimeFunction { total_time } {
+        tcl_strings[
+            "script"
+        ] = """proc TimeFunction { total_time } {
             return $total_time
         }
-        '''
-        tcl_strings['script_args'] = 'total_time'
-        tcl_strings['script_name'] = 'TimeFunction'
+        """
+        tcl_strings["script_args"] = "total_time"
+        tcl_strings["script_name"] = "TimeFunction"
 
         system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
         system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
@@ -213,7 +218,7 @@ class TestZhangLi:
 
         # u=0 region
         value = system.m((1e-9, -4e-9, 3e-9))
-        assert np.linalg.norm(np.cross(value, (0, 0.1*Ms, Ms))) < 1e-3
+        assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
 
         # u!=0 region
         value = system.m((1e-9, 4e-9, 3e-9))

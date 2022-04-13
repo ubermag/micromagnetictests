@@ -7,9 +7,9 @@ import micromagneticmodel as mm
 
 
 def test_info_file(calculator):
-    name = 'info_file'
+    name = "info_file"
 
-    L = 30e-9   # (m)
+    L = 30e-9  # (m)
     cell = (10e-9, 15e-9, 5e-9)  # (m)
     A = 1.3e-11  # (J/m)
     Ms = 8e5  # (A/m)
@@ -28,44 +28,44 @@ def test_info_file(calculator):
     td = calculator.TimeDriver()
     td.drive(system, t=25e-12, n=10)
 
-    dirname = os.path.join(name, 'drive-0')
-    infofile = os.path.join(dirname, 'info.json')
+    dirname = os.path.join(name, "drive-0")
+    infofile = os.path.join(dirname, "info.json")
     assert os.path.exists(dirname)
     assert os.path.isfile(infofile)
 
     with open(infofile) as f:
         info = json.loads(f.read())
-    assert 'drive_number' in info.keys()
-    assert 'date' in info.keys()
-    assert 'time' in info.keys()
-    assert 'driver' in info.keys()
+    assert "drive_number" in info.keys()
+    assert "date" in info.keys()
+    assert "time" in info.keys()
+    assert "driver" in info.keys()
 
-    assert info['drive_number'] == 0
-    assert re.findall(r'\d{4}-\d{2}-\d{2}', info['date']) is not []
-    assert re.findall(r'\d{2}:\d{2}-\d{2}', info['time']) is not []
-    assert info['driver'] == 'TimeDriver'
-    assert info['t'] == 25e-12
-    assert info['n'] == 10
+    assert info["drive_number"] == 0
+    assert re.findall(r"\d{4}-\d{2}-\d{2}", info["date"]) is not []
+    assert re.findall(r"\d{2}:\d{2}-\d{2}", info["time"]) is not []
+    assert info["driver"] == "TimeDriver"
+    assert info["t"] == 25e-12
+    assert info["n"] == 10
 
     # Second (1) drive
     md = calculator.MinDriver()
     md.drive(system)
 
-    dirname = os.path.join(name, 'drive-1')
-    infofile = os.path.join(dirname, 'info.json')
+    dirname = os.path.join(name, "drive-1")
+    infofile = os.path.join(dirname, "info.json")
     assert os.path.exists(dirname)
     assert os.path.isfile(infofile)
 
     with open(infofile) as f:
         info = json.loads(f.read())
-    assert 'drive_number' in info.keys()
-    assert 'date' in info.keys()
-    assert 'time' in info.keys()
-    assert 'driver' in info.keys()
+    assert "drive_number" in info.keys()
+    assert "date" in info.keys()
+    assert "time" in info.keys()
+    assert "driver" in info.keys()
 
-    assert info['drive_number'] == 1
-    assert re.findall(r'\d{4}-\d{2}-\d{2}', info['date']) is not []
-    assert re.findall(r'\d{2}:\d{2}-\d{2}', info['time']) is not []
-    assert info['driver'] == 'MinDriver'
+    assert info["drive_number"] == 1
+    assert re.findall(r"\d{4}-\d{2}-\d{2}", info["date"]) is not []
+    assert re.findall(r"\d{2}:\d{2}-\d{2}", info["time"]) is not []
+    assert info["driver"] == "MinDriver"
 
     calculator.delete(system)

@@ -21,5 +21,6 @@ def test():
     >>> # mt.test()
 
     """
-    return pytest.main(['-v', '--pyargs',
-                        'micromagnetictests', '-l'])  # pragma: no cover
+    return pytest.main(
+        ["-v", "--pyargs", "micromagnetictests", "-l"]
+    )  # pragma: no cover

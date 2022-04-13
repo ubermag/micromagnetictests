@@ -27,7 +27,7 @@ class TestTimeDriver:
         self.m = df.Field(self.mesh, dim=3, value=(0, 0.1, 1), norm=self.Ms)
 
     def test_noevolver_nodriver(self):
-        name = 'timedriver_noevolver_nodriver'
+        name = "timedriver_noevolver_nodriver"
 
         system = mm.System(name=name)
         system.energy = self.energy
@@ -40,19 +40,19 @@ class TestTimeDriver:
         value = system.m(self.mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1
 
-        assert system.table.x == 't'
+        assert system.table.x == "t"
 
         self.calculator.delete(system)
 
     def test_rungekutta_evolver_nodriver(self):
-        name = 'timedriver_rungekutta_evolver_nodriver'
+        name = "timedriver_rungekutta_evolver_nodriver"
 
         system = mm.System(name=name)
         system.energy = self.energy
         system.dynamics = self.precession + self.damping
         system.m = self.m
 
-        evolver = self.calculator.RungeKuttaEvolver(method='rkf54s')
+        evolver = self.calculator.RungeKuttaEvolver(method="rkf54s")
         td = self.calculator.TimeDriver(evolver=evolver)
         td.drive(system, t=0.2e-9, n=50)
 
@@ -62,7 +62,7 @@ class TestTimeDriver:
         self.calculator.delete(system)
 
     def test_euler_evolver_nodriver(self):
-        name = 'timedriver_euler_evolver_nodriver'
+        name = "timedriver_euler_evolver_nodriver"
 
         system = mm.System(name=name)
         system.energy = self.energy
@@ -79,7 +79,7 @@ class TestTimeDriver:
         self.calculator.delete(system)
 
     def test_theta_evolver_nodriver(self):
-        name = 'timedriver_theta_evolver_nodriver'
+        name = "timedriver_theta_evolver_nodriver"
 
         system = mm.System(name=name)
         system.energy = self.energy
@@ -96,7 +96,7 @@ class TestTimeDriver:
         self.calculator.delete(system)
 
     def test_therm_heun_evolver_nodriver(self):
-        name = 'timedriver_therm_heun_evolver_nodriver'
+        name = "timedriver_therm_heun_evolver_nodriver"
 
         system = mm.System(name=name)
         system.energy = self.energy
@@ -113,7 +113,7 @@ class TestTimeDriver:
         self.calculator.delete(system)
 
     def test_noevolver_nodriver_finite_temperature(self):
-        name = 'timedriver_therm_heun_evolver_nodriver'
+        name = "timedriver_therm_heun_evolver_nodriver"
 
         system = mm.System(name=name)
         system.energy = self.energy
@@ -126,7 +126,7 @@ class TestTimeDriver:
             td.drive(system, t=0.2e-9, n=50)
 
     def test_noevolver_driver(self):
-        name = 'timedriver_noevolver_driver'
+        name = "timedriver_noevolver_driver"
 
         system = mm.System(name=name)
         system.energy = self.energy
@@ -142,7 +142,7 @@ class TestTimeDriver:
         self.calculator.delete(system)
 
     def test_noprecession(self):
-        name = 'timedriver_noprecession'
+        name = "timedriver_noprecession"
 
         system = mm.System(name=name)
         system.energy = self.energy
@@ -158,7 +158,7 @@ class TestTimeDriver:
         self.calculator.delete(system)
 
     def test_nodamping(self):
-        name = 'timedriver_nodamping'
+        name = "timedriver_nodamping"
 
         system = mm.System(name=name)
         system.energy = self.energy
@@ -174,7 +174,7 @@ class TestTimeDriver:
         self.calculator.delete(system)
 
     def test_output_files(self):
-        name = 'timedriver_output_files'
+        name = "timedriver_output_files"
 
         system = mm.System(name=name)
         system.energy = self.energy
@@ -184,21 +184,21 @@ class TestTimeDriver:
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=50, save=True, overwrite=True)
 
-        dirname = os.path.join(f'{name}', f'drive-{system.drive_number-1}')
+        dirname = os.path.join(f"{name}", f"drive-{system.drive_number-1}")
         assert os.path.exists(dirname)
-        miffilename = os.path.join(dirname, f'{name}.mif')
+        miffilename = os.path.join(dirname, f"{name}.mif")
         assert os.path.isfile(miffilename)
-        omf_files = list(glob.iglob(os.path.join(dirname, '*.omf')))
+        omf_files = list(glob.iglob(os.path.join(dirname, "*.omf")))
         assert len(omf_files) == 51
-        odt_files = list(glob.iglob(os.path.join(dirname, '*.odt')))
+        odt_files = list(glob.iglob(os.path.join(dirname, "*.odt")))
         assert len(odt_files) == 1
-        omffilename = os.path.join(dirname, 'm0.omf')
+        omffilename = os.path.join(dirname, "m0.omf")
         assert omffilename in omf_files
 
         self.calculator.delete(system)
 
     def test_drive_exception(self):
-        name = 'timedriver_exception'
+        name = "timedriver_exception"
 
         system = mm.System(name=name)
         system.energy = self.energy
