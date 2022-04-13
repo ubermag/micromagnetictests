@@ -26,6 +26,6 @@ def get_tests():
     """
     for name, object in inspect.getmembers(mt.calculatortests):
         if inspect.isclass(object) or inspect.isfunction(object):
-            starting_strings = ['__', 'test_', 'Test']
+            starting_strings = ["__", "test_", "Test"]
             if any([name.startswith(s) for s in starting_strings]):
                 yield (name, object)

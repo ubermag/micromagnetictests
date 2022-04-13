@@ -5,14 +5,14 @@ from scipy.optimize import bisect  # This is why scipy is a dependency.
 
 
 def test_stdprob3(calculator):
-    name = 'stdprob3'
+    name = "stdprob3"
 
     # Function for initiaising the flower state.
     def m_init_flower(pos):
-        _, y, z = pos[0]/1e-9, pos[1]/1e-9, pos[2]/1e-9
+        _, y, z = pos[0] / 1e-9, pos[1] / 1e-9, pos[2] / 1e-9
         mx = 0
-        my = 2*z - 1
-        mz = -2*y + 1
+        my = 2 * z - 1
+        mz = -2 * y + 1
         norm_squared = mx**2 + my**2 + mz**2
         if norm_squared <= 0.05:
             return (1, 0, 0)
@@ -21,23 +21,23 @@ def test_stdprob3(calculator):
 
     # Function for initialising the vortex state.
     def m_init_vortex(pos):
-        x, _, _ = pos[0]/1e-9, pos[1]/1e-9, pos[2]/1e-9
+        x, _, _ = pos[0] / 1e-9, pos[1] / 1e-9, pos[2] / 1e-9
         mx = 0
-        my = np.sin(np.pi/2 * (x-0.5))
-        mz = np.cos(np.pi/2 * (x-0.5))
+        my = np.sin(np.pi / 2 * (x - 0.5))
+        mz = np.cos(np.pi / 2 * (x - 0.5))
 
         return (mx, my, mz)
 
     def minimise_system_energy(L, m_init):
         N = 16  # discretisation in one dimension
         cubesize = 100e-9  # cube edge length (m)
-        cellsize = cubesize/N  # discretisation in all three dimensions.
-        lex = cubesize/L  # exchange length.
+        cellsize = cubesize / N  # discretisation in all three dimensions.
+        lex = cubesize / L  # exchange length.
 
         Km = 1e6  # magnetostatic energy density (J/m**3)
-        Ms = np.sqrt(2*Km/mm.consts.mu0)  # magnetisation saturation (A/m)
+        Ms = np.sqrt(2 * Km / mm.consts.mu0)  # magnetisation saturation (A/m)
         A = 0.5 * mm.consts.mu0 * Ms**2 * lex**2  # exchange energy constant
-        K = 0.1*Km  # Uniaxial anisotropy constant
+        K = 0.1 * Km  # Uniaxial anisotropy constant
         u = (0, 0, 1)  # Uniaxial anisotropy easy-axis
 
         p1 = (0, 0, 0)  # Minimum sample coordinate.
@@ -47,8 +47,7 @@ def test_stdprob3(calculator):
         mesh = df.Mesh(region=region, cell=cell)
 
         system = mm.System(name=name)
-        system.energy = (mm.Exchange(A=A) + mm.UniaxialAnisotropy(K=K, u=u) +
-                         mm.Demag())
+        system.energy = mm.Exchange(A=A) + mm.UniaxialAnisotropy(K=K, u=u) + mm.Demag()
         system.m = df.Field(mesh, dim=3, value=m_init, norm=Ms)
 
         md = calculator.MinDriver()
@@ -62,8 +61,8 @@ def test_stdprob3(calculator):
         vortex = minimise_system_energy(L, m_init_vortex)
         flower = minimise_system_energy(L, m_init_flower)
 
-        Evortex = vortex.table.data.tail(1)['E'][0]
-        Eflower = flower.table.data.tail(1)['E'][0]
+        Evortex = vortex.table.data.tail(1)["E"][0]
+        Eflower = flower.table.data.tail(1)["E"][0]
 
         return Evortex - Eflower
 

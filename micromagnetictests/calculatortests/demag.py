@@ -16,7 +16,7 @@ class TestDemag:
         self.mesh = df.Mesh(region=self.region, cell=self.cell)
 
     def test_demag(self):
-        name = 'demag'
+        name = "demag"
 
         Ms = 1e6
 
@@ -33,7 +33,7 @@ class TestDemag:
         self.calculator.delete(system)
 
     def test_demag_asymptotic_radius(self):
-        name = 'demag_asymptotic_radius'
+        name = "demag_asymptotic_radius"
 
         Ms = 1e6
 
@@ -50,7 +50,7 @@ class TestDemag:
         self.calculator.delete(system)
 
     def test_demag_pbc(self):
-        name = 'demag_pbc'
+        name = "demag_pbc"
 
         Ms = 1e6
 
@@ -60,20 +60,20 @@ class TestDemag:
         md = self.calculator.MinDriver()
 
         # 1D pbc
-        mesh = df.Mesh(region=self.region, cell=self.cell, bc='x')
+        mesh = df.Mesh(region=self.region, cell=self.cell, bc="x")
         system.m = df.Field(mesh, dim=3, value=(0, 0, 1), norm=Ms)
 
         md.drive(system)
 
         # 2D pbc
-        mesh = df.Mesh(region=self.region, cell=self.cell, bc='xy')
+        mesh = df.Mesh(region=self.region, cell=self.cell, bc="xy")
         system.m = df.Field(mesh, dim=3, value=(0, 0, 1), norm=Ms)
 
         with pytest.raises(ValueError):
             md.drive(system)
 
         # 3D pbc
-        mesh = df.Mesh(region=self.region, cell=self.cell, bc='xyz')
+        mesh = df.Mesh(region=self.region, cell=self.cell, bc="xyz")
         system.m = df.Field(mesh, dim=3, value=(0, 0, 1), norm=Ms)
 
         with pytest.raises(ValueError):

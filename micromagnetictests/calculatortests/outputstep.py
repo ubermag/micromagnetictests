@@ -5,7 +5,7 @@ import micromagneticmodel as mm
 
 
 def test_outputstep(calculator):
-    name = 'output_step'
+    name = "output_step"
 
     p1 = (0, 0, 0)
     p2 = (5e-9, 5e-9, 5e-9)
@@ -23,7 +23,7 @@ def test_outputstep(calculator):
     md = calculator.MinDriver()
     md.drive(system, output_step=True)
 
-    dirname = os.path.join(name, 'drive-0')
+    dirname = os.path.join(name, "drive-0")
     assert os.path.exists(dirname)
 
     assert len(system.table.data.index) > 1

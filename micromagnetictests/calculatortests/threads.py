@@ -24,7 +24,7 @@ class TestThreads:
         self.m = df.Field(self.mesh, dim=3, value=(0, 0.1, 1), norm=self.Ms)
 
     def test_threads(self):
-        name = 'timedriver_noevolver_nodriver'
+        name = "timedriver_noevolver_nodriver"
 
         system = mm.System(name=name)
         system.energy = self.energy

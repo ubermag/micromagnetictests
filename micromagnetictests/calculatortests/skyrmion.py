@@ -3,7 +3,7 @@ import micromagneticmodel as mm
 
 
 def test_skyrmion(calculator):
-    name = 'skyrmion'
+    name = "skyrmion"
 
     Ms = 1.1e6
     A = 1.6e-11
@@ -18,20 +18,24 @@ def test_skyrmion(calculator):
     mesh = df.Mesh(p1=p1, p2=p2, cell=cell)
 
     system = mm.System(name=name)
-    system.energy = (mm.Exchange(A=A) + mm.DMI(D=D, crystalclass='Cnv_z') +
-                     mm.UniaxialAnisotropy(K=K, u=u) + mm.Demag() +
-                     mm.Zeeman(H=H))
+    system.energy = (
+        mm.Exchange(A=A)
+        + mm.DMI(D=D, crystalclass="Cnv_z")
+        + mm.UniaxialAnisotropy(K=K, u=u)
+        + mm.Demag()
+        + mm.Zeeman(H=H)
+    )
 
     def Ms_fun(pos):
         x, y, z = pos
-        if (x**2 + y**2)**0.5 < 50e-9:
+        if (x**2 + y**2) ** 0.5 < 50e-9:
             return Ms
         else:
             return 0
 
     def m_init(pos):
         x, y, z = pos
-        if (x**2 + y**2)**0.5 < 10e-9:
+        if (x**2 + y**2) ** 0.5 < 10e-9:
             return (0, 0.1, -1)
         else:
             return (0, 0.1, 1)
@@ -43,10 +47,10 @@ def test_skyrmion(calculator):
 
     # Check the magnetisation at the sample centre.
     value = system.m((0, 0, 0))
-    assert value[2]/Ms < -0.97
+    assert value[2] / Ms < -0.97
 
     # Check the magnetisation at the sample edge.
     value = system.m((50e-9, 0, 0))
-    assert value[2]/Ms > 0.5
+    assert value[2] / Ms > 0.5
 
     calculator.delete(system)

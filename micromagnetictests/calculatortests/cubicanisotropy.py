@@ -14,13 +14,13 @@ class TestCubicAnisotropy:
         p2 = (7e-9, 5e-9, 4e-9)
         self.region = df.Region(p1=p1, p2=p2)
         self.cell = (1e-9, 1e-9, 2e-9)
-        self.subregions = {'r1': df.Region(p1=(-7e-9, 0, 0),
-                                           p2=(0, 5e-9, 4e-9)),
-                           'r2': df.Region(p1=(0, 0, 0),
-                                           p2=(7e-9, 5e-9, 4e-9))}
+        self.subregions = {
+            "r1": df.Region(p1=(-7e-9, 0, 0), p2=(0, 5e-9, 4e-9)),
+            "r2": df.Region(p1=(0, 0, 0), p2=(7e-9, 5e-9, 4e-9)),
+        }
 
     def test_scalar_vector_vector(self):
-        name = 'cubicanisotropy_scalar_vector_vector'
+        name = "cubicanisotropy_scalar_vector_vector"
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
 
@@ -53,7 +53,7 @@ class TestCubicAnisotropy:
         self.calculator.delete(system)
 
     def test_field_vector_vector(self):
-        name = 'cubicanisotropy_field_vector_vector'
+        name = "cubicanisotropy_field_vector_vector"
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
 
@@ -77,7 +77,7 @@ class TestCubicAnisotropy:
         md.drive(system)
 
         value = system.m((-2e-9, 1e-9, 1e-9))
-        assert np.linalg.norm(np.cross(value, (0, 0.3*Ms, Ms))) < 1e-3
+        assert np.linalg.norm(np.cross(value, (0, 0.3 * Ms, Ms))) < 1e-3
 
         value = system.m((2e-9, 2e-9, 2e-9))
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
@@ -85,7 +85,7 @@ class TestCubicAnisotropy:
         self.calculator.delete(system)
 
     def test_field_field_field(self):
-        name = 'cubicanisotropy_field_field_field'
+        name = "cubicanisotropy_field_field_field"
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
 
@@ -123,7 +123,7 @@ class TestCubicAnisotropy:
         md.drive(system)
 
         value = system.m((0, 0, 0))
-        assert np.linalg.norm(np.cross(value, (0, 0.3*Ms, Ms))) < 1e-3
+        assert np.linalg.norm(np.cross(value, (0, 0.3 * Ms, Ms))) < 1e-3
 
         value = system.m((3e-9, 2e-9, 2e-9))
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
@@ -134,12 +134,11 @@ class TestCubicAnisotropy:
         self.calculator.delete(system)
 
     def test_dict_vector_vector(self):
-        name = 'cubicanisotropy_dict_vector_vector'
+        name = "cubicanisotropy_dict_vector_vector"
 
-        mesh = df.Mesh(region=self.region, cell=self.cell,
-                       subregions=self.subregions)
+        mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
 
-        K = {'r1': 0, 'r2': 1e5}
+        K = {"r1": 0, "r2": 1e5}
         u1 = (0, 0, 1)
         u2 = (0, 1, 0)
         Ms = 1e6
@@ -152,7 +151,7 @@ class TestCubicAnisotropy:
         md.drive(system)
 
         value = system.m((-2e-9, 1e-9, 1e-9))
-        assert np.linalg.norm(np.cross(value, (0, 0.3*Ms, Ms))) < 1e-3
+        assert np.linalg.norm(np.cross(value, (0, 0.3 * Ms, Ms))) < 1e-3
 
         value = system.m((2e-9, 2e-9, 2e-9))
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3

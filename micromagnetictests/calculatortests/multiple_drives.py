@@ -5,7 +5,7 @@ import micromagneticmodel as mm
 
 
 def test_multiple_drives(calculator):
-    name = 'multiple_drives'
+    name = "multiple_drives"
 
     p1 = (0, 0, 0)
     p2 = (5e-9, 5e-9, 5e-9)
@@ -18,14 +18,13 @@ def test_multiple_drives(calculator):
 
     system = mm.System(name=name)
     system.energy = mm.Exchange(A=A) + mm.Zeeman(H=H)
-    system.dynamics = (mm.Precession(gamma0=mm.consts.gamma0) +
-                       mm.Damping(alpha=1))
+    system.dynamics = mm.Precession(gamma0=mm.consts.gamma0) + mm.Damping(alpha=1)
     system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
 
     md = calculator.MinDriver()
     md.drive(system)
 
-    dirname = os.path.join(name, 'drive-0')
+    dirname = os.path.join(name, "drive-0")
     assert os.path.exists(dirname)
 
     system.energy.zeeman.H = (1e6, 0, 0)
@@ -33,22 +32,22 @@ def test_multiple_drives(calculator):
     td = calculator.TimeDriver()
     td.drive(system, t=100e-12, n=10)
 
-    dirname = os.path.join(name, 'drive-1')
+    dirname = os.path.join(name, "drive-1")
     assert os.path.exists(dirname)
 
     calculator.compute(system.energy.zeeman.energy, system)
 
-    dirname = os.path.join(name, 'compute-0')
+    dirname = os.path.join(name, "compute-0")
     assert os.path.exists(dirname)
 
     td.drive(system, t=100e-12, n=10)
 
-    dirname = os.path.join(name, 'drive-2')
+    dirname = os.path.join(name, "drive-2")
     assert os.path.exists(dirname)
 
     calculator.compute(system.energy.zeeman.effective_field, system)
 
-    dirname = os.path.join(name, 'compute-1')
+    dirname = os.path.join(name, "compute-1")
     assert os.path.exists(dirname)
 
     assert len(os.listdir(name)) == 5

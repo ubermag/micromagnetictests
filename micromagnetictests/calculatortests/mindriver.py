@@ -25,7 +25,7 @@ class TestMinDriver:
         self.m = df.Field(self.mesh, dim=3, value=(0, 1, 0), norm=self.Ms)
 
     def test_noevolver_nodriver(self):
-        name = 'mindriver_noevolver_nodriver'
+        name = "mindriver_noevolver_nodriver"
 
         system = mm.System(name=name)
         system.energy = self.energy
@@ -37,18 +37,18 @@ class TestMinDriver:
         value = system.m(self.mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-3
 
-        assert system.table.x == 'iteration'
+        assert system.table.x == "iteration"
 
         self.calculator.delete(system)
 
     def test_evolver_nodriver(self):
-        name = 'mindriver_evolver_nodriver'
+        name = "mindriver_evolver_nodriver"
 
         system = mm.System(name=name)
         system.energy = self.energy
         system.m = self.m
 
-        evolver = self.calculator.CGEvolver(method='Polak-Ribiere')
+        evolver = self.calculator.CGEvolver(method="Polak-Ribiere")
         md = self.calculator.MinDriver(evolver=evolver)
         md.drive(system)
 
@@ -58,7 +58,7 @@ class TestMinDriver:
         self.calculator.delete(system)
 
     def test_noevolver_driver(self):
-        name = 'mindriver_noevolver_driver'
+        name = "mindriver_noevolver_driver"
 
         system = mm.System(name=name)
         system.energy = self.energy
@@ -73,13 +73,13 @@ class TestMinDriver:
         self.calculator.delete(system)
 
     def test_evolver_driver(self):
-        name = 'mindriver_evolver_driver'
+        name = "mindriver_evolver_driver"
 
         system = mm.System(name=name)
         system.energy = self.energy
         system.m = self.m
 
-        evolver = self.calculator.CGEvolver(method='Polak-Ribiere')
+        evolver = self.calculator.CGEvolver(method="Polak-Ribiere")
         md = self.calculator.MinDriver(evolver=evolver, stopping_mxHxm=0.1)
         md.drive(system)
 
@@ -89,7 +89,7 @@ class TestMinDriver:
         self.calculator.delete(system)
 
     def test_output_files(self):
-        name = 'mindriver_output_files'
+        name = "mindriver_output_files"
 
         system = mm.System(name=name)
         system.energy = self.energy
@@ -98,15 +98,15 @@ class TestMinDriver:
         md = self.calculator.MinDriver()
         md.drive(system, save=True, overwrite=True)
 
-        dirname = os.path.join(f'{name}', f'drive-{system.drive_number-1}')
+        dirname = os.path.join(f"{name}", f"drive-{system.drive_number-1}")
         assert os.path.exists(dirname)
-        miffilename = os.path.join(dirname, f'{name}.mif')
+        miffilename = os.path.join(dirname, f"{name}.mif")
         assert os.path.isfile(miffilename)
-        omf_files = list(glob.iglob(os.path.join(dirname, '*.omf')))
+        omf_files = list(glob.iglob(os.path.join(dirname, "*.omf")))
         assert len(omf_files) == 2
-        odt_files = list(glob.iglob(os.path.join(dirname, '*.odt')))
+        odt_files = list(glob.iglob(os.path.join(dirname, "*.odt")))
         assert len(odt_files) == 1
-        omffilename = os.path.join(dirname, 'm0.omf')
+        omffilename = os.path.join(dirname, "m0.omf")
         assert omffilename in omf_files
 
         self.calculator.delete(system)
