@@ -35,7 +35,7 @@ classifiers = [
 ]
 
 dependencies = [
-    "micromagneticmodel~=0.61.0",
+    "micromagneticmodel>=0.61.1",
     "scipy>=1.5"
 ]
 
