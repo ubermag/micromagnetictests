@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "micromagnetictests"
-version = "0.61.2"
+version = "0.61.3"
 description = "Testing package for computational magnetism tools."
 readme = "README.md"
 requires-python = ">=3.8"
