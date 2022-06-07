@@ -1,3 +1,5 @@
+import shutil
+
 import micromagneticmodel as mm
 import pytest
 
@@ -14,10 +16,10 @@ def test_schedule(calculator, tmp_path):
         # submission system script)
         td.schedule(
             system,
-            "oommf",
+            shutil.which("oommf"),
             "scheduling resources",
             dirname=str(tmp_path),
             t=0.2e-9,
             n=50,
         )
-        assert len(tmp_path.glob("**/job.sh")) == 1
+        assert len(list(tmp_path.glob("**/job.sh"))) == 1
