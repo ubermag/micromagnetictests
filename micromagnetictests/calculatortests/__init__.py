@@ -18,6 +18,7 @@ from .outputformat import test_format
 from .outputstep import test_outputstep
 from .precession import TestPrecession
 from .rkky import TestRKKY
+from .schedule import test_schedule
 from .skyrmion import test_skyrmion
 from .slonczewski import TestSlonczewski
 from .stdprob3 import test_stdprob3
