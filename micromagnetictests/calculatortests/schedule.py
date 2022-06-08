@@ -1,25 +1,20 @@
-import shutil
-
 import micromagneticmodel as mm
-import pytest
 
 
 def test_schedule(calculator, tmp_path):
     system = mm.examples.macrospin()
 
     td = calculator.TimeDriver()
-    with pytest.raises(RuntimeError):
-        # We have no test system with a job scheduling system such as slurm.
-        # Instead, we use oommf to test that the mif file creation and the
-        # subprocess call to schedule the run work as expected.
-        # OOMMF will raise an error because we call it with a "command" job.sh (the
-        # submission system script)
-        td.schedule(
-            system,
-            shutil.which("oommf"),
-            "scheduling resources",
-            dirname=str(tmp_path),
-            t=0.2e-9,
-            n=50,
-        )
-        assert len(list(tmp_path.glob("**/job.sh"))) == 1
+    # We have no test system with a job scheduling system such as slurm.
+    # Instead, we use dir to test that the mif file and job script creation and the
+    # subprocess call to schedule the run work as expected.
+    # `dir` is expected to work on all operating systems.
+    td.schedule(
+        system,
+        "dir",
+        "scheduling resources",
+        dirname=str(tmp_path),
+        t=0.2e-9,
+        n=50,
+    )
+    assert len(list(tmp_path.glob("**/job.sh"))) == 1
