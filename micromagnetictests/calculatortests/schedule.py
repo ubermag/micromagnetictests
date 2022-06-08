@@ -3,12 +3,11 @@ import sys
 import micromagneticmodel as mm
 import pytest
 
-pytest.mark.skipif(
+
+@pytest.mark.skipif(
     sys.platform == "win32",
     reason="Calling the oommf executable without a full path does not properly work.",
 )
-
-
 def test_schedule(calculator, tmp_path):
     system = mm.examples.macrospin()
 
