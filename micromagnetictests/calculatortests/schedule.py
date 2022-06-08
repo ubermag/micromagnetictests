@@ -1,5 +1,12 @@
+import sys
+
 import micromagneticmodel as mm
 import pytest
+
+pytest.mark.skipif(
+    sys.platform == "win32",
+    reason="Calling the oommf executable without a full path does not properly work.",
+)
 
 
 def test_schedule(calculator, tmp_path):
@@ -20,4 +27,4 @@ def test_schedule(calculator, tmp_path):
             t=0.2e-9,
             n=50,
         )
-        assert len(tmp_path.glob("**/job.sh")) == 1
+        assert len(list(tmp_path.glob("**/job.sh"))) == 1
