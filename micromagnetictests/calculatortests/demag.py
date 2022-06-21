@@ -49,7 +49,7 @@ class TestDemag:
 
         self.calculator.delete(system)
 
-    def test_demag_pbc(self):
+    def test_demag_1_pbc(self):
         name = "demag_pbc"
 
         Ms = 1e6
@@ -64,19 +64,48 @@ class TestDemag:
         system.m = df.Field(mesh, dim=3, value=(0, 0, 1), norm=Ms)
 
         md.drive(system)
+        self.calculator.delete(system)
+
+    def test_demag_2_pbc(self):
+        name = "demag_pbc"
+
+        Ms = 1e6
+
+        system = mm.System(name=name)
+        system.energy = mm.Demag()
+
+        md = self.calculator.MinDriver()
 
         # 2D pbc
         mesh = df.Mesh(region=self.region, cell=self.cell, bc="xy")
         system.m = df.Field(mesh, dim=3, value=(0, 0, 1), norm=Ms)
 
-        with pytest.raises(ValueError):
+        if not hasattr(self.calculator, "RelaxDriver"):
+            with pytest.raises(ValueError):
+                md.drive(system)
+        else:
             md.drive(system)
+
+        self.calculator.delete(system)
+
+    def test_demag_3_pbc(self):
+        name = "demag_pbc"
+
+        Ms = 1e6
+
+        system = mm.System(name=name)
+        system.energy = mm.Demag()
+
+        md = self.calculator.MinDriver()
 
         # 3D pbc
         mesh = df.Mesh(region=self.region, cell=self.cell, bc="xyz")
         system.m = df.Field(mesh, dim=3, value=(0, 0, 1), norm=Ms)
 
-        with pytest.raises(ValueError):
+        if not hasattr(self.calculator, "RelaxDriver"):
+            with pytest.raises(ValueError):
+                md.drive(system)
+        else:
             md.drive(system)
 
         self.calculator.delete(system)

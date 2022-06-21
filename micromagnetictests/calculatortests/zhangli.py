@@ -44,6 +44,31 @@ class TestZhangLi:
         system.dynamics -= mm.ZhangLi(u=u, beta=beta)
         td.drive(system, t=0.2e-9, n=50)
 
+    def test_time_scalar_scalar(self):
+        name = "zhangli_scalar_scalar"
+
+        u = 0
+        beta = 0.5
+        H = (0, 0, 1e5)
+        Ms = 1e6
+
+        mesh = df.Mesh(region=self.region, cell=self.cell)
+
+        system = mm.System(name=name)
+        system.energy = mm.Zeeman(H=H)
+        system.dynamics = mm.ZhangLi(u=u, beta=beta)
+        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+
+        td = self.calculator.TimeDriver()
+        td.drive(system, t=0.2e-9, n=50)
+
+        # u is zero, nothing should change.
+        value = system.m(mesh.region.random_point())
+        assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
+
+        system.dynamics -= mm.ZhangLi(u=u, beta=beta)
+        td.drive(system, t=0.2e-9, n=50)
+
         # Check if it runs.
 
         # time-dependence - function

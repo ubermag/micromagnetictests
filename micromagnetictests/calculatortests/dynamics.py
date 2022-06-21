@@ -39,7 +39,7 @@ class TestDynamics:
 
         # Alpha is zero, nothing should change.
         value = system.m(mesh.region.random_point())
-        assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+        assert np.linalg.norm(np.subtract(np.divide(value, Ms), (0, 0, 1))) < 1e-5
 
         self.calculator.delete(system)
 
@@ -67,7 +67,7 @@ class TestDynamics:
 
         # alpha!=0 region
         value = system.m((1e-9, 4e-9, 3e-9))
-        assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+        assert np.linalg.norm(np.subtract(np.divide(value, Ms), (0, 0, 1))) < 1e-5
 
         self.calculator.delete(system)
 
@@ -109,6 +109,6 @@ class TestDynamics:
 
         # alpha!=0 and gamma!=0 region
         value = system.m((1e-9, 4e-9, 3e-9))
-        assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+        assert np.linalg.norm(np.subtract(np.divide(value, Ms), (0, 0, 1))) < 1e-5
 
         self.calculator.delete(system)

@@ -50,7 +50,11 @@ def test_stdprob3(calculator):
         system.energy = mm.Exchange(A=A) + mm.UniaxialAnisotropy(K=K, u=u) + mm.Demag()
         system.m = df.Field(mesh, dim=3, value=m_init, norm=Ms)
 
-        md = calculator.MinDriver()
+        if hasattr(calculator, "RelaxDriver"):
+            system.dynamics = mm.Damping(alpha=0.5)
+            md = calculator.RelaxDriver()
+        else:
+            md = calculator.MinDriver()
         md.drive(system)
 
         calculator.delete(system)

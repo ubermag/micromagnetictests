@@ -36,7 +36,15 @@ class TestDMI:
         mesh = df.Mesh(region=self.region, cell=self.cell)
         system.m = df.Field(mesh, dim=3, value=self.random_m, norm=Ms)
 
-        md = self.calculator.MinDriver()
+        if hasattr(self.calculator, "RelaxDriver"):
+            system.dynamics = mm.Damping(alpha=0.5)
+            md = self.calculator.RelaxDriver()
+            with pytest.raises(RuntimeError):
+                md.drive(system)
+            system.energy += mm.Exchange(A=1e-21)
+        else:
+            md = self.calculator.MinDriver()
+
         md.drive(system)
 
         # There are 4N cells in the mesh. Because of that the average should be
@@ -57,7 +65,14 @@ class TestDMI:
         mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
         system.m = df.Field(mesh, dim=3, value=self.random_m, norm=Ms)
 
-        md = self.calculator.MinDriver()
+        if hasattr(self.calculator, "RelaxDriver"):
+            system.dynamics = mm.Damping(alpha=0.5)
+            md = self.calculator.RelaxDriver()
+            with pytest.raises(RuntimeError):
+                md.drive(system)
+            system.energy += mm.Exchange(A=1e-21)
+        else:
+            md = self.calculator.MinDriver()
         md.drive(system)
 
         assert np.linalg.norm(system.m["r1"].average) > 1

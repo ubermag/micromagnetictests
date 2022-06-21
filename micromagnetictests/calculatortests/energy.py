@@ -32,7 +32,11 @@ class TestEnergy:
         system.energy = mm.Exchange(A=A) + mm.Zeeman(H=H)
         system.m = df.Field(mesh, dim=3, value=(0, 1, 0), norm=Ms)
 
-        md = self.calculator.MinDriver()
+        if hasattr(self.calculator, "RelaxDriver"):
+            system.dynamics = mm.Damping(alpha=0.5)
+            md = self.calculator.RelaxDriver()
+        else:
+            md = self.calculator.MinDriver()
         md.drive(system)
 
         value = system.m(mesh.region.random_point())
@@ -54,7 +58,11 @@ class TestEnergy:
         system.energy = mm.Exchange(A=A) + mm.UniaxialAnisotropy(K=K, u=u)
         system.m = df.Field(mesh, dim=3, value=(0.5, 1, 0), norm=Ms)
 
-        md = self.calculator.MinDriver()
+        if hasattr(self.calculator, "RelaxDriver"):
+            system.dynamics = mm.Damping(alpha=0.5)
+            md = self.calculator.RelaxDriver()
+        else:
+            md = self.calculator.MinDriver()
         md.drive(system)
 
         value = system.m(mesh.region.random_point())

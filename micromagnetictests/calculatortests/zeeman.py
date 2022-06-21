@@ -39,6 +39,26 @@ class TestZeeman:
         value = system.m(mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
+    def test_time_vector(self):
+        name = "zeeman_vector"
+
+        H = (0, 0, 1e6)
+        Ms = 1e6
+
+        system = mm.System(name=name)
+
+        # time-independent
+        system.energy = mm.Zeeman(H=H)
+
+        mesh = df.Mesh(region=self.region, cell=self.cell)
+        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+
+        md = self.calculator.MinDriver()
+        md.drive(system)
+
+        value = system.m(mesh.region.random_point())
+        assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+
         # time-dependent - sin
         system.energy = mm.Zeeman(H=H, func="sin", f=1e9, t0=1e-12)
 
@@ -162,6 +182,25 @@ class TestZeeman:
 
         assert np.linalg.norm(np.subtract(system.m["r2"].average, (0, 0, Ms))) < 1
 
+    def test_time_dict(self):
+        name = "zeeman_dict"
+
+        H = {"r1": (1e5, 0, 0), "r2": (0, 0, 1e5)}
+        Ms = 1e6
+
+        system = mm.System(name=name)
+        system.energy = mm.Zeeman(H=H)
+
+        mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
+        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+
+        md = self.calculator.MinDriver()
+        md.drive(system)
+
+        assert np.linalg.norm(np.subtract(system.m["r1"].average, (Ms, 0, 0))) < 1
+
+        assert np.linalg.norm(np.subtract(system.m["r2"].average, (0, 0, Ms))) < 1
+
         # time-dependent - sin
         system.energy = mm.Zeeman(H=H, func="sin", f=1e9, t0=1e-12)
 
@@ -200,6 +239,34 @@ class TestZeeman:
         self.calculator.delete(system)
 
     def test_field(self):
+        name = "zeeman_field"
+
+        def value_fun(pos):
+            x, y, z = pos
+            if x <= 0:
+                return (1e6, 0, 0)
+            else:
+                return (0, 0, 1e6)
+
+        mesh = df.Mesh(region=self.region, cell=self.cell)
+
+        H = df.Field(mesh, dim=3, value=value_fun)
+        Ms = 1e6
+
+        system = mm.System(name=name)
+        system.energy = mm.Zeeman(H=H)
+        system.m = df.Field(mesh, dim=3, value=(0, 1, 0), norm=Ms)
+
+        md = self.calculator.MinDriver()
+        md.drive(system)
+
+        value = system.m((-2e-9, -2e-9, -2e-9))
+        assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1e-3
+
+        value = system.m((2e-9, 2e-9, 2e-9))
+        assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+
+    def test_time_field(self):
         name = "zeeman_field"
 
         def value_fun(pos):

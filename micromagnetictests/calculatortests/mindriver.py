@@ -35,9 +35,9 @@ class TestMinDriver:
         md.drive(system)
 
         value = system.m(self.mesh.region.random_point())
-        assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-3
+        assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-2
 
-        assert system.table.x == "iteration"
+        assert system.table.x == md._x
 
         self.calculator.delete(system)
 
@@ -100,14 +100,23 @@ class TestMinDriver:
 
         dirname = os.path.join(f"{name}", f"drive-{system.drive_number-1}")
         assert os.path.exists(dirname)
-        miffilename = os.path.join(dirname, f"{name}.mif")
-        assert os.path.isfile(miffilename)
-        omf_files = list(glob.iglob(os.path.join(dirname, "*.omf")))
-        assert len(omf_files) == 2
-        odt_files = list(glob.iglob(os.path.join(dirname, "*.odt")))
-        assert len(odt_files) == 1
-        omffilename = os.path.join(dirname, "m0.omf")
-        assert omffilename in omf_files
+        if os.path.exists(os.path.join(dirname, f'{name}.out')):
+            mumax3_path = os.path.join(dirname, f'{name}.out')
+            mx3filename = os.path.join(dirname, f"{name}.mx3")
+            assert os.path.isfile(mx3filename)
+            omffilename = os.path.join(dirname, "m0.omf")
+            assert os.path.isfile(omffilename)
+            omf_files = list(glob.iglob(os.path.join(mumax3_path, "*.ovf")))
+            assert len(omf_files) == 1
+        else:
+            miffilename = os.path.join(dirname, f"{name}.mif")
+            assert os.path.isfile(miffilename)
+            omf_files = list(glob.iglob(os.path.join(dirname, "*.omf")))
+            assert len(omf_files) == 2
+            odt_files = list(glob.iglob(os.path.join(dirname, "*.odt")))
+            assert len(odt_files) == 1
+            omffilename = os.path.join(dirname, "m0.omf")
+            assert omffilename in omf_files
 
         self.calculator.delete(system)
 
