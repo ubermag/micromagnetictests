@@ -120,3 +120,48 @@ class TestDMI:
             assert np.linalg.norm(system.m.average) < 1
 
         self.calculator.delete(system)
+
+    def test_crystalclass_init(self):
+        name = "dmi_crystalclass"
+
+        D = 1e-3
+        Ms = 1e6
+
+        mumax3_cc = ["Cnv_z", "T", "O", "Cnv"]
+
+        for crystalclass in [
+            "Cnv_x",
+            "Cnv_y",
+            "Cnv_z",
+            "T",
+            "O",
+            "D2d_x",
+            "D2d_y",
+            "D2d_z",
+            "Cnv",
+            "D2d",  # legacy crystalclass names
+        ]:
+            system = mm.System(name=name)
+            system.energy = mm.DMI(D=D, crystalclass=crystalclass)
+
+            if crystalclass.endswith(("x", "y")):
+                mesh = df.Mesh(
+                    p1=(0, 0, -100e-9), p2=(1e-9, 1e-9, 100e-9), cell=self.cell
+                )
+            else:
+                mesh = df.Mesh(region=self.region, cell=self.cell)
+
+            system.m = df.Field(mesh, dim=3, value=self.random_m, norm=Ms)
+
+            md = self.calculator.MinDriver()
+            if hasattr(self.calculator, "RelaxDriver"):
+                system.energy += mm.Exchange(A=1e-21)
+                if crystalclass not in mumax3_cc:
+                    with pytest.raises(ValueError):
+                        md.drive(system)
+                else:
+                    md.drive(system)
+            else:
+                md.drive(system)
+
+        self.calculator.delete(system)
