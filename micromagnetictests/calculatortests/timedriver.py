@@ -186,8 +186,8 @@ class TestTimeDriver:
 
         dirname = os.path.join(f"{name}", f"drive-{system.drive_number-1}")
         assert os.path.exists(dirname)
-        if os.path.exists(os.path.join(dirname, f'{name}.out')):
-            mumax3_path = os.path.join(dirname, f'{name}.out')
+        if os.path.exists(os.path.join(dirname, f"{name}.out")):
+            mumax3_path = os.path.join(dirname, f"{name}.out")
             mx3filename = os.path.join(dirname, f"{name}.mx3")
             assert os.path.isfile(mx3filename)
             omffilename = os.path.join(dirname, "m0.omf")
