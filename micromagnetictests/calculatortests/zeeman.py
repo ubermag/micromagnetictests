@@ -178,9 +178,9 @@ class TestZeeman:
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        assert np.linalg.norm(np.subtract(system.m["r1"].average, (Ms, 0, 0))) < 1
+        assert np.linalg.norm(np.subtract(system.m["r1"].mean(), (Ms, 0, 0))) < 1
 
-        assert np.linalg.norm(np.subtract(system.m["r2"].average, (0, 0, Ms))) < 1
+        assert np.linalg.norm(np.subtract(system.m["r2"].mean(), (0, 0, Ms))) < 1
 
     def test_time_dict(self):
         name = "zeeman_dict"
@@ -197,9 +197,9 @@ class TestZeeman:
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        assert np.linalg.norm(np.subtract(system.m["r1"].average, (Ms, 0, 0))) < 1
+        assert np.linalg.norm(np.subtract(system.m["r1"].mean(), (Ms, 0, 0))) < 1
 
-        assert np.linalg.norm(np.subtract(system.m["r2"].average, (0, 0, Ms))) < 1
+        assert np.linalg.norm(np.subtract(system.m["r2"].mean(), (0, 0, Ms))) < 1
 
         # time-dependent - sin
         system.energy = mm.Zeeman(H=H, func="sin", f=1e9, t0=1e-12)

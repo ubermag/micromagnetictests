@@ -49,7 +49,7 @@ class TestDMI:
 
         # There are 4N cells in the mesh. Because of that the average should be
         # 0.
-        assert np.linalg.norm(system.m.average) < 1
+        assert np.linalg.norm(system.m.mean()) < 1
 
         self.calculator.delete(system)
 
@@ -75,10 +75,10 @@ class TestDMI:
             md = self.calculator.MinDriver()
         md.drive(system)
 
-        assert np.linalg.norm(system.m["r1"].average) > 1
+        assert np.linalg.norm(system.m["r1"].mean()) > 1
         # There are 4N cells in the region with D!=0. Because of that
         # the average should be 0.
-        assert np.linalg.norm(system.m["r2"].average) < 1
+        assert np.linalg.norm(system.m["r2"].mean()) < 1
 
         self.calculator.delete(system)
 
@@ -117,7 +117,7 @@ class TestDMI:
 
             # There are 4N cells in the mesh. Because of that the
             # average should be 0.
-            assert np.linalg.norm(system.m.average) < 1
+            assert np.linalg.norm(system.m.mean()) < 1
 
         self.calculator.delete(system)
 

@@ -41,7 +41,7 @@ class TestExchange:
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        assert abs(np.linalg.norm(system.m.average) - Ms) < 1
+        assert abs(np.linalg.norm(system.m.mean()) - Ms) < 1
 
         self.calculator.delete(system)
 
@@ -61,15 +61,15 @@ class TestExchange:
         md.drive(system)
 
         # r1
-        assert abs(np.linalg.norm(system.m["r1"].average) - Ms) < 1
+        assert abs(np.linalg.norm(system.m["r1"].mean()) - Ms) < 1
         # r2
-        assert abs(np.linalg.norm(system.m["r2"].average) - Ms) < 1
+        assert abs(np.linalg.norm(system.m["r2"].mean()) - Ms) < 1
 
         assert (
             abs(
                 np.dot(
-                    system.m["r1"].orientation.average,
-                    system.m["r2"].orientation.average,
+                    system.m["r1"].orientation.mean(),
+                    system.m["r2"].orientation.mean(),
                 )
                 - (-1)
             )
@@ -100,6 +100,6 @@ class TestExchange:
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        assert abs(np.linalg.norm(system.m.average) - Ms) < 1
+        assert abs(np.linalg.norm(system.m.mean()) - Ms) < 1
 
         self.calculator.delete(system)

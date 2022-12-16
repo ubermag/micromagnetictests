@@ -34,8 +34,8 @@ class TestFixedSubregions:
         md = self.calculator.MinDriver()
         md.drive(system, fixed_subregions=["r1"])
 
-        assert np.linalg.norm(np.subtract(system.m["r1"].average, (Ms, 0, 0))) < 1
+        assert np.linalg.norm(np.subtract(system.m["r1"].mean(), (Ms, 0, 0))) < 1
 
-        assert np.linalg.norm(np.subtract(system.m["r2"].average, (0, 0, Ms))) < 1
+        assert np.linalg.norm(np.subtract(system.m["r2"].mean(), (0, 0, Ms))) < 1
 
         self.calculator.delete(system)
