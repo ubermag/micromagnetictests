@@ -36,7 +36,7 @@ class TestExchange:
         system.energy = mm.Exchange(A=A)
 
         mesh = df.Mesh(region=self.region, n=self.n)
-        system.m = df.Field(mesh, dim=3, value=self.m_init, norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=self.m_init, norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -55,7 +55,7 @@ class TestExchange:
         system.energy = mm.Exchange(A=A)
 
         mesh = df.Mesh(region=self.region, n=self.n, subregions=self.subregions)
-        system.m = df.Field(mesh, dim=3, value=self.m_init, norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=self.m_init, norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -89,13 +89,13 @@ class TestExchange:
                 return 1e-12
 
         mesh = df.Mesh(region=self.region, n=self.n)
-        A = df.Field(mesh, dim=1, value=A_fun)
+        A = df.Field(mesh, nvdim=1, value=A_fun)
         Ms = 1e6
 
         system = mm.System(name=name)
         system.energy = mm.Exchange(A=A)
 
-        system.m = df.Field(mesh, dim=3, value=self.m_init, norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=self.m_init, norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)

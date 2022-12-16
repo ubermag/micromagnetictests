@@ -22,7 +22,7 @@ def test_info_file(calculator):
     system = mm.System(name=name)
     system.energy = mm.Exchange(A=A) + mm.Zeeman(H=H)
     system.dynamics = mm.Precession(gamma0=gamma0) + mm.Damping(alpha=alpha)
-    system.m = df.Field(mesh, dim=3, value=(0.0, 0.25, 0.1), norm=Ms)
+    system.m = df.Field(mesh, nvdim=3, value=(0.0, 0.25, 0.1), norm=Ms)
 
     # First (0) drive
     td = calculator.TimeDriver()

@@ -19,7 +19,7 @@ class TestHysteresisDriver:
         region = df.Region(p1=p1, p2=p2)
         self.mesh = df.Mesh(region=region, n=n)
         self.energy = mm.Exchange(A=A) + mm.Zeeman(H=H)
-        self.m = df.Field(self.mesh, dim=3, value=(0, 1, 0), norm=self.Ms)
+        self.m = df.Field(self.mesh, nvdim=3, value=(0, 1, 0), norm=self.Ms)
 
     def test_noevolver_nodriver(self):
         name = "hysteresisdriver_noevolver_nodriver"

@@ -30,7 +30,7 @@ class TestEnergy:
 
         system = mm.System(name=name)
         system.energy = mm.Exchange(A=A) + mm.Zeeman(H=H)
-        system.m = df.Field(mesh, dim=3, value=(0, 1, 0), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 1, 0), norm=Ms)
 
         if hasattr(self.calculator, "RelaxDriver"):
             system.dynamics = mm.Damping(alpha=0.5)
@@ -56,7 +56,7 @@ class TestEnergy:
 
         system = mm.System(name=name)
         system.energy = mm.Exchange(A=A) + mm.UniaxialAnisotropy(K=K, u=u)
-        system.m = df.Field(mesh, dim=3, value=(0.5, 1, 0), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0.5, 1, 0), norm=Ms)
 
         if hasattr(self.calculator, "RelaxDriver"):
             system.dynamics = mm.Damping(alpha=0.5)
@@ -83,7 +83,7 @@ class TestEnergy:
 
         system = mm.System(name=name)
         system.energy = mm.Exchange(A=A) + mm.CubicAnisotropy(K=K, u1=u1, u2=u2)
-        system.m = df.Field(mesh, dim=3, value=(1, 0.3, 0), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 0.3, 0), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -102,14 +102,14 @@ class TestEnergy:
         # magnetisation uniform.
         A = {"r1": 1e-12, "r2": 3e-12, "r1:r2": 2e-12}
         D = {"r1": 1e-9, "r2": 0, "r1:r2": 5e-9}
-        H = df.Field(mesh, dim=3, value=(1e10, 0, 0))
+        H = df.Field(mesh, nvdim=3, value=(1e10, 0, 0))
         Ms = 1e6
 
         system = mm.System(name=name)
         system.energy = (
             mm.Exchange(A=A) + mm.DMI(D=D, crystalclass="Cnv_z") + mm.Zeeman(H=H)
         )
-        system.m = df.Field(mesh, dim=3, value=(1, 0.3, 0), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 0.3, 0), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -128,7 +128,7 @@ class TestEnergy:
         # magnetisation uniform.
         A = {"r1": 1e-12, "r2": 3e-12, "r1:r2": 2e-12}
         D = {"r1": 1e-9, "r2": 0, "r1:r2": 5e-9}  # Very weak DMI
-        H = df.Field(mesh, dim=3, value=(1e12, 0, 0))
+        H = df.Field(mesh, nvdim=3, value=(1e12, 0, 0))
         K = 1e6
         u = (1, 0, 0)
         Ms = 1e5
@@ -141,7 +141,7 @@ class TestEnergy:
             + mm.Zeeman(H=H)
             + mm.Demag()
         )
-        system.m = df.Field(mesh, dim=3, value=(1, 0.3, 0), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 0.3, 0), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -163,15 +163,15 @@ class TestEnergy:
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
 
-        H1 = df.Field(mesh, dim=3, value=value_fun)
-        H2 = df.Field(mesh, dim=3, value=(0, 1e6, 0))
+        H1 = df.Field(mesh, nvdim=3, value=value_fun)
+        H2 = df.Field(mesh, nvdim=3, value=(0, 1e6, 0))
         Ms = 1e6
 
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H1, name="zeeman1") + mm.Zeeman(
             H=H2, name="zeeman2"
         )
-        system.m = df.Field(mesh, dim=3, value=(0, 1, 0), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 1, 0), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)

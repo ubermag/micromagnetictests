@@ -39,7 +39,7 @@ class TestCubicAnisotropy:
             else:
                 return (0, 1, 0.2)
 
-        system.m = df.Field(mesh, dim=3, value=m_fun, norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=m_fun, norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -64,14 +64,14 @@ class TestCubicAnisotropy:
             else:
                 return 1e5
 
-        K = df.Field(mesh, dim=1, value=K_fun)
+        K = df.Field(mesh, nvdim=1, value=K_fun)
         u1 = (0, 0, 1)
         u2 = (0, 1, 0)
         Ms = 1e6
 
         system = mm.System(name=name)
         system.energy = mm.CubicAnisotropy(K=K, u1=u1, u2=u2)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.3, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.3, 1), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -110,14 +110,14 @@ class TestCubicAnisotropy:
             else:
                 return (0, 1, 0)
 
-        K = df.Field(mesh, dim=1, value=K_fun)
-        u1 = df.Field(mesh, dim=3, value=u1_fun)
-        u2 = df.Field(mesh, dim=3, value=u2_fun)
+        K = df.Field(mesh, nvdim=1, value=K_fun)
+        u1 = df.Field(mesh, nvdim=3, value=u1_fun)
+        u2 = df.Field(mesh, nvdim=3, value=u2_fun)
         Ms = 1e6
 
         system = mm.System(name=name)
         system.energy = mm.CubicAnisotropy(K=K, u1=u1, u2=u2)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.3, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.3, 1), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -145,7 +145,7 @@ class TestCubicAnisotropy:
 
         system = mm.System(name=name)
         system.energy = mm.CubicAnisotropy(K=K, u1=u1, u2=u2)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.3, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.3, 1), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)

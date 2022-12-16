@@ -21,7 +21,7 @@ class TestThreads:
         self.energy = mm.Exchange(A=A) + mm.Zeeman(H=H)
         self.precession = mm.Precession(gamma0=mm.consts.gamma0)
         self.damping = mm.Damping(alpha=1)
-        self.m = df.Field(self.mesh, dim=3, value=(0, 0.1, 1), norm=self.Ms)
+        self.m = df.Field(self.mesh, nvdim=3, value=(0, 0.1, 1), norm=self.Ms)
 
     def test_threads(self):
         name = "timedriver_noevolver_nodriver"

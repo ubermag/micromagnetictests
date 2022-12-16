@@ -34,7 +34,7 @@ class TestDMI:
         system.energy = mm.DMI(D=D, crystalclass="Cnv_z")
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
-        system.m = df.Field(mesh, dim=3, value=self.random_m, norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=self.random_m, norm=Ms)
 
         if hasattr(self.calculator, "RelaxDriver"):
             system.dynamics = mm.Damping(alpha=0.5)
@@ -63,7 +63,7 @@ class TestDMI:
         system.energy = mm.DMI(D=D, crystalclass="Cnv_z")
 
         mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
-        system.m = df.Field(mesh, dim=3, value=self.random_m, norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=self.random_m, norm=Ms)
 
         if hasattr(self.calculator, "RelaxDriver"):
             system.dynamics = mm.Damping(alpha=0.5)
@@ -110,7 +110,7 @@ class TestDMI:
             else:
                 mesh = df.Mesh(region=self.region, cell=self.cell)
 
-            system.m = df.Field(mesh, dim=3, value=self.random_m, norm=Ms)
+            system.m = df.Field(mesh, nvdim=3, value=self.random_m, norm=Ms)
 
             md = self.calculator.MinDriver()
             md.drive(system)
@@ -151,7 +151,7 @@ class TestDMI:
             else:
                 mesh = df.Mesh(region=self.region, cell=self.cell)
 
-            system.m = df.Field(mesh, dim=3, value=self.random_m, norm=Ms)
+            system.m = df.Field(mesh, nvdim=3, value=self.random_m, norm=Ms)
 
             md = self.calculator.MinDriver()
             if hasattr(self.calculator, "RelaxDriver"):

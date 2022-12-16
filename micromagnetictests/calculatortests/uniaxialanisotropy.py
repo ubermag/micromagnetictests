@@ -30,7 +30,7 @@ class TestUniaxialAnisotropy:
         system.energy = mm.UniaxialAnisotropy(K=K, u=u)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.3, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.3, 1), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -52,13 +52,13 @@ class TestUniaxialAnisotropy:
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
 
-        K = df.Field(mesh, dim=1, value=value_fun)
+        K = df.Field(mesh, nvdim=1, value=value_fun)
         u = (0, 0, 1)
         Ms = 1e6
 
         system = mm.System(name=name)
         system.energy = mm.UniaxialAnisotropy(K=K, u=u)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.3, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.3, 1), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -84,12 +84,12 @@ class TestUniaxialAnisotropy:
         mesh = df.Mesh(region=self.region, cell=self.cell)
 
         K = 1e5
-        u = df.Field(mesh, dim=3, value=value_fun)
+        u = df.Field(mesh, nvdim=3, value=value_fun)
         Ms = 1e6
 
         system = mm.System(name=name)
         system.energy = mm.UniaxialAnisotropy(K=K, u=u)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 0), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 0), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -121,13 +121,13 @@ class TestUniaxialAnisotropy:
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
 
-        K = df.Field(mesh, dim=1, value=K_fun)
-        u = df.Field(mesh, dim=3, value=u_fun)
+        K = df.Field(mesh, nvdim=1, value=K_fun)
+        u = df.Field(mesh, nvdim=3, value=u_fun)
         Ms = 1e6
 
         system = mm.System(name=name)
         system.energy = mm.UniaxialAnisotropy(K=K, u=u)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 0), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 0), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -153,7 +153,7 @@ class TestUniaxialAnisotropy:
 
         system = mm.System(name=name)
         system.energy = mm.UniaxialAnisotropy(K=K, u=u)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.3, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.3, 1), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -185,13 +185,13 @@ class TestUniaxialAnisotropy:
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
 
-        K = df.Field(mesh, dim=1, value=K_fun)
-        u = df.Field(mesh, dim=3, value=u_fun)
+        K = df.Field(mesh, nvdim=1, value=K_fun)
+        u = df.Field(mesh, nvdim=3, value=u_fun)
         Ms = 1e6
 
         system = mm.System(name=name)
         system.energy = mm.UniaxialAnisotropy(K=K, u=u)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 0), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 0), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -219,7 +219,7 @@ class TestUniaxialAnisotropy:
         system.energy = mm.UniaxialAnisotropy(K1=K1, K2=K2, u=u)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.3, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.3, 1), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)

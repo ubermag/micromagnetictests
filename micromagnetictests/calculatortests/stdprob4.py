@@ -22,7 +22,7 @@ def test_stdprob4(calculator):
     alpha = 0.02
     system.dynamics = mm.Precession(gamma0=gamma0) + mm.Damping(alpha=alpha)
 
-    system.m = df.Field(mesh, dim=3, value=(1, 0.25, 0.1), norm=Ms)
+    system.m = df.Field(mesh, nvdim=3, value=(1, 0.25, 0.1), norm=Ms)
 
     md = calculator.MinDriver()
     md.drive(system)  # updates system.m in-place

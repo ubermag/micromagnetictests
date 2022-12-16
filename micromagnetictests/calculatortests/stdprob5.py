@@ -6,8 +6,8 @@ def test_stdprob5(calculator):
     name = "stdprob5"
 
     # Geometry
-    lx = 100e-9  # x dimension of the sample(m)
-    ly = 100e-9  # y dimension of the sample (m)
+    lx = 100e-9  # x nvdimension of the sample(m)
+    ly = 100e-9  # y nvdimension of the sample (m)
     lz = 10e-9  # sample thickness (m)
 
     # Material (permalloy) parameters
@@ -32,7 +32,7 @@ def test_stdprob5(calculator):
         x, y, _ = pos[0] / 1e-9 - 50, pos[1] / 1e-9 - 50, pos[2] / 1e-9
         return (-y, x, 10)
 
-    system.m = df.Field(mesh, dim=3, value=m_vortex, norm=Ms)
+    system.m = df.Field(mesh, nvdim=3, value=m_vortex, norm=Ms)
 
     md = calculator.MinDriver()
     md.drive(system)

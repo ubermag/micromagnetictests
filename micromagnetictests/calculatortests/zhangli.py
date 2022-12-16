@@ -32,7 +32,7 @@ class TestZhangLi:
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
         system.dynamics = mm.ZhangLi(u=u, beta=beta)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=50)
@@ -57,7 +57,7 @@ class TestZhangLi:
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
         system.dynamics = mm.ZhangLi(u=u, beta=beta)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=50)
@@ -76,7 +76,7 @@ class TestZhangLi:
             return np.sin(t * 1e10)
 
         system.dynamics = mm.ZhangLi(u=u, beta=beta, func=time_dep, dt=1e-13)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
 
@@ -96,7 +96,7 @@ class TestZhangLi:
         tcl_strings["script_name"] = "TimeFunction"
 
         system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
 
@@ -119,7 +119,7 @@ class TestZhangLi:
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
         system.dynamics = mm.ZhangLi(u=u, beta=beta)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=50)
@@ -137,7 +137,7 @@ class TestZhangLi:
             return np.sin(t * 1e10)
 
         system.dynamics = mm.ZhangLi(u=u, beta=beta, func=time_dep, dt=1e-13)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
 
@@ -161,7 +161,7 @@ class TestZhangLi:
         tcl_strings["script_name"] = "TimeFunction"
 
         system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
 
@@ -188,14 +188,14 @@ class TestZhangLi:
                 return 1
 
         H = (0, 0, 1e6)
-        u = df.Field(mesh, dim=1, value=u_fun)
+        u = df.Field(mesh, nvdim=1, value=u_fun)
         beta = 0.5
         Ms = 1e6
 
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
         system.dynamics = mm.ZhangLi(u=u, beta=beta)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=50)
@@ -213,7 +213,7 @@ class TestZhangLi:
             return np.sin(t * 1e10)
 
         system.dynamics = mm.ZhangLi(u=u, beta=beta, func=time_dep, dt=1e-13)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
 
@@ -237,7 +237,7 @@ class TestZhangLi:
         tcl_strings["script_name"] = "TimeFunction"
 
         system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
 
