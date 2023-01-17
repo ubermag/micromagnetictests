@@ -36,12 +36,12 @@ class TestExchange:
         system.energy = mm.Exchange(A=A)
 
         mesh = df.Mesh(region=self.region, n=self.n)
-        system.m = df.Field(mesh, dim=3, value=self.m_init, norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=self.m_init, norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        assert abs(np.linalg.norm(system.m.average) - Ms) < 1
+        assert abs(np.linalg.norm(system.m.mean()) - Ms) < 1
 
         self.calculator.delete(system)
 
@@ -55,21 +55,21 @@ class TestExchange:
         system.energy = mm.Exchange(A=A)
 
         mesh = df.Mesh(region=self.region, n=self.n, subregions=self.subregions)
-        system.m = df.Field(mesh, dim=3, value=self.m_init, norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=self.m_init, norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
 
         # r1
-        assert abs(np.linalg.norm(system.m["r1"].average) - Ms) < 1
+        assert abs(np.linalg.norm(system.m["r1"].mean()) - Ms) < 1
         # r2
-        assert abs(np.linalg.norm(system.m["r2"].average) - Ms) < 1
+        assert abs(np.linalg.norm(system.m["r2"].mean()) - Ms) < 1
 
         assert (
             abs(
                 np.dot(
-                    system.m["r1"].orientation.average,
-                    system.m["r2"].orientation.average,
+                    system.m["r1"].orientation.mean(),
+                    system.m["r2"].orientation.mean(),
                 )
                 - (-1)
             )
@@ -89,17 +89,17 @@ class TestExchange:
                 return 1e-12
 
         mesh = df.Mesh(region=self.region, n=self.n)
-        A = df.Field(mesh, dim=1, value=A_fun)
+        A = df.Field(mesh, nvdim=1, value=A_fun)
         Ms = 1e6
 
         system = mm.System(name=name)
         system.energy = mm.Exchange(A=A)
 
-        system.m = df.Field(mesh, dim=3, value=self.m_init, norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=self.m_init, norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        assert abs(np.linalg.norm(system.m.average) - Ms) < 1
+        assert abs(np.linalg.norm(system.m.mean()) - Ms) < 1
 
         self.calculator.delete(system)

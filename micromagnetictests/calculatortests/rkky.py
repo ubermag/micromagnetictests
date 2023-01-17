@@ -38,7 +38,7 @@ class TestRKKY:
         system.energy = mm.RKKY(sigma=sigma, sigma2=sigma2, subregions=["r1", "r3"])
 
         mesh = df.Mesh(region=self.region, n=self.n, subregions=self.subregions)
-        system.m = df.Field(mesh, dim=3, value=self.m_init, norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=self.m_init, norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -51,7 +51,7 @@ class TestRKKY:
         system.energy.rkky.sigma = 1e4
         system.energy.rkky.sigma2 = 0
 
-        system.m = df.Field(mesh, dim=3, value=self.m_init, norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=self.m_init, norm=Ms)
 
         md.drive(system)
 

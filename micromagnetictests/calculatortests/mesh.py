@@ -31,7 +31,7 @@ class TestMesh:
 
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
-        system.m = df.Field(mesh, dim=3, value=(1, 0, 0), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 0, 0), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -51,7 +51,7 @@ class TestMesh:
 
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
-        system.m = df.Field(mesh, dim=3, value=(1, 0, 0), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 0, 0), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -71,7 +71,7 @@ class TestMesh:
 
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
-        system.m = df.Field(mesh, dim=3, value=(1, 0, 0), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 0, 0), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -93,7 +93,7 @@ class TestMesh:
 
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
-        system.m = df.Field(mesh, dim=3, value=(1, 0, 0), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 0, 0), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)

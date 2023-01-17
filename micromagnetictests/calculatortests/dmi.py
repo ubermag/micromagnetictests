@@ -34,7 +34,7 @@ class TestDMI:
         system.energy = mm.DMI(D=D, crystalclass="Cnv_z")
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
-        system.m = df.Field(mesh, dim=3, value=self.random_m, norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=self.random_m, norm=Ms)
 
         if hasattr(self.calculator, "RelaxDriver"):
             system.dynamics = mm.Damping(alpha=0.5)
@@ -49,7 +49,7 @@ class TestDMI:
 
         # There are 4N cells in the mesh. Because of that the average should be
         # 0.
-        assert np.linalg.norm(system.m.average) < 1
+        assert np.linalg.norm(system.m.mean()) < 1
 
         self.calculator.delete(system)
 
@@ -63,7 +63,7 @@ class TestDMI:
         system.energy = mm.DMI(D=D, crystalclass="Cnv_z")
 
         mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
-        system.m = df.Field(mesh, dim=3, value=self.random_m, norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=self.random_m, norm=Ms)
 
         if hasattr(self.calculator, "RelaxDriver"):
             system.dynamics = mm.Damping(alpha=0.5)
@@ -75,10 +75,10 @@ class TestDMI:
             md = self.calculator.MinDriver()
         md.drive(system)
 
-        assert np.linalg.norm(system.m["r1"].average) > 1
+        assert np.linalg.norm(system.m["r1"].mean()) > 1
         # There are 4N cells in the region with D!=0. Because of that
         # the average should be 0.
-        assert np.linalg.norm(system.m["r2"].average) < 1
+        assert np.linalg.norm(system.m["r2"].mean()) < 1
 
         self.calculator.delete(system)
 
@@ -110,14 +110,14 @@ class TestDMI:
             else:
                 mesh = df.Mesh(region=self.region, cell=self.cell)
 
-            system.m = df.Field(mesh, dim=3, value=self.random_m, norm=Ms)
+            system.m = df.Field(mesh, nvdim=3, value=self.random_m, norm=Ms)
 
             md = self.calculator.MinDriver()
             md.drive(system)
 
             # There are 4N cells in the mesh. Because of that the
             # average should be 0.
-            assert np.linalg.norm(system.m.average) < 1
+            assert np.linalg.norm(system.m.mean()) < 1
 
         self.calculator.delete(system)
 
@@ -151,7 +151,7 @@ class TestDMI:
             else:
                 mesh = df.Mesh(region=self.region, cell=self.cell)
 
-            system.m = df.Field(mesh, dim=3, value=self.random_m, norm=Ms)
+            system.m = df.Field(mesh, nvdim=3, value=self.random_m, norm=Ms)
 
             md = self.calculator.MinDriver()
             if hasattr(self.calculator, "RelaxDriver"):

@@ -31,7 +31,7 @@ class TestDamping:
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
         system.dynamics = mm.Damping(alpha=alpha)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=50)
@@ -54,7 +54,7 @@ class TestDamping:
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
         system.dynamics = mm.Damping(alpha=alpha)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=50)
@@ -82,13 +82,13 @@ class TestDamping:
                 return 1
 
         H = (0, 0, 1e6)
-        alpha = df.Field(mesh, dim=1, value=value_fun)
+        alpha = df.Field(mesh, nvdim=1, value=value_fun)
         Ms = 1e6
 
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
         system.dynamics = mm.Damping(alpha=alpha)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=50)

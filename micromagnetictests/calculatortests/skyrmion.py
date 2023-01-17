@@ -40,7 +40,7 @@ def test_skyrmion(calculator):
         else:
             return (0, 0.1, 1)
 
-    system.m = df.Field(mesh, dim=3, value=m_init, norm=Ms_fun)
+    system.m = df.Field(mesh, nvdim=3, value=m_init, norm=Ms_fun)
 
     md = calculator.MinDriver()
     md.drive(system)

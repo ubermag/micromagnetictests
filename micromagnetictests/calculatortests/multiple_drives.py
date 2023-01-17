@@ -19,7 +19,7 @@ def test_multiple_drives(calculator):
     system = mm.System(name=name)
     system.energy = mm.Exchange(A=A) + mm.Zeeman(H=H)
     system.dynamics = mm.Precession(gamma0=mm.consts.gamma0) + mm.Damping(alpha=1)
-    system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+    system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
     md = calculator.MinDriver()
     md.drive(system)
@@ -55,7 +55,7 @@ def test_multiple_drives_compute(calculator):
     system = mm.System(name=name)
     system.energy = mm.Exchange(A=A) + mm.Zeeman(H=H)
     system.dynamics = mm.Precession(gamma0=mm.consts.gamma0) + mm.Damping(alpha=1)
-    system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+    system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
     calculator.compute(system.energy.zeeman.energy, system)
 

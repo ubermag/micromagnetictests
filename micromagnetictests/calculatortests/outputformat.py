@@ -17,7 +17,7 @@ def test_format(calculator):
 
     system = mm.System(name=name)
     system.energy = mm.Exchange(A=A) + mm.Zeeman(H=H)
-    system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+    system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
     md = calculator.MinDriver()
 

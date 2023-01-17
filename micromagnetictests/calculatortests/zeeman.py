@@ -31,7 +31,7 @@ class TestZeeman:
         system.energy = mm.Zeeman(H=H)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -51,7 +51,7 @@ class TestZeeman:
         system.energy = mm.Zeeman(H=H)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -63,7 +63,7 @@ class TestZeeman:
         system.energy = mm.Zeeman(H=H, func="sin", f=1e9, t0=1e-12)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.1e-9, n=20)
@@ -72,7 +72,7 @@ class TestZeeman:
         system.energy = mm.Zeeman(H=H, func="sinc", f=1e9, t0=0)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.1e-9, n=20)
@@ -91,7 +91,7 @@ class TestZeeman:
         system.energy = mm.Zeeman(H=H, func=t_func, dt=1e-13)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.1e-9, n=20)
@@ -156,7 +156,7 @@ class TestZeeman:
         system.energy = mm.Zeeman(H=H, tcl_strings=tcl_strings)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.1e-9, n=20)
@@ -173,14 +173,14 @@ class TestZeeman:
         system.energy = mm.Zeeman(H=H)
 
         mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        assert np.linalg.norm(np.subtract(system.m["r1"].average, (Ms, 0, 0))) < 1
+        assert np.linalg.norm(np.subtract(system.m["r1"].mean(), (Ms, 0, 0))) < 1
 
-        assert np.linalg.norm(np.subtract(system.m["r2"].average, (0, 0, Ms))) < 1
+        assert np.linalg.norm(np.subtract(system.m["r2"].mean(), (0, 0, Ms))) < 1
 
     def test_time_dict(self):
         name = "zeeman_dict"
@@ -192,20 +192,20 @@ class TestZeeman:
         system.energy = mm.Zeeman(H=H)
 
         mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        assert np.linalg.norm(np.subtract(system.m["r1"].average, (Ms, 0, 0))) < 1
+        assert np.linalg.norm(np.subtract(system.m["r1"].mean(), (Ms, 0, 0))) < 1
 
-        assert np.linalg.norm(np.subtract(system.m["r2"].average, (0, 0, Ms))) < 1
+        assert np.linalg.norm(np.subtract(system.m["r2"].mean(), (0, 0, Ms))) < 1
 
         # time-dependent - sin
         system.energy = mm.Zeeman(H=H, func="sin", f=1e9, t0=1e-12)
 
         mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.1e-9, n=20)
@@ -214,7 +214,7 @@ class TestZeeman:
         system.energy = mm.Zeeman(H=H, func="sinc", f=1e9, t0=0)
 
         mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.1e-9, n=20)
@@ -231,7 +231,7 @@ class TestZeeman:
         system.energy = mm.Zeeman(H=H, func=t_func, dt=1e-13)
 
         mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.1e-9, n=20)
@@ -250,12 +250,12 @@ class TestZeeman:
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
 
-        H = df.Field(mesh, dim=3, value=value_fun)
+        H = df.Field(mesh, nvdim=3, value=value_fun)
         Ms = 1e6
 
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
-        system.m = df.Field(mesh, dim=3, value=(0, 1, 0), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 1, 0), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -278,12 +278,12 @@ class TestZeeman:
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
 
-        H = df.Field(mesh, dim=3, value=value_fun)
+        H = df.Field(mesh, nvdim=3, value=value_fun)
         Ms = 1e6
 
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
-        system.m = df.Field(mesh, dim=3, value=(0, 1, 0), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 1, 0), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system)
@@ -298,7 +298,7 @@ class TestZeeman:
         system.energy = mm.Zeeman(H=H, func="sin", f=1e9, t0=1e-12)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.1e-9, n=20)
@@ -307,7 +307,7 @@ class TestZeeman:
         system.energy = mm.Zeeman(H=H, func="sinc", f=1e9, t0=0)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.1e-9, n=20)
@@ -330,7 +330,7 @@ class TestZeeman:
         system.energy = mm.Zeeman(H=H, func=t_func, dt=1e-13)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.1e-9, n=20)
@@ -361,7 +361,7 @@ class TestZeeman:
         system.energy = mm.Zeeman(H=H, tcl_strings=tcl_strings)
 
         mesh = df.Mesh(region=self.region, cell=self.cell)
-        system.m = df.Field(mesh, dim=3, value=(1, 1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.1e-9, n=20)

@@ -29,13 +29,13 @@ class TestFixedSubregions:
         system.energy = mm.Zeeman(H=H)
 
         mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
-        system.m = df.Field(mesh, dim=3, value=(1, 0, 0), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(1, 0, 0), norm=Ms)
 
         md = self.calculator.MinDriver()
         md.drive(system, fixed_subregions=["r1"])
 
-        assert np.linalg.norm(np.subtract(system.m["r1"].average, (Ms, 0, 0))) < 1
+        assert np.linalg.norm(np.subtract(system.m["r1"].mean(), (Ms, 0, 0))) < 1
 
-        assert np.linalg.norm(np.subtract(system.m["r2"].average, (0, 0, Ms))) < 1
+        assert np.linalg.norm(np.subtract(system.m["r2"].mean(), (0, 0, Ms))) < 1
 
         self.calculator.delete(system)

@@ -29,9 +29,9 @@ def test_stdprob3(calculator):
         return (mx, my, mz)
 
     def minimise_system_energy(L, m_init):
-        N = 16  # discretisation in one dimension
+        N = 16  # discretisation in one nvdimension
         cubesize = 100e-9  # cube edge length (m)
-        cellsize = cubesize / N  # discretisation in all three dimensions.
+        cellsize = cubesize / N  # discretisation in all three nvdimensions.
         lex = cubesize / L  # exchange length.
 
         Km = 1e6  # magnetostatic energy density (J/m**3)
@@ -48,7 +48,7 @@ def test_stdprob3(calculator):
 
         system = mm.System(name=name)
         system.energy = mm.Exchange(A=A) + mm.UniaxialAnisotropy(K=K, u=u) + mm.Demag()
-        system.m = df.Field(mesh, dim=3, value=m_init, norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=m_init, norm=Ms)
 
         if hasattr(calculator, "RelaxDriver"):
             system.dynamics = mm.Damping(alpha=0.5)

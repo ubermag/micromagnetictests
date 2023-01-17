@@ -31,7 +31,7 @@ class TestCompute:
             + mm.CubicAnisotropy(K=1e3, u1=(1, 0, 0), u2=(0, 1, 0))
         )
 
-        self.system.m = df.Field(mesh, dim=3, value=(0, 0, 1), norm=8e6)
+        self.system.m = df.Field(mesh, nvdim=3, value=(0, 0, 1), norm=8e6)
 
     def test_energy(self):
         for term in self.system.energy:

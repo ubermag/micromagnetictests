@@ -37,7 +37,7 @@ class TestSlonczewski:
         system.dynamics = mm.Slonczewski(
             J=J, mp=mp, P=P, Lambda=Lambda, eps_prime=eps_prime
         )
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=20)
@@ -60,7 +60,7 @@ class TestSlonczewski:
         system.dynamics = mm.Slonczewski(
             J=J, mp=mp, P=P, Lambda=Lambda, eps_prime=eps_prime, dt=1e-13, func=time_dep
         )
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
 
@@ -80,7 +80,7 @@ class TestSlonczewski:
         system.dynamics = mm.Slonczewski(
             J=J, mp=mp, P=P, Lambda=Lambda, eps_prime=eps_prime, tcl_strings=tcl_strings
         )
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
 
@@ -106,7 +106,7 @@ class TestSlonczewski:
         system.dynamics = mm.Slonczewski(
             J=J, mp=mp, P=P, Lambda=Lambda, eps_prime=eps_prime
         )
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
         system.T = 10
 
         evolver = self.calculator.Xf_ThermSpinXferEvolver()
@@ -122,7 +122,7 @@ class TestSlonczewski:
         system.dynamics = mm.Slonczewski(
             J=J, mp=mp, P=P, Lambda=Lambda, eps_prime=eps_prime, dt=1e-13, func=time_dep
         )
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
 
@@ -142,7 +142,7 @@ class TestSlonczewski:
         system.dynamics = mm.Slonczewski(
             J=J, mp=mp, P=P, Lambda=Lambda, eps_prime=eps_prime, tcl_strings=tcl_strings
         )
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
 
@@ -168,7 +168,7 @@ class TestSlonczewski:
         system.dynamics = mm.Slonczewski(
             J=J, mp=mp, P=P, Lambda=Lambda, eps_prime=eps_prime
         )
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=20)
@@ -182,7 +182,7 @@ class TestSlonczewski:
         system.dynamics = mm.Slonczewski(
             J=J, mp=mp, P=P, Lambda=Lambda, eps_prime=eps_prime, dt=1e-13, func=time_dep
         )
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
 
@@ -202,7 +202,7 @@ class TestSlonczewski:
         system.dynamics = mm.Slonczewski(
             J=J, mp=mp, P=P, Lambda=Lambda, eps_prime=eps_prime, tcl_strings=tcl_strings
         )
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
 
@@ -215,11 +215,11 @@ class TestSlonczewski:
 
         mesh = df.Mesh(region=self.region, n=self.n)
 
-        J = df.Field(mesh, dim=1, value=0.5e12)
-        mp = df.Field(mesh, dim=3, value=(1, 0, 0))
-        P = df.Field(mesh, dim=1, value=0.5)
-        Lambda = df.Field(mesh, dim=1, value=2)
-        eps_prime = df.Field(mesh, dim=1, value=1)
+        J = df.Field(mesh, nvdim=1, value=0.5e12)
+        mp = df.Field(mesh, nvdim=3, value=(1, 0, 0))
+        P = df.Field(mesh, nvdim=1, value=0.5)
+        Lambda = df.Field(mesh, nvdim=1, value=2)
+        eps_prime = df.Field(mesh, nvdim=1, value=1)
         H = (0, 0, 1e6)
         Ms = 1e6
 
@@ -228,7 +228,7 @@ class TestSlonczewski:
         system.dynamics = mm.Slonczewski(
             J=J, mp=mp, P=P, Lambda=Lambda, eps_prime=eps_prime
         )
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=20)
@@ -242,7 +242,7 @@ class TestSlonczewski:
         system.dynamics = mm.Slonczewski(
             J=J, mp=mp, P=P, Lambda=Lambda, eps_prime=eps_prime, dt=1e-13, func=time_dep
         )
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
 
@@ -262,7 +262,7 @@ class TestSlonczewski:
         system.dynamics = mm.Slonczewski(
             J=J, mp=mp, P=P, Lambda=Lambda, eps_prime=eps_prime, tcl_strings=tcl_strings
         )
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td.drive(system, t=0.2e-9, n=50)
 

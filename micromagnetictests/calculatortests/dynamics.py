@@ -32,7 +32,7 @@ class TestDynamics:
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
         system.dynamics = mm.Precession(gamma0=gamma0) + mm.Damping(alpha=alpha)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=50)
@@ -56,7 +56,7 @@ class TestDynamics:
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
         system.dynamics = mm.Precession(gamma0=gamma0) + mm.Damping(alpha=alpha)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=50)
@@ -91,14 +91,14 @@ class TestDynamics:
                 return 2.211e5
 
         H = (0, 0, 1e6)
-        alpha = df.Field(mesh, dim=1, value=alpha_fun)
-        gamma0 = df.Field(mesh, dim=1, value=gamma0_fun)
+        alpha = df.Field(mesh, nvdim=1, value=alpha_fun)
+        gamma0 = df.Field(mesh, nvdim=1, value=gamma0_fun)
         Ms = 1e6
 
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
         system.dynamics = mm.Precession(gamma0=gamma0) + mm.Damping(alpha=alpha)
-        system.m = df.Field(mesh, dim=3, value=(0, 0.1, 1), norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=50)
