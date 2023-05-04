@@ -9,7 +9,7 @@ class TestPrecession:
     def _setup_calculator(self, calculator):
         self.calculator = calculator
 
-    def setup(self):
+    def setup_method(self):
         p1 = (-5e-9, -5e-9, -3e-9)
         p2 = (5e-9, 5e-9, 3e-9)
         self.region = df.Region(p1=p1, p2=p2)

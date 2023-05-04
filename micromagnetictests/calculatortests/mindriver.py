@@ -12,7 +12,7 @@ class TestMinDriver:
     def _setup_calculator(self, calculator):
         self.calculator = calculator
 
-    def setup(self):
+    def setup_method(self):
         p1 = (0, 0, 0)
         p2 = (5e-9, 5e-9, 5e-9)
         n = (5, 5, 5)

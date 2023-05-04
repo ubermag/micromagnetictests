@@ -10,7 +10,7 @@ class TestCompute:
     def _setup_calculator(self, calculator):
         self.calculator = calculator
 
-    def setup(self):
+    def setup_method(self):
         name = "compute_tests"
         p1 = (0, 0, 0)
         p2 = (10e-9, 2e-9, 2e-9)

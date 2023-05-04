@@ -11,7 +11,7 @@ class TestDMI:
     def _setup_calculator(self, calculator):
         self.calculator = calculator
 
-    def setup(self):
+    def setup_method(self):
         p1 = (-100e-9, 0, 0)
         p2 = (100e-9, 1e-9, 1e-9)
         self.region = df.Region(p1=p1, p2=p2)

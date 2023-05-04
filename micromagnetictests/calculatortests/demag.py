@@ -8,7 +8,7 @@ class TestDemag:
     def _setup_calculator(self, calculator):
         self.calculator = calculator
 
-    def setup(self):
+    def setup_method(self):
         p1 = (-5e-9, 0, 0)
         p2 = (5e-9, 5e-9, 1e-9)
         self.cell = (1e-9, 1e-9, 1e-9)
