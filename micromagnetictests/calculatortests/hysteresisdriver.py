@@ -3,7 +3,7 @@ import micromagneticmodel as mm
 import numpy as np
 
 
-def test_noevolver_nodriver(calculator):
+def test_simple_hysteresis_loop(calculator):
     """Simple hysteresis loop between Hmin and Hmax with symmetric number of steps."""
     system = mm.System(name="hysteresisdriver_noevolver_nodriver")
 
