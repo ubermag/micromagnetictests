@@ -50,10 +50,13 @@ class TestHysteresisDriver:
         system.m = self.m
 
         hd = self.calculator.HysteresisDriver()
-        hd.drive(system, Hsteps=[
-            [(0, 0, -1e6), (0, 0, 1e6), 3],
-            [(0, 0, 1e6), (0, 0, -1e6), 3],
-        ])
+        hd.drive(
+            system,
+            Hsteps=[
+                [(0, 0, -1e6), (0, 0, 1e6), 3],
+                [(0, 0, 1e6), (0, 0, -1e6), 3],
+            ],
+        )
 
         value = system.m(self.mesh.region.random_point())
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-3
