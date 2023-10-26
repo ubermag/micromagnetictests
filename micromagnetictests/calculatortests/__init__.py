@@ -9,7 +9,7 @@ from .dynamics import TestDynamics
 from .energy import TestEnergy
 from .exchange import TestExchange
 from .fixedsubregions import TestFixedSubregions
-from .hysteresisdriver import test_simple_hysteresis_loop
+from .hysteresisdriver import TestHysteresisDriver
 from .info_file import test_info_file
 from .mesh import TestMesh
 from .mindriver import TestMinDriver
