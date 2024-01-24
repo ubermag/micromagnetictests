@@ -12,7 +12,7 @@ def Ms():
 @pytest.fixture
 def system(Ms):
     system = mm.System(name="hysteresisdriver_noevolver_nodriver")
-    
+
     A = 1e-12
     H = (0, 0, 1e6)
     system.energy = mm.Exchange(A=A) + mm.Zeeman(H=H)
