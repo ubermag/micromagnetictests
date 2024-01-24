@@ -42,20 +42,20 @@ def test_simple_hysteresis_loop(calculator, system, Ms):
 
 
 def test_stepped_hysteresis_loop(calculator, system, Ms):
-    """Simple hysteresis loop using `Hsteps` as keyword argument."""
+    """Simple hysteresis loop with uneven steps using `Hsteps` as keyword argument."""
     hd = calculator.HysteresisDriver()
     hd.drive(
         system,
         Hsteps=[
             [(0, 0, -1e6), (0, 0, 1e6), 3],
-            [(0, 0, 1e6), (0, 0, -1e6), 3],
+            [(0, 0, 1e6), (0, 0, -1e6), 5],
         ],
     )
 
     value = system.m(self.mesh.region.random_point())
     assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
-    assert len(system.table.data.index) == 5
+    assert len(system.table.data.index) == 7
 
     assert system.table.x == "B_hysteresis"
 
