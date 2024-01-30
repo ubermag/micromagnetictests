@@ -42,6 +42,9 @@ class TestZhangLi:
         assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
 
         system.dynamics -= mm.ZhangLi(u=u, beta=beta)
+        # empty dynamics is not allowed
+        system.dynamics += mm.Damping(alpha=1)
+
         td.drive(system, t=0.2e-9, n=50)
 
     def test_time_scalar_scalar(self):
@@ -67,6 +70,9 @@ class TestZhangLi:
         assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
 
         system.dynamics -= mm.ZhangLi(u=u, beta=beta)
+        # empty dynamics is not allowed
+        system.dynamics += mm.Damping(alpha=1)
+      
         td.drive(system, t=0.2e-9, n=50)
 
         # Check if it runs.
