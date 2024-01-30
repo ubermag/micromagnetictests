@@ -111,7 +111,7 @@ class TestSlonczewski:
 
         evolver = self.calculator.Xf_ThermSpinXferEvolver()
         td = self.calculator.TimeDriver(evolver=evolver)
-        td.drive(system, t=0.2e-9, n=20)
+        td.drive(system, t=0.2e-11, n=20)
 
         # Check if it runs.
 
@@ -124,7 +124,7 @@ class TestSlonczewski:
         )
         system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
-        td.drive(system, t=0.2e-9, n=50)
+        td.drive(system, t=0.2e-11, n=50)
 
         # Check if it runs.
 
@@ -144,7 +144,7 @@ class TestSlonczewski:
         )
         system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
-        td.drive(system, t=0.2e-9, n=50)
+        td.drive(system, t=0.2e-11, n=50)
 
         # Check if it runs.
 
