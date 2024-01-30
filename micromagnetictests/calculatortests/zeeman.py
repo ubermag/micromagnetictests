@@ -61,9 +61,9 @@ class TestZeeman:
 
         # time-dependent - sin
         system.energy = mm.Zeeman(H=H, func="sin", f=1e9, t0=1e-12)
-        # with empty system dynamics, error will be raised due to 
+        # with empty system dynamics, error will be raised due to
         # check system dynamics.
-        system.dynamics = mm.Damping(alpha=1) 
+        system.dynamics = mm.Damping(alpha=1)
         mesh = df.Mesh(region=self.region, cell=self.cell)
         system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
@@ -192,9 +192,9 @@ class TestZeeman:
 
         system = mm.System(name=name)
         system.energy = mm.Zeeman(H=H)
-        # with empty system dynamics, error will be raised due to 
+        # with empty system dynamics, error will be raised due to
         # check system dynamics.
-        system.dynamics = mm.Damping(alpha=1) 
+        system.dynamics = mm.Damping(alpha=1)
 
         mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
         system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
@@ -301,10 +301,10 @@ class TestZeeman:
 
         # time-dependent - sin
         system.energy = mm.Zeeman(H=H, func="sin", f=1e9, t0=1e-12)
-        # with empty system dynamics, error will be raised due to 
+        # with empty system dynamics, error will be raised due to
         # check system dynamics.
-        system.dynamics = mm.Damping(alpha=1) 
-        
+        system.dynamics = mm.Damping(alpha=1)
+
         mesh = df.Mesh(region=self.region, cell=self.cell)
         system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 

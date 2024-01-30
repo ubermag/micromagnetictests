@@ -47,10 +47,10 @@ class TestSlonczewski:
         # remove current -> needs different evolver
         system.dynamics -= mm.Slonczewski(
             J=J, mp=mp, P=P, Lambda=Lambda, eps_prime=eps_prime
-        ) 
+        )
         # Damping factor is introduced because of the dynamics
         # check function as empty system.dynamics will fail the test
-        system.dynamics += mm.Damping(alpha=1) 
+        system.dynamics += mm.Damping(alpha=1)
 
         td.drive(system, t=0.2e-9, n=20)
 

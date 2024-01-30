@@ -72,7 +72,7 @@ class TestZhangLi:
         system.dynamics -= mm.ZhangLi(u=u, beta=beta)
         # empty dynamics is not allowed
         system.dynamics += mm.Damping(alpha=1)
-      
+
         td.drive(system, t=0.2e-9, n=50)
 
         # Check if it runs.
