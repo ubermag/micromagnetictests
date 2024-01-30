@@ -17,6 +17,7 @@ from .multiple_drives import test_multiple_drives
 from .outputformat import test_format
 from .outputstep import test_outputstep
 from .precession import TestPrecession
+from .relaxdriver import test_check_for_energy_and_dynamics, test_relaxdriver
 from .rkky import TestRKKY
 from .schedule import test_schedule
 from .skyrmion import test_skyrmion
