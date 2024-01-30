@@ -229,3 +229,16 @@ class TestTimeDriver:
             td.drive(system, t=1e-12, n=1)
 
         self.calculator.delete(system)
+
+    def test_check_for_energy_and_dynamics(self):
+        system = mm.examples.macrospin()
+        system.energy = 0
+        td = self.calculator.TimeDriver()
+
+        with pytest.raises(RuntimeError, match="System's energy is not defined"):
+            td.drive(system, t=1e-12, n=1)
+
+        system.dynamics = 0
+
+        with pytest.raises(RuntimeError, match="System's dynamics is not defined"):
+            td.drive(system, t=1e-12, n=1)

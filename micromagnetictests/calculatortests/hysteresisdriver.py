@@ -1,6 +1,7 @@
 import discretisedfield as df
 import micromagneticmodel as mm
 import numpy as np
+import pytest
 
 
 def test_simple_hysteresis_loop(calculator):
@@ -30,3 +31,12 @@ def test_simple_hysteresis_loop(calculator):
     assert system.table.x == "B_hysteresis"
 
     calculator.delete(system)
+
+
+def test_check_for_energy(calculator):
+    system = mm.examples.macrospin()
+    system.energy = 0
+    td = calculator.TimeDriver()
+
+    with pytest.raises(RuntimeError, match="System's energy is not defined"):
+        td.drive(system, t=1e-12, n=1)
