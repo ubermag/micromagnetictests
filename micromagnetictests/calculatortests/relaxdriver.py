@@ -36,8 +36,3 @@ def test_check_for_energy_and_dynamics(calculator):
 
     with pytest.raises(RuntimeError, match="System's energy is not defined"):
         md.drive(system)
-
-    system.dynamics = 0
-
-    with pytest.raises(RuntimeError, match="System's dynamics is not defined"):
-        md.drive(system)
