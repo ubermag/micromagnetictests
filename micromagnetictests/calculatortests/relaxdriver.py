@@ -5,7 +5,6 @@ import pytest
 
 
 def test_relaxdriver(calculator):
-    name = "relaxdriver"
     p1 = (0, 0, 0)
     p2 = (5e-9, 5e-9, 5e-9)
     n = (5, 5, 5)
@@ -15,7 +14,7 @@ def test_relaxdriver(calculator):
     region = df.Region(p1=p1, p2=p2)
     mesh = df.Mesh(region=region, n=n)
 
-    system = mm.System(name=name)
+    system = mm.System(name="relaxdriver")
     system.energy = mm.Exchange(A=A) + mm.Zeeman(H=H)
     system.m = df.Field(mesh, nvdim=3, value=(0, 1, 0), norm=Ms)
 
