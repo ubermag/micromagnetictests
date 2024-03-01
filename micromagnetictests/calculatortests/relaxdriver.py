@@ -29,7 +29,7 @@ def test_relaxdriver(calculator):
     calculator.delete(system)
 
 
-def test_check_for_energy_and_dynamics(calculator):
+def test_relax_check_for_energy(calculator):
     system = mm.examples.macrospin()
     system.energy = 0
     md = calculator.RelaxDriver()
