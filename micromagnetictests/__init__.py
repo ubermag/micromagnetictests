@@ -1,4 +1,5 @@
 """Test computational magnetism tools."""
+
 import importlib.metadata
 
 import pytest

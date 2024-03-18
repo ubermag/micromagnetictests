@@ -1,4 +1,5 @@
 """Calculator tests"""
+
 from .compute import TestCompute
 from .cubicanisotropy import TestCubicAnisotropy
 from .damping import TestDamping
