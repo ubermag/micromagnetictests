@@ -256,3 +256,68 @@ class TestZhangLi:
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) > 1
 
         self.calculator.delete(system)
+
+    def test_field_vector(self):
+        """
+        Domain wall in a strip oriented in x (y) direction. Current is applied in x (y)
+        direction. The average mz component before and after moving the domain walls
+        are compared. There is no check for mx and my because we do not ensure same
+        chirality of the domain walls.
+        """
+        md = self.calculator.MinDriver()
+        td = self.calculator.TimeDriver()
+
+        pa = 200e-9
+        pb = 20e-9
+        Ms = 5.8e5
+
+        def init_m(direction):
+            def _inner(p):
+                if p[direction] < 70e-9:
+                    return (0.1, 0.1, -1)
+                return (0.1, 0.1, 1)
+
+            return _inner
+
+        A = 15e-12
+        K = 0.5e6
+        u = (0, 0, 1)
+
+        system_x = mm.System(name="strip_x")
+        system_x.energy = mm.Exchange(A=A) + mm.UniaxialAnisotropy(K=K, u=u)
+        mesh = df.Mesh(p1=(0, 0, 0), p2=(pa, pb, 5e-9), cell=(5e-9, 5e-9, 5e-9))
+        system_x.m = df.Field(mesh, nvdim=3, value=init_m(0), norm=Ms)
+        md.drive(system_x)
+
+        system_y = mm.System(name="strip_y")
+        system_y.energy = mm.Exchange(A=A) + mm.UniaxialAnisotropy(K=K, u=u)
+        mesh = df.Mesh(p1=(0, 0, 0), p2=(pb, pa, 5e-9), cell=(5e-9, 5e-9, 5e-9))
+        system_y.m = df.Field(mesh, nvdim=3, value=init_m(1), norm=Ms)
+        md.drive(system_y)
+
+        assert system_x.m.orientation.z.mean() > 0.25
+        assert np.isclose(
+            system_x.m.orientation.z.mean(), system_y.m.orientation.z.mean()
+        ).all()
+
+        system_x.dynamics = (
+            mm.Precession(gamma0=mm.consts.gamma0)
+            + mm.Damping(alpha=0.3)
+            + mm.ZhangLi(u=(200, 0, 0), beta=0.5)
+        )
+        td.drive(system_x, t=0.4e-9, n=1)
+
+        system_y.dynamics = (
+            mm.Precession(gamma0=mm.consts.gamma0)
+            + mm.Damping(alpha=0.3)
+            + mm.ZhangLi(u=(0, 200, 0), beta=0.5)
+        )
+        td.drive(system_y, t=0.4e-9, n=1)
+
+        assert system_x.m.orientation.z.mean() < -0.25
+        assert np.isclose(
+            system_x.m.orientation.z.mean(), system_y.m.orientation.z.mean()
+        ).all()
+
+        self.calculator.delete(system_x)
+        self.calculator.delete(system_y)
