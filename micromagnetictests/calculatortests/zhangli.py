@@ -92,9 +92,7 @@ class TestZhangLi:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings[
-            "script"
-        ] = """proc TimeFunction { total_time } {
+        tcl_strings["script"] = """proc TimeFunction { total_time } {
             return $total_time
         }
         """
@@ -157,9 +155,7 @@ class TestZhangLi:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings[
-            "script"
-        ] = """proc TimeFunction { total_time } {
+        tcl_strings["script"] = """proc TimeFunction { total_time } {
             return $total_time
         }
         """
@@ -233,9 +229,7 @@ class TestZhangLi:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings[
-            "script"
-        ] = """proc TimeFunction { total_time } {
+        tcl_strings["script"] = """proc TimeFunction { total_time } {
             return $total_time
         }
         """

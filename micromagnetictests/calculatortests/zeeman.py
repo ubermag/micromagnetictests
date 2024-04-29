@@ -143,9 +143,7 @@ class TestZeeman:
 
         # time-dependent - tcl strings
         tcl_strings = {}
-        tcl_strings[
-            "script"
-        ] = """proc TimeFunction { total_time } {
+        tcl_strings["script"] = """proc TimeFunction { total_time } {
             set Hx [expr {sin($total_time * 1e10)}]
             set dHx [expr {1e10 * cos($total_time * 1e10)}]
             return [list $Hx 0 0 $dHx 0 0]
@@ -345,9 +343,7 @@ class TestZeeman:
 
         # time-dependent - tcl strings
         tcl_strings = {}
-        tcl_strings[
-            "script"
-        ] = """proc TimeFunction { total_time } {
+        tcl_strings["script"] = """proc TimeFunction { total_time } {
             set PI [expr {4*atan(1.)}]
             set w [expr {1e9*2*$PI}]
             set ct [expr {cos($w*$total_time)}]
