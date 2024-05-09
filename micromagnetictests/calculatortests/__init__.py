@@ -9,7 +9,7 @@ from .dynamics import TestDynamics
 from .energy import TestEnergy
 from .exchange import TestExchange
 from .fixedsubregions import TestFixedSubregions
-from .hysteresisdriver import test_simple_hysteresis_loop, test_stepped_hysteresis_loop
+from .hysteresisdriver import test_check_for_energy, test_simple_hysteresis_loop, test_stepped_hysteresis_loop
 from .info_file import test_info_file
 from .mesh import TestMesh
 from .mindriver import TestMinDriver
@@ -17,6 +17,7 @@ from .multiple_drives import test_multiple_drives
 from .outputformat import test_format
 from .outputstep import test_outputstep
 from .precession import TestPrecession
+from .relaxdriver import test_relax_check_for_energy, test_relaxdriver
 from .rkky import TestRKKY
 from .schedule import test_schedule
 from .skyrmion import test_skyrmion

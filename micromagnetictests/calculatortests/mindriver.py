@@ -129,3 +129,11 @@ class TestMinDriver:
             md.drive(system)
 
         self.calculator.delete(system)
+
+    def test_check_for_energy(self):
+        system = mm.examples.macrospin()
+        system.energy = 0
+        md = self.calculator.MinDriver()
+
+        with pytest.raises(RuntimeError, match="System's energy is not defined"):
+            md.drive(system)

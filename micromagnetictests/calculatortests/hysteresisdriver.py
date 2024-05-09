@@ -60,3 +60,13 @@ def test_stepped_hysteresis_loop(calculator, system, Ms):
     assert system.table.x == "B_hysteresis"
 
     calculator.delete(system)
+
+
+def test_check_for_energy(calculator):
+    system = mm.examples.macrospin()
+    system.energy = 0
+    hd = calculator.HysteresisDriver()
+
+    with pytest.raises(RuntimeError, match="System's energy is not defined"):
+        hd.drive(system, Hmin=(0, 0, -1e6), Hmax=(0, 0, 1e6), n=3)
+
