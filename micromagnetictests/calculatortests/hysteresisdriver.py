@@ -69,4 +69,3 @@ def test_check_for_energy(calculator):
 
     with pytest.raises(RuntimeError, match="System's energy is not defined"):
         hd.drive(system, Hmin=(0, 0, -1e6), Hmax=(0, 0, 1e6), n=3)
-
