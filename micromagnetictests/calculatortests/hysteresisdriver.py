@@ -36,7 +36,7 @@ def test_simple_hysteresis_loop(calculator):
 def test_check_for_energy(calculator):
     system = mm.examples.macrospin()
     system.energy = 0
-    td = calculator.TimeDriver()
+    hd = calculator.HysteresisDriver()
 
     with pytest.raises(RuntimeError, match="System's energy is not defined"):
-        td.drive(system, t=1e-12, n=1)
+        hd.drive(system, Hmin=(0, 0, -1e6), Hmax=(0, 0, 1e6), n=3)
