@@ -82,6 +82,8 @@ class TestDMI:
 
         self.calculator.delete(system)
 
+    @pytest.mark.filterwarnings("ignore:((.|\n)*)Use of `Cnv` is deprecated((.|\n)*)")
+    @pytest.mark.filterwarnings("ignore:((.|\n)*)Use of `D2d` is deprecated((.|\n)*)")
     def test_crystalclass(self):
         name = "dmi_crystalclass"
 
@@ -121,6 +123,8 @@ class TestDMI:
 
         self.calculator.delete(system)
 
+    @pytest.mark.filterwarnings("ignore:((.|\n)*)Use of `Cnv` is deprecated((.|\n)*)")
+    @pytest.mark.filterwarnings("ignore:((.|\n)*)Use of `D2d` is deprecated((.|\n)*)")
     def test_crystalclass_init(self):
         name = "dmi_crystalclass"
 
