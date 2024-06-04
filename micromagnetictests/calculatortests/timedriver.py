@@ -37,7 +37,7 @@ class TestTimeDriver:
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=50)
 
-        value = system.m(self.mesh.region.random_point())
+        value = system.m(self.mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 10
 
         assert system.table.x == "t"
@@ -56,7 +56,7 @@ class TestTimeDriver:
         td = self.calculator.TimeDriver(evolver=evolver)
         td.drive(system, t=0.2e-9, n=50)
 
-        value = system.m(self.mesh.region.random_point())
+        value = system.m(self.mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1
 
         self.calculator.delete(system)
@@ -73,7 +73,7 @@ class TestTimeDriver:
         td = self.calculator.TimeDriver(evolver=evolver)
         td.drive(system, t=0.2e-9, n=50)
 
-        value = system.m(self.mesh.region.random_point())
+        value = system.m(self.mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1
 
         self.calculator.delete(system)
@@ -136,7 +136,7 @@ class TestTimeDriver:
         td = self.calculator.TimeDriver(stopping_dm_dt=0.01)
         td.drive(system, t=0.3e-9, n=50)
 
-        value = system.m(self.mesh.region.random_point())
+        value = system.m(self.mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1
 
         self.calculator.delete(system)
@@ -152,7 +152,7 @@ class TestTimeDriver:
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=50)
 
-        value = system.m(self.mesh.region.random_point())
+        value = system.m(self.mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 10
 
         self.calculator.delete(system)
@@ -168,7 +168,7 @@ class TestTimeDriver:
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=50)
 
-        value = system.m(self.mesh.region.random_point())
+        value = system.m(self.mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) > 1e3
 
         self.calculator.delete(system)

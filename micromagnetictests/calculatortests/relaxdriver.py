@@ -21,7 +21,7 @@ def test_relaxdriver(calculator):
     md = calculator.RelaxDriver()
     md.drive(system)
 
-    value = system.m(mesh.region.random_point())
+    value = system.m(mesh.region.center)
     assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-2
 
     assert system.table.x == md._x

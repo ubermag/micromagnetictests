@@ -36,7 +36,7 @@ class TestZeeman:
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
     def test_time_vector(self):
@@ -56,7 +56,7 @@ class TestZeeman:
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
         # time-dependent - sin

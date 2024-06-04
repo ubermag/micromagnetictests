@@ -35,13 +35,13 @@ class TestThreads:
         td = self.calculator.TimeDriver()
         td.drive(system, t=0.2e-9, n=50, n_threads=1)
 
-        value = system.m(self.mesh.region.random_point())
+        value = system.m(self.mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1
 
         # Two threads
         td.drive(system, t=0.2e-9, n=50, n_threads=2)
 
-        value = system.m(self.mesh.region.random_point())
+        value = system.m(self.mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1
 
         self.calculator.delete(system)

@@ -23,7 +23,7 @@ def test_simple_hysteresis_loop(calculator):
     hd = calculator.HysteresisDriver()
     hd.drive(system, Hmin=(0, 0, -1e6), Hmax=(0, 0, 1e6), n=3)
 
-    value = system.m(mesh.region.random_point())
+    value = system.m(mesh.region.center)
     assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
     assert len(system.table.data.index) == 5

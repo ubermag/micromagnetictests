@@ -38,7 +38,7 @@ class TestZhangLi:
         td.drive(system, t=0.2e-9, n=50)
 
         # u is zero, nothing should change.
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
 
         system.dynamics -= mm.ZhangLi(u=u, beta=beta)
@@ -66,7 +66,7 @@ class TestZhangLi:
         td.drive(system, t=0.2e-9, n=50)
 
         # u is zero, nothing should change.
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
 
         system.dynamics -= mm.ZhangLi(u=u, beta=beta)
@@ -87,7 +87,7 @@ class TestZhangLi:
         td.drive(system, t=0.2e-9, n=50)
 
         # u is zero, nothing should change.
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
 
         # time-dependence - tcl strings
@@ -105,7 +105,7 @@ class TestZhangLi:
         td.drive(system, t=0.2e-9, n=50)
 
         # u is zero, nothing should change.
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
 
         self.calculator.delete(system)

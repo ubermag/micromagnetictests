@@ -38,7 +38,7 @@ class TestDynamics:
         td.drive(system, t=0.2e-9, n=50)
 
         # Alpha is zero, nothing should change.
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.subtract(np.divide(value, Ms), (0, 0, 1))) < 1e-5
 
         self.calculator.delete(system)

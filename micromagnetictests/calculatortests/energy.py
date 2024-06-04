@@ -39,7 +39,7 @@ class TestEnergy:
             md = self.calculator.MinDriver()
         md.drive(system)
 
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1e-3
 
         self.calculator.delete(system)
@@ -65,7 +65,7 @@ class TestEnergy:
             md = self.calculator.MinDriver()
         md.drive(system)
 
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1e-3
 
         self.calculator.delete(system)
@@ -88,7 +88,7 @@ class TestEnergy:
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1e-3
 
         self.calculator.delete(system)
@@ -114,7 +114,7 @@ class TestEnergy:
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1
 
         self.calculator.delete(system)
@@ -146,7 +146,7 @@ class TestEnergy:
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1
 
         self.calculator.delete(system)
