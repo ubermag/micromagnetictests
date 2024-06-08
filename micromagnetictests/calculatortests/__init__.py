@@ -10,6 +10,8 @@ from .energy import TestEnergy
 from .exchange import TestExchange
 from .fixedsubregions import TestFixedSubregions
 from .hysteresisdriver import (
+    Ms,
+    system,
     test_check_for_energy,
     test_simple_hysteresis_loop,
     test_stepped_hysteresis_loop,
