@@ -140,6 +140,9 @@ class TestZhangLi:
         def time_dep(t):
             return np.sin(t * 1e10)
 
+        # - default value set to 0
+        # - vector-valued dictionary elements
+        u = {"r2": (1, 0, 0)}
         system.dynamics = mm.ZhangLi(u=u, beta=beta, func=time_dep, dt=1e-13)
         system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
@@ -162,6 +165,7 @@ class TestZhangLi:
         tcl_strings["script_args"] = "total_time"
         tcl_strings["script_name"] = "TimeFunction"
 
+        u = {"r1": 0, "r2": 1}
         system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
         system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
@@ -236,6 +240,14 @@ class TestZhangLi:
         tcl_strings["script_args"] = "total_time"
         tcl_strings["script_name"] = "TimeFunction"
 
+        def u_fun(pos):
+            x, y, z = pos
+            if y <= 0:
+                return (0, 0, 0)
+            else:
+                return (1, 0, 0)
+
+        u = df.Field(mesh, nvdim=3, value=u_fun)
         system.dynamics = mm.ZhangLi(u=u, beta=beta, tcl_strings=tcl_strings)
         system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
@@ -251,7 +263,7 @@ class TestZhangLi:
 
         self.calculator.delete(system)
 
-    def test_field_vector(self):
+    def test_vector_scalar(self):
         """
         Domain wall in a strip oriented in x (y) direction. Current is applied in x (y)
         direction. The average mz component before and after moving the domain walls
@@ -290,9 +302,9 @@ class TestZhangLi:
         md.drive(system_y)
 
         assert system_x.m.orientation.z.mean() > 0.25
-        assert np.isclose(
+        assert np.allclose(
             system_x.m.orientation.z.mean(), system_y.m.orientation.z.mean()
-        ).all()
+        )
 
         system_x.dynamics = (
             mm.Precession(gamma0=mm.consts.gamma0)
@@ -309,9 +321,9 @@ class TestZhangLi:
         td.drive(system_y, t=0.4e-9, n=1)
 
         assert system_x.m.orientation.z.mean() < -0.25
-        assert np.isclose(
+        assert np.allclose(
             system_x.m.orientation.z.mean(), system_y.m.orientation.z.mean()
-        ).all()
+        )
 
         self.calculator.delete(system_x)
         self.calculator.delete(system_y)
