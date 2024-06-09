@@ -35,7 +35,7 @@ class TestUniaxialAnisotropy:
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
         self.calculator.delete(system)
@@ -224,7 +224,7 @@ class TestUniaxialAnisotropy:
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
         self.calculator.delete(system)

@@ -71,9 +71,7 @@ class TestSlonczewski:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings[
-            "script"
-        ] = """proc TimeFunction { total_time } {
+        tcl_strings["script"] = """proc TimeFunction { total_time } {
             return $total_time
         }
         """
@@ -133,9 +131,7 @@ class TestSlonczewski:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings[
-            "script"
-        ] = """proc TimeFunction { total_time } {
+        tcl_strings["script"] = """proc TimeFunction { total_time } {
             return $total_time
         }
         """
@@ -193,9 +189,7 @@ class TestSlonczewski:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings[
-            "script"
-        ] = """proc TimeFunction { total_time } {
+        tcl_strings["script"] = """proc TimeFunction { total_time } {
             return $total_time
         }
         """
@@ -253,9 +247,7 @@ class TestSlonczewski:
 
         # time-dependence - tcl strings
         tcl_strings = {}
-        tcl_strings[
-            "script"
-        ] = """proc TimeFunction { total_time } {
+        tcl_strings["script"] = """proc TimeFunction { total_time } {
             return $total_time
         }
         """

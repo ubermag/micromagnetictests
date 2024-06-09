@@ -34,7 +34,7 @@ class TestMinDriver:
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        value = system.m(self.mesh.region.random_point())
+        value = system.m(self.mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-2
 
         assert system.table.x == md._x
@@ -52,7 +52,7 @@ class TestMinDriver:
         md = self.calculator.MinDriver(evolver=evolver)
         md.drive(system)
 
-        value = system.m(self.mesh.region.random_point())
+        value = system.m(self.mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-3
 
         self.calculator.delete(system)
@@ -67,7 +67,7 @@ class TestMinDriver:
         md = self.calculator.MinDriver(stopping_mxHxm=0.1)
         md.drive(system)
 
-        value = system.m(self.mesh.region.random_point())
+        value = system.m(self.mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-3
 
         self.calculator.delete(system)
@@ -83,7 +83,7 @@ class TestMinDriver:
         md = self.calculator.MinDriver(evolver=evolver, stopping_mxHxm=0.1)
         md.drive(system)
 
-        value = system.m(self.mesh.region.random_point())
+        value = system.m(self.mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-3
 
         self.calculator.delete(system)
@@ -133,7 +133,7 @@ class TestMinDriver:
     def test_check_for_energy(self):
         system = mm.examples.macrospin()
         system.energy = 0
-        td = self.calculator.TimeDriver()
+        md = self.calculator.MinDriver()
 
         with pytest.raises(RuntimeError, match="System's energy is not defined"):
-            td.drive(system, t=1e-12, n=1)
+            md.drive(system)

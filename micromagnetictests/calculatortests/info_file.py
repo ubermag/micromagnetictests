@@ -35,10 +35,10 @@ def test_info_file(calculator):
 
     with open(infofile) as f:
         info = json.loads(f.read())
-    assert "drive_number" in info.keys()
-    assert "date" in info.keys()
-    assert "time" in info.keys()
-    assert "driver" in info.keys()
+    assert "drive_number" in info
+    assert "date" in info
+    assert "time" in info
+    assert "driver" in info
 
     assert info["drive_number"] == 0
     assert re.findall(r"\d{4}-\d{2}-\d{2}", info["date"]) is not []
@@ -58,10 +58,10 @@ def test_info_file(calculator):
 
     with open(infofile) as f:
         info = json.loads(f.read())
-    assert "drive_number" in info.keys()
-    assert "date" in info.keys()
-    assert "time" in info.keys()
-    assert "driver" in info.keys()
+    assert "drive_number" in info
+    assert "date" in info
+    assert "time" in info
+    assert "driver" in info
 
     assert info["drive_number"] == 1
     assert re.findall(r"\d{4}-\d{2}-\d{2}", info["date"]) is not []
