@@ -62,7 +62,7 @@ def test_stepped_hysteresis_loop(calculator, system, Ms):
     calculator.delete(system)
 
 
-def test_check_for_energy(calculator):
+def test_hysteresis_check_for_energy(calculator):
     system = mm.examples.macrospin()
     system.energy = 0
     hd = calculator.HysteresisDriver()

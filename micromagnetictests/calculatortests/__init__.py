@@ -12,7 +12,9 @@ from .exchange import TestExchange as TestExchange
 from .fixedsubregions import TestFixedSubregions as TestFixedSubregions
 from .hysteresisdriver import Ms as Ms
 from .hysteresisdriver import system as system
-from .hysteresisdriver import test_check_for_energy as test_check_for_energy
+from .hysteresisdriver import (
+    test_hysteresis_check_for_energy as test_hysteresis_check_for_energy,
+)
 from .hysteresisdriver import test_simple_hysteresis_loop as test_simple_hysteresis_loop
 from .hysteresisdriver import (
     test_stepped_hysteresis_loop as test_stepped_hysteresis_loop,
