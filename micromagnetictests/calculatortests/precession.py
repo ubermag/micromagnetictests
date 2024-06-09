@@ -37,7 +37,7 @@ class TestPrecession:
         td.drive(system, t=0.2e-9, n=50)
 
         # Gamma is zero, nothing should change.
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.cross(value, (0, 0.1 * Ms, Ms))) < 1e-3
 
         self.calculator.delete(system)

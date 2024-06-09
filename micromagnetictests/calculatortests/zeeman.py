@@ -36,7 +36,7 @@ class TestZeeman:
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
     def test_time_vector(self):
@@ -56,7 +56,7 @@ class TestZeeman:
         md = self.calculator.MinDriver()
         md.drive(system)
 
-        value = system.m(mesh.region.random_point())
+        value = system.m(mesh.region.center)
         assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
         # time-dependent - sin
@@ -143,9 +143,7 @@ class TestZeeman:
 
         # time-dependent - tcl strings
         tcl_strings = {}
-        tcl_strings[
-            "script"
-        ] = """proc TimeFunction { total_time } {
+        tcl_strings["script"] = """proc TimeFunction { total_time } {
             set Hx [expr {sin($total_time * 1e10)}]
             set dHx [expr {1e10 * cos($total_time * 1e10)}]
             return [list $Hx 0 0 $dHx 0 0]
@@ -345,9 +343,7 @@ class TestZeeman:
 
         # time-dependent - tcl strings
         tcl_strings = {}
-        tcl_strings[
-            "script"
-        ] = """proc TimeFunction { total_time } {
+        tcl_strings["script"] = """proc TimeFunction { total_time } {
             set PI [expr {4*atan(1.)}]
             set w [expr {1e9*2*$PI}]
             set ct [expr {cos($w*$total_time)}]
