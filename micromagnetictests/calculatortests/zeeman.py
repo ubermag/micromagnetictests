@@ -1,3 +1,5 @@
+import math
+
 import discretisedfield as df
 import micromagneticmodel as mm
 import numpy as np
@@ -320,13 +322,13 @@ class TestZeeman:
 
         # time-dependent - function
         def t_func(t):
-            omega = 2 * np.pi * 1e9
+            omega = 2 * math.pi * 1e9
             return [
-                np.cos(omega * t),
-                -np.sin(omega * t),
+                math.cos(omega * t),
+                -math.sin(omega * t),
                 0,
-                np.sin(omega * t),
-                np.cos(omega * t),
+                math.sin(omega * t),
+                math.cos(omega * t),
                 0,
                 0,
                 0,
