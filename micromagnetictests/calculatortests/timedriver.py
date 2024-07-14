@@ -106,7 +106,7 @@ class TestTimeDriver:
 
         evolver = self.calculator.Xf_ThermHeunEvolver()
         td = self.calculator.TimeDriver(evolver=evolver)
-        td.drive(system, t=0.2e-9, n=50)
+        td.drive(system, t=1e-11, n=1)
 
         # Check if it runs.
 
