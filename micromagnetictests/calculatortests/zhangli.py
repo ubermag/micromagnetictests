@@ -57,7 +57,7 @@ class TestZhangLi:
         self.beta = 0.5
         self.system = system
 
-    def test_scalar_scalar(self):
+    def test_scalar_u(self):
         """
         Uniform current in x direction.
         """
@@ -79,7 +79,7 @@ class TestZhangLi:
 
         self.calculator.delete(system)
 
-    def test_time_func_scalar_scalar(self):
+    def test_time_func_scalar_u(self):
         """
         Uniform current in x direction with sin time dependence.
         """
@@ -118,7 +118,7 @@ class TestZhangLi:
 
         # self.calculator.delete(system)
 
-    def test_time_tcl_scalar_scalar(self):
+    def test_time_tcl_scalar_u(self):
         """
         Uniform current in x direction with sin time dependence.
         """
@@ -162,7 +162,7 @@ class TestZhangLi:
 
         self.calculator.delete(system)
 
-    def test_dict_scalar(self):
+    def test_dict_scalar_u(self):
         """
         Current only in left half of the strip, defined with a dict.
         """
@@ -184,7 +184,7 @@ class TestZhangLi:
 
         self.calculator.delete(system)
 
-    def test_dict_vector(self):
+    def test_dict_vector_u(self):
         """
         Current only in left half of the strip, defined with a dict.
         """
@@ -206,7 +206,7 @@ class TestZhangLi:
 
         self.calculator.delete(system)
 
-    def test_field_scalar(self):
+    def test_field_scalar_u(self):
         """
         Current only in left half of the strip, defined with a Field.
         """
@@ -232,7 +232,7 @@ class TestZhangLi:
 
         self.calculator.delete(system)
 
-    def test_field_vector(self):
+    def test_field_vector_u(self):
         """
         Current only in left half of the strip, defined with a Field.
         """
@@ -260,7 +260,7 @@ class TestZhangLi:
 
         self.calculator.delete(system)
 
-    def test_vector_scalar(self):
+    def test_vector_u(self):
         """
         Strip oriented along y with uniform current applied in y direction.
         """
