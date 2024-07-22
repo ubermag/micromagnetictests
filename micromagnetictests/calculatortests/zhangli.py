@@ -294,7 +294,7 @@ class TestZhangLi:
         system.dynamics = (
             mm.Precession(gamma0=mm.consts.gamma0)
             + mm.Damping(alpha=0.3)
-            + mm.ZhangLi(u=(0, 200, 0), beta=0.5)
+            + mm.ZhangLi(u=(0, self.u, 0), beta=self.beta)
         )
         td.drive(system, t=0.35e-9, n=1)
 
