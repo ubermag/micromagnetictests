@@ -98,7 +98,7 @@ class TestMinDriver:
         md = self.calculator.MinDriver()
         md.drive(system, save=True, overwrite=True)
 
-        dirname = os.path.join(f"{name}", f"drive-{system.drive_number-1}")
+        dirname = os.path.join(f"{name}", f"drive-{system.drive_number - 1}")
         assert os.path.exists(dirname)
         if os.path.exists(os.path.join(dirname, f"{name}.out")):
             mumax3_path = os.path.join(dirname, f"{name}.out")
