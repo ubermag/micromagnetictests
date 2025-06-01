@@ -42,7 +42,7 @@ def test_info_file(calculator):
 
     assert info["drive_number"] == 0
     assert re.findall(r"\d{4}-\d{2}-\d{2}", info["date"]) != []
-    assert re.findall(r"\d{2}:\d{2}-\d{2}", info["time"]) != []
+    assert re.findall(r"\d{2}:\d{2}:\d{2}", info["time"]) != []
     assert info["driver"] == "TimeDriver"
     assert info["t"] == 25e-12
     assert info["n"] == 10
@@ -65,7 +65,7 @@ def test_info_file(calculator):
 
     assert info["drive_number"] == 1
     assert re.findall(r"\d{4}-\d{2}-\d{2}", info["date"]) != []
-    assert re.findall(r"\d{2}:\d{2}-\d{2}", info["time"]) != []
+    assert re.findall(r"\d{2}:\d{2}:\d{2}", info["time"]) != []
     assert info["driver"] == "MinDriver"
 
     calculator.delete(system)
