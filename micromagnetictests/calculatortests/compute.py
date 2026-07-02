@@ -36,52 +36,58 @@ def compute_case(calculator):
 
 
 def test_compute_energy(compute_case):
-    self = compute_case
-    for term in self.system.energy:
-        assert isinstance(self.calculator.compute(term.energy, self.system), float)
+    for term in compute_case.system.energy:
+        assert isinstance(
+            compute_case.calculator.compute(term.energy, compute_case.system), float
+        )
     assert isinstance(
-        self.calculator.compute(self.system.energy.energy, self.system), float
+        compute_case.calculator.compute(
+            compute_case.system.energy.energy, compute_case.system
+        ),
+        float,
     )
-    self.calculator.delete(self.system)
+    compute_case.calculator.delete(compute_case.system)
 
 
 def test_compute_energy_density(compute_case):
-    self = compute_case
-    for term in self.system.energy:
-        e_density = self.calculator.compute(term.density, self.system)
+    for term in compute_case.system.energy:
+        e_density = compute_case.calculator.compute(term.density, compute_case.system)
         assert isinstance(e_density, df.Field)
-        assert e_density.mesh.subregions == self.subregions
-    e_density = self.calculator.compute(self.system.energy.density, self.system)
+        assert e_density.mesh.subregions == compute_case.subregions
+    e_density = compute_case.calculator.compute(
+        compute_case.system.energy.density, compute_case.system
+    )
     assert isinstance(e_density, df.Field)
-    assert e_density.mesh.subregions == self.subregions
-    self.calculator.delete(self.system)
+    assert e_density.mesh.subregions == compute_case.subregions
+    compute_case.calculator.delete(compute_case.system)
 
 
 def test_compute_effective_field(compute_case):
-    self = compute_case
-    for term in self.system.energy:
-        effective_field = self.calculator.compute(term.effective_field, self.system)
+    for term in compute_case.system.energy:
+        effective_field = compute_case.calculator.compute(
+            term.effective_field, compute_case.system
+        )
         assert isinstance(effective_field, df.Field)
-        assert effective_field.mesh.subregions == self.subregions
-    effective_field = self.calculator.compute(
-        self.system.energy.effective_field, self.system
+        assert effective_field.mesh.subregions == compute_case.subregions
+    effective_field = compute_case.calculator.compute(
+        compute_case.system.energy.effective_field, compute_case.system
     )
     assert isinstance(effective_field, df.Field)
-    assert effective_field.mesh.subregions == self.subregions
-    self.calculator.delete(self.system)
+    assert effective_field.mesh.subregions == compute_case.subregions
+    compute_case.calculator.delete(compute_case.system)
 
 
 def test_compute_invalid_func(compute_case):
-    self = compute_case
     with pytest.raises(ValueError):
-        self.calculator.compute(self.system.energy.__len__, self.system)
+        compute_case.calculator.compute(
+            compute_case.system.energy.__len__, compute_case.system
+        )
 
 
 def test_compute_dmi(compute_case):
-    self = compute_case
     if sys.platform != "win32":
-        self.system.energy += mm.DMI(D=5e-3, crystalclass="T")
-        term = self.system.energy.dmi
+        compute_case.system.energy += mm.DMI(D=5e-3, crystalclass="T")
+        term = compute_case.system.energy.dmi
         for crystalclass in [
             "T",
             "Cnv_x",
@@ -92,32 +98,47 @@ def test_compute_dmi(compute_case):
             "D2d_z",
         ]:
             term.crystalclass = crystalclass
-            assert isinstance(self.calculator.compute(term.energy, self.system), float)
-            e_density = self.calculator.compute(term.density, self.system)
+            assert isinstance(
+                compute_case.calculator.compute(term.energy, compute_case.system), float
+            )
+            e_density = compute_case.calculator.compute(
+                term.density, compute_case.system
+            )
             assert isinstance(e_density, df.Field)
-            assert e_density.mesh.subregions == self.subregions
-            effective_field = self.calculator.compute(term.effective_field, self.system)
+            assert e_density.mesh.subregions == compute_case.subregions
+            effective_field = compute_case.calculator.compute(
+                term.effective_field, compute_case.system
+            )
             assert isinstance(effective_field, df.Field)
-            assert effective_field.mesh.subregions == self.subregions
+            assert effective_field.mesh.subregions == compute_case.subregions
         assert isinstance(
-            self.calculator.compute(self.system.energy.energy, self.system), float
+            compute_case.calculator.compute(
+                compute_case.system.energy.energy, compute_case.system
+            ),
+            float,
         )
-        self.calculator.delete(self.system)
+        compute_case.calculator.delete(compute_case.system)
 
 
 def test_compute_slonczewski(compute_case):
-    self = compute_case
-    self.system.dynamics = mm.Slonczewski(J=7.5e12, mp=(1, 0, 0), P=0.4, Lambda=2)
-    assert isinstance(
-        self.calculator.compute(self.system.energy.energy, self.system), float
+    compute_case.system.dynamics = mm.Slonczewski(
+        J=7.5e12, mp=(1, 0, 0), P=0.4, Lambda=2
     )
-    self.calculator.delete(self.system)
+    assert isinstance(
+        compute_case.calculator.compute(
+            compute_case.system.energy.energy, compute_case.system
+        ),
+        float,
+    )
+    compute_case.calculator.delete(compute_case.system)
 
 
 def test_compute_zhang_li(compute_case):
-    self = compute_case
-    self.system.dynamics = mm.ZhangLi(beta=0.01, u=5e6)
+    compute_case.system.dynamics = mm.ZhangLi(beta=0.01, u=5e6)
     assert isinstance(
-        self.calculator.compute(self.system.energy.energy, self.system), float
+        compute_case.calculator.compute(
+            compute_case.system.energy.energy, compute_case.system
+        ),
+        float,
     )
-    self.calculator.delete(self.system)
+    compute_case.calculator.delete(compute_case.system)

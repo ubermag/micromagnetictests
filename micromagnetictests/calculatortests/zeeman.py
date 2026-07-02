@@ -24,7 +24,6 @@ def zeeman_case(calculator):
 
 
 def test_zeeman_vector(zeeman_case):
-    self = zeeman_case
     name = "zeeman_vector"
 
     H = (0, 0, 1e6)
@@ -35,10 +34,10 @@ def test_zeeman_vector(zeeman_case):
     # time-independent
     system.energy = mm.Zeeman(H=H)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=zeeman_case.region, cell=zeeman_case.cell)
     system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = zeeman_case.calculator.MinDriver()
     md.drive(system)
 
     value = system.m(mesh.region.center)
@@ -46,7 +45,6 @@ def test_zeeman_vector(zeeman_case):
 
 
 def test_zeeman_time_vector(zeeman_case):
-    self = zeeman_case
     name = "zeeman_vector"
 
     H = (0, 0, 1e6)
@@ -57,10 +55,10 @@ def test_zeeman_time_vector(zeeman_case):
     # time-independent
     system.energy = mm.Zeeman(H=H)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=zeeman_case.region, cell=zeeman_case.cell)
     system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = zeeman_case.calculator.MinDriver()
     md.drive(system)
 
     value = system.m(mesh.region.center)
@@ -71,22 +69,22 @@ def test_zeeman_time_vector(zeeman_case):
     # with empty system dynamics, error will be raised due to
     # check system dynamics.
     system.dynamics = mm.Damping(alpha=1)
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=zeeman_case.region, cell=zeeman_case.cell)
     system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = zeeman_case.calculator.TimeDriver()
     td.drive(system, t=0.1e-9, n=20)
 
     # time-dependent - sinc
     system.energy = mm.Zeeman(H=H, func="sinc", f=1e9, t0=0)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=zeeman_case.region, cell=zeeman_case.cell)
     system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = zeeman_case.calculator.TimeDriver()
     td.drive(system, t=0.1e-9, n=20)
 
-    self.calculator.delete(system)
+    zeeman_case.calculator.delete(system)
 
     # time-dependent - function
     def t_func(t):
@@ -99,10 +97,10 @@ def test_zeeman_time_vector(zeeman_case):
 
     system.energy = mm.Zeeman(H=H, func=t_func, dt=1e-13)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=zeeman_case.region, cell=zeeman_case.cell)
     system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = zeeman_case.calculator.TimeDriver()
     td.drive(system, t=0.1e-9, n=20)
 
     # time-dependent - two terms
@@ -162,17 +160,16 @@ def test_zeeman_time_vector(zeeman_case):
 
     system.energy = mm.Zeeman(H=H, tcl_strings=tcl_strings)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=zeeman_case.region, cell=zeeman_case.cell)
     system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = zeeman_case.calculator.TimeDriver()
     td.drive(system, t=0.1e-9, n=20)
 
-    self.calculator.delete(system)
+    zeeman_case.calculator.delete(system)
 
 
 def test_zeeman_dict(zeeman_case):
-    self = zeeman_case
     name = "zeeman_dict"
 
     H = {"r1": (1e5, 0, 0), "r2": (0, 0, 1e5)}
@@ -181,10 +178,14 @@ def test_zeeman_dict(zeeman_case):
     system = mm.System(name=name)
     system.energy = mm.Zeeman(H=H)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
+    mesh = df.Mesh(
+        region=zeeman_case.region,
+        cell=zeeman_case.cell,
+        subregions=zeeman_case.subregions,
+    )
     system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = zeeman_case.calculator.MinDriver()
     md.drive(system)
 
     assert np.linalg.norm(np.subtract(system.m["r1"].mean(), (Ms, 0, 0))) < 1
@@ -193,7 +194,6 @@ def test_zeeman_dict(zeeman_case):
 
 
 def test_zeeman_time_dict(zeeman_case):
-    self = zeeman_case
     name = "zeeman_dict"
 
     H = {"r1": (1e5, 0, 0), "r2": (0, 0, 1e5)}
@@ -205,10 +205,14 @@ def test_zeeman_time_dict(zeeman_case):
     # check system dynamics.
     system.dynamics = mm.Damping(alpha=1)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
+    mesh = df.Mesh(
+        region=zeeman_case.region,
+        cell=zeeman_case.cell,
+        subregions=zeeman_case.subregions,
+    )
     system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = zeeman_case.calculator.MinDriver()
     md.drive(system)
 
     assert np.linalg.norm(np.subtract(system.m["r1"].mean(), (Ms, 0, 0))) < 1
@@ -218,19 +222,27 @@ def test_zeeman_time_dict(zeeman_case):
     # time-dependent - sin
     system.energy = mm.Zeeman(H=H, func="sin", f=1e9, t0=1e-12)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
+    mesh = df.Mesh(
+        region=zeeman_case.region,
+        cell=zeeman_case.cell,
+        subregions=zeeman_case.subregions,
+    )
     system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = zeeman_case.calculator.TimeDriver()
     td.drive(system, t=0.1e-9, n=20)
 
     # time-dependent - sinc
     system.energy = mm.Zeeman(H=H, func="sinc", f=1e9, t0=0)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
+    mesh = df.Mesh(
+        region=zeeman_case.region,
+        cell=zeeman_case.cell,
+        subregions=zeeman_case.subregions,
+    )
     system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = zeeman_case.calculator.TimeDriver()
     td.drive(system, t=0.1e-9, n=20)
 
     # time-dependent - function
@@ -244,17 +256,20 @@ def test_zeeman_time_dict(zeeman_case):
 
     system.energy = mm.Zeeman(H=H, func=t_func, dt=1e-13)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
+    mesh = df.Mesh(
+        region=zeeman_case.region,
+        cell=zeeman_case.cell,
+        subregions=zeeman_case.subregions,
+    )
     system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = zeeman_case.calculator.TimeDriver()
     td.drive(system, t=0.1e-9, n=20)
 
-    self.calculator.delete(system)
+    zeeman_case.calculator.delete(system)
 
 
 def test_zeeman_field(zeeman_case):
-    self = zeeman_case
     name = "zeeman_field"
 
     def value_fun(pos):
@@ -264,7 +279,7 @@ def test_zeeman_field(zeeman_case):
         else:
             return (0, 0, 1e6)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=zeeman_case.region, cell=zeeman_case.cell)
 
     H = df.Field(mesh, nvdim=3, value=value_fun)
     Ms = 1e6
@@ -273,7 +288,7 @@ def test_zeeman_field(zeeman_case):
     system.energy = mm.Zeeman(H=H)
     system.m = df.Field(mesh, nvdim=3, value=(0, 1, 0), norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = zeeman_case.calculator.MinDriver()
     md.drive(system)
 
     value = system.m((-2e-9, -2e-9, -2e-9))
@@ -284,7 +299,6 @@ def test_zeeman_field(zeeman_case):
 
 
 def test_zeeman_time_field(zeeman_case):
-    self = zeeman_case
     name = "zeeman_field"
 
     def value_fun(pos):
@@ -294,7 +308,7 @@ def test_zeeman_time_field(zeeman_case):
         else:
             return (0, 0, 1e6)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=zeeman_case.region, cell=zeeman_case.cell)
 
     H = df.Field(mesh, nvdim=3, value=value_fun)
     Ms = 1e6
@@ -303,7 +317,7 @@ def test_zeeman_time_field(zeeman_case):
     system.energy = mm.Zeeman(H=H)
     system.m = df.Field(mesh, nvdim=3, value=(0, 1, 0), norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = zeeman_case.calculator.MinDriver()
     md.drive(system)
 
     value = system.m((-2e-9, -2e-9, -2e-9))
@@ -318,19 +332,19 @@ def test_zeeman_time_field(zeeman_case):
     # check system dynamics.
     system.dynamics = mm.Damping(alpha=1)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=zeeman_case.region, cell=zeeman_case.cell)
     system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = zeeman_case.calculator.TimeDriver()
     td.drive(system, t=0.1e-9, n=20)
 
     # time-dependent - sinc
     system.energy = mm.Zeeman(H=H, func="sinc", f=1e9, t0=0)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=zeeman_case.region, cell=zeeman_case.cell)
     system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = zeeman_case.calculator.TimeDriver()
     td.drive(system, t=0.1e-9, n=20)
 
     # time-dependent - function
@@ -350,10 +364,10 @@ def test_zeeman_time_field(zeeman_case):
 
     system.energy = mm.Zeeman(H=H, func=t_func, dt=1e-13)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=zeeman_case.region, cell=zeeman_case.cell)
     system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = zeeman_case.calculator.TimeDriver()
     td.drive(system, t=0.1e-9, n=20)
 
     # time-dependent - tcl strings
@@ -379,10 +393,10 @@ def test_zeeman_time_field(zeeman_case):
 
     system.energy = mm.Zeeman(H=H, tcl_strings=tcl_strings)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=zeeman_case.region, cell=zeeman_case.cell)
     system.m = df.Field(mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = zeeman_case.calculator.TimeDriver()
     td.drive(system, t=0.1e-9, n=20)
 
-    self.calculator.delete(system)
+    zeeman_case.calculator.delete(system)

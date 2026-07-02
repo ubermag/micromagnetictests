@@ -27,86 +27,81 @@ def min_driver_case(calculator):
 
 
 def test_min_driver_noevolver_nodriver(min_driver_case):
-    self = min_driver_case
     name = "mindriver_noevolver_nodriver"
 
     system = mm.System(name=name)
-    system.energy = self.energy
-    system.m = self.m
+    system.energy = min_driver_case.energy
+    system.m = min_driver_case.m
 
-    md = self.calculator.MinDriver()
+    md = min_driver_case.calculator.MinDriver()
     md.drive(system)
 
-    value = system.m(self.mesh.region.center)
-    assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-2
+    value = system.m(min_driver_case.mesh.region.center)
+    assert np.linalg.norm(np.subtract(value, (0, 0, min_driver_case.Ms))) < 1e-2
 
     assert system.table.x == md._x
 
-    self.calculator.delete(system)
+    min_driver_case.calculator.delete(system)
 
 
 def test_min_driver_evolver_nodriver(min_driver_case):
-    self = min_driver_case
     name = "mindriver_evolver_nodriver"
 
     system = mm.System(name=name)
-    system.energy = self.energy
-    system.m = self.m
+    system.energy = min_driver_case.energy
+    system.m = min_driver_case.m
 
-    evolver = self.calculator.CGEvolver(method="Polak-Ribiere")
-    md = self.calculator.MinDriver(evolver=evolver)
+    evolver = min_driver_case.calculator.CGEvolver(method="Polak-Ribiere")
+    md = min_driver_case.calculator.MinDriver(evolver=evolver)
     md.drive(system)
 
-    value = system.m(self.mesh.region.center)
-    assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-3
+    value = system.m(min_driver_case.mesh.region.center)
+    assert np.linalg.norm(np.subtract(value, (0, 0, min_driver_case.Ms))) < 1e-3
 
-    self.calculator.delete(system)
+    min_driver_case.calculator.delete(system)
 
 
 def test_min_driver_noevolver_driver(min_driver_case):
-    self = min_driver_case
     name = "mindriver_noevolver_driver"
 
     system = mm.System(name=name)
-    system.energy = self.energy
-    system.m = self.m
+    system.energy = min_driver_case.energy
+    system.m = min_driver_case.m
 
-    md = self.calculator.MinDriver(stopping_mxHxm=0.1)
+    md = min_driver_case.calculator.MinDriver(stopping_mxHxm=0.1)
     md.drive(system)
 
-    value = system.m(self.mesh.region.center)
-    assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-3
+    value = system.m(min_driver_case.mesh.region.center)
+    assert np.linalg.norm(np.subtract(value, (0, 0, min_driver_case.Ms))) < 1e-3
 
-    self.calculator.delete(system)
+    min_driver_case.calculator.delete(system)
 
 
 def test_min_driver_evolver_driver(min_driver_case):
-    self = min_driver_case
     name = "mindriver_evolver_driver"
 
     system = mm.System(name=name)
-    system.energy = self.energy
-    system.m = self.m
+    system.energy = min_driver_case.energy
+    system.m = min_driver_case.m
 
-    evolver = self.calculator.CGEvolver(method="Polak-Ribiere")
-    md = self.calculator.MinDriver(evolver=evolver, stopping_mxHxm=0.1)
+    evolver = min_driver_case.calculator.CGEvolver(method="Polak-Ribiere")
+    md = min_driver_case.calculator.MinDriver(evolver=evolver, stopping_mxHxm=0.1)
     md.drive(system)
 
-    value = system.m(self.mesh.region.center)
-    assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1e-3
+    value = system.m(min_driver_case.mesh.region.center)
+    assert np.linalg.norm(np.subtract(value, (0, 0, min_driver_case.Ms))) < 1e-3
 
-    self.calculator.delete(system)
+    min_driver_case.calculator.delete(system)
 
 
 def test_min_driver_output_files(min_driver_case):
-    self = min_driver_case
     name = "mindriver_output_files"
 
     system = mm.System(name=name)
-    system.energy = self.energy
-    system.m = self.m
+    system.energy = min_driver_case.energy
+    system.m = min_driver_case.m
 
-    md = self.calculator.MinDriver()
+    md = min_driver_case.calculator.MinDriver()
     md.drive(system, save=True, overwrite=True)
 
     dirname = os.path.join(f"{name}", f"drive-{system.drive_number - 1}")
@@ -129,26 +124,24 @@ def test_min_driver_output_files(min_driver_case):
         omffilename = os.path.join(dirname, "m0.omf")
         assert omffilename in omf_files
 
-    self.calculator.delete(system)
+    min_driver_case.calculator.delete(system)
 
 
 def test_min_driver_wrong_evolver(min_driver_case):
-    self = min_driver_case
     system = mm.examples.macrospin()
-    evolver = self.calculator.RungeKuttaEvolver()
-    md = self.calculator.MinDriver(evolver=evolver)
+    evolver = min_driver_case.calculator.RungeKuttaEvolver()
+    md = min_driver_case.calculator.MinDriver(evolver=evolver)
 
     with pytest.raises(TypeError):
         md.drive(system)
 
-    self.calculator.delete(system)
+    min_driver_case.calculator.delete(system)
 
 
 def test_min_driver_check_for_energy(min_driver_case):
-    self = min_driver_case
     system = mm.examples.macrospin()
     system.energy = 0
-    md = self.calculator.MinDriver()
+    md = min_driver_case.calculator.MinDriver()
 
     with pytest.raises(RuntimeError, match="System's energy is not defined"):
         md.drive(system)

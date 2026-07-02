@@ -31,7 +31,6 @@ def m_init(pos):
 
 
 def test_exchange_scalar(exchange_case):
-    self = exchange_case
     name = "exchange_scalar"
 
     A = 1e-12
@@ -40,19 +39,18 @@ def test_exchange_scalar(exchange_case):
     system = mm.System(name=name)
     system.energy = mm.Exchange(A=A)
 
-    mesh = df.Mesh(region=self.region, n=self.n)
+    mesh = df.Mesh(region=exchange_case.region, n=exchange_case.n)
     system.m = df.Field(mesh, nvdim=3, value=m_init, norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = exchange_case.calculator.MinDriver()
     md.drive(system)
 
     assert abs(np.linalg.norm(system.m.mean()) - Ms) < 1
 
-    self.calculator.delete(system)
+    exchange_case.calculator.delete(system)
 
 
 def test_exchange_dict(exchange_case):
-    self = exchange_case
     name = "exchange_dict"
 
     A = {"r1": 3e-12, "r2": 1e-12, "r1:r2": -1e-12}
@@ -61,10 +59,14 @@ def test_exchange_dict(exchange_case):
     system = mm.System(name=name)
     system.energy = mm.Exchange(A=A)
 
-    mesh = df.Mesh(region=self.region, n=self.n, subregions=self.subregions)
+    mesh = df.Mesh(
+        region=exchange_case.region,
+        n=exchange_case.n,
+        subregions=exchange_case.subregions,
+    )
     system.m = df.Field(mesh, nvdim=3, value=m_init, norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = exchange_case.calculator.MinDriver()
     md.drive(system)
 
     # r1
@@ -83,11 +85,10 @@ def test_exchange_dict(exchange_case):
         < 1e-3
     )
 
-    self.calculator.delete(system)
+    exchange_case.calculator.delete(system)
 
 
 def test_exchange_field(exchange_case):
-    self = exchange_case
     name = "exchange_field"
 
     def A_fun(pos):
@@ -97,7 +98,7 @@ def test_exchange_field(exchange_case):
         else:
             return 1e-12
 
-    mesh = df.Mesh(region=self.region, n=self.n)
+    mesh = df.Mesh(region=exchange_case.region, n=exchange_case.n)
     A = df.Field(mesh, nvdim=1, value=A_fun)
     Ms = 1e6
 
@@ -106,9 +107,9 @@ def test_exchange_field(exchange_case):
 
     system.m = df.Field(mesh, nvdim=3, value=m_init, norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = exchange_case.calculator.MinDriver()
     md.drive(system)
 
     assert abs(np.linalg.norm(system.m.mean()) - Ms) < 1
 
-    self.calculator.delete(system)
+    exchange_case.calculator.delete(system)

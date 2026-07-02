@@ -23,34 +23,32 @@ def energy_case(calculator):
 
 
 def test_energy_exchange_zeeman(energy_case):
-    self = energy_case
     name = "energy_exchange_zeeman"
 
     A = 1e-12
     H = (1e6, 0, 0)
     Ms = 1e6
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=energy_case.region, cell=energy_case.cell)
 
     system = mm.System(name=name)
     system.energy = mm.Exchange(A=A) + mm.Zeeman(H=H)
     system.m = df.Field(mesh, nvdim=3, value=(0, 1, 0), norm=Ms)
 
-    if hasattr(self.calculator, "RelaxDriver"):
+    if hasattr(energy_case.calculator, "RelaxDriver"):
         system.dynamics = mm.Damping(alpha=0.5)
-        md = self.calculator.RelaxDriver()
+        md = energy_case.calculator.RelaxDriver()
     else:
-        md = self.calculator.MinDriver()
+        md = energy_case.calculator.MinDriver()
     md.drive(system)
 
     value = system.m(mesh.region.center)
     assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1e-3
 
-    self.calculator.delete(system)
+    energy_case.calculator.delete(system)
 
 
 def test_energy_exchange_uniaxialanisotropy(energy_case):
-    self = energy_case
     name = "exchange_uniaxialanisotropy"
 
     A = {"r1": 1e-12, "r2": 0}
@@ -58,27 +56,30 @@ def test_energy_exchange_uniaxialanisotropy(energy_case):
     u = (1, 0, 0)
     Ms = 1e6
 
-    mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
+    mesh = df.Mesh(
+        region=energy_case.region,
+        cell=energy_case.cell,
+        subregions=energy_case.subregions,
+    )
 
     system = mm.System(name=name)
     system.energy = mm.Exchange(A=A) + mm.UniaxialAnisotropy(K=K, u=u)
     system.m = df.Field(mesh, nvdim=3, value=(0.5, 1, 0), norm=Ms)
 
-    if hasattr(self.calculator, "RelaxDriver"):
+    if hasattr(energy_case.calculator, "RelaxDriver"):
         system.dynamics = mm.Damping(alpha=0.5)
-        md = self.calculator.RelaxDriver()
+        md = energy_case.calculator.RelaxDriver()
     else:
-        md = self.calculator.MinDriver()
+        md = energy_case.calculator.MinDriver()
     md.drive(system)
 
     value = system.m(mesh.region.center)
     assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1e-3
 
-    self.calculator.delete(system)
+    energy_case.calculator.delete(system)
 
 
 def test_energy_exchange_cubicanisotropy(energy_case):
-    self = energy_case
     name = "exchange_cubicanisotropy"
 
     A = {"r1": 1e-12, "r2": 0}
@@ -87,26 +88,33 @@ def test_energy_exchange_cubicanisotropy(energy_case):
     u2 = (0, 1, 0)
     Ms = 1e6
 
-    mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
+    mesh = df.Mesh(
+        region=energy_case.region,
+        cell=energy_case.cell,
+        subregions=energy_case.subregions,
+    )
 
     system = mm.System(name=name)
     system.energy = mm.Exchange(A=A) + mm.CubicAnisotropy(K=K, u1=u1, u2=u2)
     system.m = df.Field(mesh, nvdim=3, value=(1, 0.3, 0), norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = energy_case.calculator.MinDriver()
     md.drive(system)
 
     value = system.m(mesh.region.center)
     assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1e-3
 
-    self.calculator.delete(system)
+    energy_case.calculator.delete(system)
 
 
 def test_energy_exchange_dmi_zeeman(energy_case):
-    self = energy_case
     name = "exchange_dmi_zeeman"
 
-    mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
+    mesh = df.Mesh(
+        region=energy_case.region,
+        cell=energy_case.cell,
+        subregions=energy_case.subregions,
+    )
 
     # Very weak DMI and strong Zeeman to make the final
     # magnetisation uniform.
@@ -121,20 +129,23 @@ def test_energy_exchange_dmi_zeeman(energy_case):
     )
     system.m = df.Field(mesh, nvdim=3, value=(1, 0.3, 0), norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = energy_case.calculator.MinDriver()
     md.drive(system)
 
     value = system.m(mesh.region.center)
     assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1
 
-    self.calculator.delete(system)
+    energy_case.calculator.delete(system)
 
 
 def test_energy_exchange_dmi_zeeman_uniaxialanisotropy_demag(energy_case):
-    self = energy_case
     name = "exchange_dmi_zeeman_uniaxialanisotropy"
 
-    mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
+    mesh = df.Mesh(
+        region=energy_case.region,
+        cell=energy_case.cell,
+        subregions=energy_case.subregions,
+    )
 
     # Very weak DMI and strong Zeeman to make the final
     # magnetisation uniform.
@@ -155,17 +166,16 @@ def test_energy_exchange_dmi_zeeman_uniaxialanisotropy_demag(energy_case):
     )
     system.m = df.Field(mesh, nvdim=3, value=(1, 0.3, 0), norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = energy_case.calculator.MinDriver()
     md.drive(system)
 
     value = system.m(mesh.region.center)
     assert np.linalg.norm(np.subtract(value, (Ms, 0, 0))) < 1
 
-    self.calculator.delete(system)
+    energy_case.calculator.delete(system)
 
 
 def test_energy_zeeman_zeeman(energy_case):
-    self = energy_case
     name = "multi_zeeman_field"
 
     def value_fun(pos):
@@ -175,7 +185,7 @@ def test_energy_zeeman_zeeman(energy_case):
         else:
             return (0, 0, 1e6)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=energy_case.region, cell=energy_case.cell)
 
     H1 = df.Field(mesh, nvdim=3, value=value_fun)
     H2 = df.Field(mesh, nvdim=3, value=(0, 1e6, 0))
@@ -185,9 +195,9 @@ def test_energy_zeeman_zeeman(energy_case):
     system.energy = mm.Zeeman(H=H1, name="zeeman1") + mm.Zeeman(H=H2, name="zeeman2")
     system.m = df.Field(mesh, nvdim=3, value=(0, 1, 0), norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = energy_case.calculator.MinDriver()
     md.drive(system)
 
     # test if it runs
 
-    self.calculator.delete(system)
+    energy_case.calculator.delete(system)

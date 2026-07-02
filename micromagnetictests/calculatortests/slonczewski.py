@@ -23,7 +23,6 @@ def slonczewski_case(calculator):
 
 
 def test_slonczewski_single_values(slonczewski_case):
-    self = slonczewski_case
     name = "slonczewski_scalar_values"
 
     J = 1e12
@@ -34,7 +33,7 @@ def test_slonczewski_single_values(slonczewski_case):
     H = (0, 0, 1e6)
     Ms = 1e6
 
-    mesh = df.Mesh(region=self.region, n=self.n)
+    mesh = df.Mesh(region=slonczewski_case.region, n=slonczewski_case.n)
 
     system = mm.System(name=name)
     system.energy = mm.Zeeman(H=H)
@@ -43,7 +42,7 @@ def test_slonczewski_single_values(slonczewski_case):
     )
     system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = slonczewski_case.calculator.TimeDriver()
     td.drive(system, t=0.2e-9, n=20)
 
     # Check if it runs.
@@ -91,11 +90,10 @@ def test_slonczewski_single_values(slonczewski_case):
 
     # Check if it runs.
 
-    self.calculator.delete(system)
+    slonczewski_case.calculator.delete(system)
 
 
 def test_slonczewski_single_values_finite_temperature(slonczewski_case):
-    self = slonczewski_case
     name = "slonczewski_scalar_values_finite_temperature"
 
     J = 1e12
@@ -106,7 +104,7 @@ def test_slonczewski_single_values_finite_temperature(slonczewski_case):
     H = (0, 0, 1e6)
     Ms = 1e6
 
-    mesh = df.Mesh(region=self.region, n=self.n)
+    mesh = df.Mesh(region=slonczewski_case.region, n=slonczewski_case.n)
 
     system = mm.System(name=name)
     system.energy = mm.Zeeman(H=H)
@@ -116,8 +114,8 @@ def test_slonczewski_single_values_finite_temperature(slonczewski_case):
     system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
     system.T = 10
 
-    evolver = self.calculator.Xf_ThermSpinXferEvolver()
-    td = self.calculator.TimeDriver(evolver=evolver)
+    evolver = slonczewski_case.calculator.Xf_ThermSpinXferEvolver()
+    td = slonczewski_case.calculator.TimeDriver(evolver=evolver)
     td.drive(system, t=0.2e-11, n=20)
 
     # Check if it runs.
@@ -153,11 +151,10 @@ def test_slonczewski_single_values_finite_temperature(slonczewski_case):
 
     # Check if it runs.
 
-    self.calculator.delete(system)
+    slonczewski_case.calculator.delete(system)
 
 
 def test_slonczewski_dict_values(slonczewski_case):
-    self = slonczewski_case
     name = "slonczewski_scalar_values"
 
     J = {"r1": 1e12, "r2": 5e12}
@@ -168,7 +165,11 @@ def test_slonczewski_dict_values(slonczewski_case):
     H = (0, 0, 1e6)
     Ms = 1e6
 
-    mesh = df.Mesh(region=self.region, n=self.n, subregions=self.subregions)
+    mesh = df.Mesh(
+        region=slonczewski_case.region,
+        n=slonczewski_case.n,
+        subregions=slonczewski_case.subregions,
+    )
 
     system = mm.System(name=name)
     system.energy = mm.Zeeman(H=H)
@@ -177,7 +178,7 @@ def test_slonczewski_dict_values(slonczewski_case):
     )
     system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = slonczewski_case.calculator.TimeDriver()
     td.drive(system, t=0.2e-9, n=20)
 
     # Check if it runs.
@@ -213,14 +214,13 @@ def test_slonczewski_dict_values(slonczewski_case):
 
     # Check if it runs.
 
-    self.calculator.delete(system)
+    slonczewski_case.calculator.delete(system)
 
 
 def test_slonczewski_field_values(slonczewski_case):
-    self = slonczewski_case
     name = "slonczewski_scalar_values"
 
-    mesh = df.Mesh(region=self.region, n=self.n)
+    mesh = df.Mesh(region=slonczewski_case.region, n=slonczewski_case.n)
 
     J = df.Field(mesh, nvdim=1, value=0.5e12)
     mp = df.Field(mesh, nvdim=3, value=(1, 0, 0))
@@ -237,7 +237,7 @@ def test_slonczewski_field_values(slonczewski_case):
     )
     system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = slonczewski_case.calculator.TimeDriver()
     td.drive(system, t=0.2e-9, n=20)
 
     # Check if it runs.
@@ -273,4 +273,4 @@ def test_slonczewski_field_values(slonczewski_case):
 
     # Check if it runs.
 
-    self.calculator.delete(system)
+    slonczewski_case.calculator.delete(system)

@@ -19,7 +19,6 @@ def demag_case(calculator):
 
 
 def test_demag_demag(demag_case):
-    self = demag_case
     name = "demag"
 
     Ms = 1e6
@@ -27,18 +26,17 @@ def test_demag_demag(demag_case):
     system = mm.System(name=name)
     system.energy = mm.Demag()
 
-    system.m = df.Field(self.mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
+    system.m = df.Field(demag_case.mesh, nvdim=3, value=(1, 1, 1), norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = demag_case.calculator.MinDriver()
     md.drive(system)
 
     # Check if it runs. Tests to be added here.
 
-    self.calculator.delete(system)
+    demag_case.calculator.delete(system)
 
 
 def test_demag_demag_asymptotic_radius(demag_case):
-    self = demag_case
     name = "demag_asymptotic_radius"
 
     Ms = 1e6
@@ -46,18 +44,17 @@ def test_demag_demag_asymptotic_radius(demag_case):
     system = mm.System(name=name)
     system.energy = mm.Demag(asymptotic_radius=6)
 
-    system.m = df.Field(self.mesh, nvdim=3, value=(0, 0, 1), norm=Ms)
+    system.m = df.Field(demag_case.mesh, nvdim=3, value=(0, 0, 1), norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = demag_case.calculator.MinDriver()
     md.drive(system)
 
     # Check if it runs. Tests to be added here.
 
-    self.calculator.delete(system)
+    demag_case.calculator.delete(system)
 
 
 def test_demag_demag_1_pbc(demag_case):
-    self = demag_case
     name = "demag_pbc"
 
     Ms = 1e6
@@ -65,18 +62,17 @@ def test_demag_demag_1_pbc(demag_case):
     system = mm.System(name=name)
     system.energy = mm.Demag()
 
-    md = self.calculator.MinDriver()
+    md = demag_case.calculator.MinDriver()
 
     # 1D pbc
-    mesh = df.Mesh(region=self.region, cell=self.cell, bc="x")
+    mesh = df.Mesh(region=demag_case.region, cell=demag_case.cell, bc="x")
     system.m = df.Field(mesh, nvdim=3, value=(0, 0, 1), norm=Ms)
 
     md.drive(system)
-    self.calculator.delete(system)
+    demag_case.calculator.delete(system)
 
 
 def test_demag_demag_2_pbc(demag_case):
-    self = demag_case
     name = "demag_pbc"
 
     Ms = 1e6
@@ -84,23 +80,22 @@ def test_demag_demag_2_pbc(demag_case):
     system = mm.System(name=name)
     system.energy = mm.Demag()
 
-    md = self.calculator.MinDriver()
+    md = demag_case.calculator.MinDriver()
 
     # 2D pbc
-    mesh = df.Mesh(region=self.region, cell=self.cell, bc="xy")
+    mesh = df.Mesh(region=demag_case.region, cell=demag_case.cell, bc="xy")
     system.m = df.Field(mesh, nvdim=3, value=(0, 0, 1), norm=Ms)
 
-    if not hasattr(self.calculator, "RelaxDriver"):
+    if not hasattr(demag_case.calculator, "RelaxDriver"):
         with pytest.raises(ValueError):
             md.drive(system)
     else:
         md.drive(system)
 
-    self.calculator.delete(system)
+    demag_case.calculator.delete(system)
 
 
 def test_demag_demag_3_pbc(demag_case):
-    self = demag_case
     name = "demag_pbc"
 
     Ms = 1e6
@@ -108,16 +103,16 @@ def test_demag_demag_3_pbc(demag_case):
     system = mm.System(name=name)
     system.energy = mm.Demag()
 
-    md = self.calculator.MinDriver()
+    md = demag_case.calculator.MinDriver()
 
     # 3D pbc
-    mesh = df.Mesh(region=self.region, cell=self.cell, bc="xyz")
+    mesh = df.Mesh(region=demag_case.region, cell=demag_case.cell, bc="xyz")
     system.m = df.Field(mesh, nvdim=3, value=(0, 0, 1), norm=Ms)
 
-    if not hasattr(self.calculator, "RelaxDriver"):
+    if not hasattr(demag_case.calculator, "RelaxDriver"):
         with pytest.raises(ValueError):
             md.drive(system)
     else:
         md.drive(system)
 
-    self.calculator.delete(system)
+    demag_case.calculator.delete(system)

@@ -58,18 +58,17 @@ def zhang_li_case(calculator):
 
 
 def test_zhang_li_scalar_u(zhang_li_case):
-    self = zhang_li_case
     """
     Uniform current in x direction.
     """
-    td = self.calculator.TimeDriver()
+    td = zhang_li_case.calculator.TimeDriver()
 
-    system = self.system
+    system = zhang_li_case.system
 
     system.dynamics = (
         mm.Precession(gamma0=mm.consts.gamma0)
         + mm.Damping(alpha=0.3)
-        + mm.ZhangLi(u=self.u, beta=self.beta)
+        + mm.ZhangLi(u=zhang_li_case.u, beta=zhang_li_case.beta)
     )
     td.drive(system, t=0.35e-9, n=1)
 
@@ -78,17 +77,16 @@ def test_zhang_li_scalar_u(zhang_li_case):
     assert system.m.orientation.z.sel(x=(0, 120e-9)).mean() < -0.95
     assert system.m.orientation.z.sel(x=(140e-9, 200e-9)).mean() > 0.95
 
-    self.calculator.delete(system)
+    zhang_li_case.calculator.delete(system)
 
 
 def test_zhang_li_time_func_scalar_u(zhang_li_case):
-    self = zhang_li_case
     """
     Uniform current in x direction with sin time dependence.
     """
-    td = self.calculator.TimeDriver()
+    td = zhang_li_case.calculator.TimeDriver()
 
-    system = self.system
+    system = zhang_li_case.system
 
     f = 2 * math.pi / 0.6e-9
 
@@ -98,7 +96,9 @@ def test_zhang_li_time_func_scalar_u(zhang_li_case):
     system.dynamics = (
         mm.Precession(gamma0=mm.consts.gamma0)
         + mm.Damping(alpha=0.3)
-        + mm.ZhangLi(u=self.u, beta=self.beta, func=time_dep, dt=1e-13)
+        + mm.ZhangLi(
+            u=zhang_li_case.u, beta=zhang_li_case.beta, func=time_dep, dt=1e-13
+        )
     )
 
     # drive for one period and save two steps
@@ -119,16 +119,15 @@ def test_zhang_li_time_func_scalar_u(zhang_li_case):
     assert drive[1].orientation.z.sel(x=(0, 60e-9)).mean() < -0.95
     assert drive[1].orientation.z.sel(x=(80e-9, 200e-9)).mean() > 0.95
 
-    # self.calculator.delete(system)
+    # zhang_li_case.calculator.delete(system)
 
 
 def test_zhang_li_time_tcl_scalar_u(zhang_li_case):
-    self = zhang_li_case
     """
     Uniform current in x direction with sin time dependence.
     """
-    td = self.calculator.TimeDriver()
-    system = self.system
+    td = zhang_li_case.calculator.TimeDriver()
+    system = zhang_li_case.system
 
     # time-dependence - tcl strings
     tcl_strings = {}
@@ -144,7 +143,9 @@ def test_zhang_li_time_tcl_scalar_u(zhang_li_case):
     system.dynamics = (
         mm.Precession(gamma0=mm.consts.gamma0)
         + mm.Damping(alpha=0.3)
-        + mm.ZhangLi(u=self.u, beta=self.beta, tcl_strings=tcl_strings)
+        + mm.ZhangLi(
+            u=zhang_li_case.u, beta=zhang_li_case.beta, tcl_strings=tcl_strings
+        )
     )
 
     # drive for one period and save two steps
@@ -165,22 +166,21 @@ def test_zhang_li_time_tcl_scalar_u(zhang_li_case):
     assert drive[1].orientation.z.sel(x=(0, 60e-9)).mean() < -0.95
     assert drive[1].orientation.z.sel(x=(80e-9, 200e-9)).mean() > 0.95
 
-    self.calculator.delete(system)
+    zhang_li_case.calculator.delete(system)
 
 
 def test_zhang_li_dict_scalar_u(zhang_li_case):
-    self = zhang_li_case
     """
     Current only in left half of the strip, defined with a dict.
     """
-    td = self.calculator.TimeDriver()
+    td = zhang_li_case.calculator.TimeDriver()
 
-    system = self.system
+    system = zhang_li_case.system
 
     system.dynamics = (
         mm.Precession(gamma0=mm.consts.gamma0)
         + mm.Damping(alpha=0.3)
-        + mm.ZhangLi(u={"r1": self.u, "r2": 0}, beta=self.beta)
+        + mm.ZhangLi(u={"r1": zhang_li_case.u, "r2": 0}, beta=zhang_li_case.beta)
     )
     td.drive(system, t=0.35e-9, n=1)
 
@@ -189,22 +189,23 @@ def test_zhang_li_dict_scalar_u(zhang_li_case):
     assert system.m.orientation.z.sel(x=(0, 90e-9)).mean() < -0.95
     assert system.m.orientation.z.sel(x=(110e-9, 200e-9)).mean() > 0.95
 
-    self.calculator.delete(system)
+    zhang_li_case.calculator.delete(system)
 
 
 def test_zhang_li_dict_vector_u(zhang_li_case):
-    self = zhang_li_case
     """
     Current only in left half of the strip, defined with a dict.
     """
-    td = self.calculator.TimeDriver()
+    td = zhang_li_case.calculator.TimeDriver()
 
-    system = self.system
+    system = zhang_li_case.system
 
     system.dynamics = (
         mm.Precession(gamma0=mm.consts.gamma0)
         + mm.Damping(alpha=0.3)
-        + mm.ZhangLi(u={"r1": (self.u, 0, 0), "r2": (0, 0, 0)}, beta=self.beta)
+        + mm.ZhangLi(
+            u={"r1": (zhang_li_case.u, 0, 0), "r2": (0, 0, 0)}, beta=zhang_li_case.beta
+        )
     )
     td.drive(system, t=0.35e-9, n=1)
 
@@ -213,26 +214,27 @@ def test_zhang_li_dict_vector_u(zhang_li_case):
     assert system.m.orientation.z.sel(x=(0, 90e-9)).mean() < -0.95
     assert system.m.orientation.z.sel(x=(110e-9, 200e-9)).mean() > 0.95
 
-    self.calculator.delete(system)
+    zhang_li_case.calculator.delete(system)
 
 
 def test_zhang_li_field_scalar_u(zhang_li_case):
-    self = zhang_li_case
     """
     Current only in left half of the strip, defined with a Field.
     """
-    td = self.calculator.TimeDriver()
+    td = zhang_li_case.calculator.TimeDriver()
 
-    system = self.system
+    system = zhang_li_case.system
 
     u_field = df.Field(
-        mesh=system.m.mesh, nvdim=1, value=lambda p: self.u if p[0] < 100e-9 else 0
+        mesh=system.m.mesh,
+        nvdim=1,
+        value=lambda p: zhang_li_case.u if p[0] < 100e-9 else 0,
     )
 
     system.dynamics = (
         mm.Precession(gamma0=mm.consts.gamma0)
         + mm.Damping(alpha=0.3)
-        + mm.ZhangLi(u=u_field, beta=self.beta)
+        + mm.ZhangLi(u=u_field, beta=zhang_li_case.beta)
     )
     td.drive(system, t=0.35e-9, n=1)
 
@@ -241,28 +243,27 @@ def test_zhang_li_field_scalar_u(zhang_li_case):
     assert system.m.orientation.z.sel(x=(0, 90e-9)).mean() < -0.95
     assert system.m.orientation.z.sel(x=(110e-9, 200e-9)).mean() > 0.95
 
-    self.calculator.delete(system)
+    zhang_li_case.calculator.delete(system)
 
 
 def test_zhang_li_field_vector_u(zhang_li_case):
-    self = zhang_li_case
     """
     Current only in left half of the strip, defined with a Field.
     """
-    td = self.calculator.TimeDriver()
+    td = zhang_li_case.calculator.TimeDriver()
 
-    system = self.system
+    system = zhang_li_case.system
 
     u_field = df.Field(
         mesh=system.m.mesh,
         nvdim=3,
-        value=lambda p: (self.u, 0, 0) if p[0] < 100e-9 else (0, 0, 0),
+        value=lambda p: (zhang_li_case.u, 0, 0) if p[0] < 100e-9 else (0, 0, 0),
     )
 
     system.dynamics = (
         mm.Precession(gamma0=mm.consts.gamma0)
         + mm.Damping(alpha=0.3)
-        + mm.ZhangLi(u=u_field, beta=self.beta)
+        + mm.ZhangLi(u=u_field, beta=zhang_li_case.beta)
     )
     td.drive(system, t=0.35e-9, n=1)
 
@@ -271,18 +272,17 @@ def test_zhang_li_field_vector_u(zhang_li_case):
     assert system.m.orientation.z.sel(x=(0, 90e-9)).mean() < -0.95
     assert system.m.orientation.z.sel(x=(110e-9, 200e-9)).mean() > 0.95
 
-    self.calculator.delete(system)
+    zhang_li_case.calculator.delete(system)
 
 
 def test_zhang_li_vector_u(zhang_li_case):
-    self = zhang_li_case
     """
     Strip oriented along y with uniform current applied in y direction.
     """
-    md = self.calculator.MinDriver()
-    td = self.calculator.TimeDriver()
+    md = zhang_li_case.calculator.MinDriver()
+    td = zhang_li_case.calculator.TimeDriver()
 
-    system = self.system
+    system = zhang_li_case.system
 
     # replace system m with strip along y
     p1 = (0, 0, 0)
@@ -309,7 +309,7 @@ def test_zhang_li_vector_u(zhang_li_case):
     system.dynamics = (
         mm.Precession(gamma0=mm.consts.gamma0)
         + mm.Damping(alpha=0.3)
-        + mm.ZhangLi(u=(0, self.u, 0), beta=self.beta)
+        + mm.ZhangLi(u=(0, zhang_li_case.u, 0), beta=zhang_li_case.beta)
     )
     td.drive(system, t=0.35e-9, n=1)
 
@@ -318,4 +318,4 @@ def test_zhang_li_vector_u(zhang_li_case):
     assert system.m.orientation.z.sel(y=(0, 120e-9)).mean() < -0.95
     assert system.m.orientation.z.sel(y=(140e-9, 200e-9)).mean() > 0.95
 
-    self.calculator.delete(system)
+    zhang_li_case.calculator.delete(system)

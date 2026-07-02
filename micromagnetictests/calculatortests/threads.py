@@ -27,25 +27,24 @@ def threads_case(calculator):
 
 
 def test_threads_threads(threads_case):
-    self = threads_case
     name = "timedriver_noevolver_nodriver"
 
     system = mm.System(name=name)
-    system.energy = self.energy
-    system.dynamics = self.precession + self.damping
-    system.m = self.m
+    system.energy = threads_case.energy
+    system.dynamics = threads_case.precession + threads_case.damping
+    system.m = threads_case.m
 
     # One thread
-    td = self.calculator.TimeDriver()
+    td = threads_case.calculator.TimeDriver()
     td.drive(system, t=0.2e-9, n=50, n_threads=1)
 
-    value = system.m(self.mesh.region.center)
-    assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1
+    value = system.m(threads_case.mesh.region.center)
+    assert np.linalg.norm(np.subtract(value, (0, 0, threads_case.Ms))) < 1
 
     # Two threads
     td.drive(system, t=0.2e-9, n=50, n_threads=2)
 
-    value = system.m(self.mesh.region.center)
-    assert np.linalg.norm(np.subtract(value, (0, 0, self.Ms))) < 1
+    value = system.m(threads_case.mesh.region.center)
+    assert np.linalg.norm(np.subtract(value, (0, 0, threads_case.Ms))) < 1
 
-    self.calculator.delete(system)
+    threads_case.calculator.delete(system)

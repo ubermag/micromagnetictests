@@ -23,7 +23,6 @@ def fixed_subregions_case(calculator):
 
 
 def test_fixed_subregions_fixed_subregions(fixed_subregions_case):
-    self = fixed_subregions_case
     name = "fixed_subregions"
 
     H = (0, 0, 1e5)
@@ -32,14 +31,18 @@ def test_fixed_subregions_fixed_subregions(fixed_subregions_case):
     system = mm.System(name=name)
     system.energy = mm.Zeeman(H=H)
 
-    mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
+    mesh = df.Mesh(
+        region=fixed_subregions_case.region,
+        cell=fixed_subregions_case.cell,
+        subregions=fixed_subregions_case.subregions,
+    )
     system.m = df.Field(mesh, nvdim=3, value=(1, 0, 0), norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = fixed_subregions_case.calculator.MinDriver()
     md.drive(system, fixed_subregions=["r1"])
 
     assert np.linalg.norm(np.subtract(system.m["r1"].mean(), (Ms, 0, 0))) < 1
 
     assert np.linalg.norm(np.subtract(system.m["r2"].mean(), (0, 0, Ms))) < 1
 
-    self.calculator.delete(system)
+    fixed_subregions_case.calculator.delete(system)

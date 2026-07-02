@@ -28,7 +28,6 @@ def random_m(pos):
 
 
 def test_dmi_scalar(dmi_case):
-    self = dmi_case
     name = "dmi_scalar"
 
     D = 1e-3
@@ -37,17 +36,17 @@ def test_dmi_scalar(dmi_case):
     system = mm.System(name=name)
     system.energy = mm.DMI(D=D, crystalclass="Cnv_z")
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
-    system.m = df.Field(mesh, nvdim=3, value=self.random_m, norm=Ms)
+    mesh = df.Mesh(region=dmi_case.region, cell=dmi_case.cell)
+    system.m = df.Field(mesh, nvdim=3, value=dmi_case.random_m, norm=Ms)
 
-    if hasattr(self.calculator, "RelaxDriver"):
+    if hasattr(dmi_case.calculator, "RelaxDriver"):
         system.dynamics = mm.Damping(alpha=0.5)
-        md = self.calculator.RelaxDriver()
+        md = dmi_case.calculator.RelaxDriver()
         with pytest.raises(RuntimeError):
             md.drive(system)
         system.energy += mm.Exchange(A=1e-21)
     else:
-        md = self.calculator.MinDriver()
+        md = dmi_case.calculator.MinDriver()
 
     md.drive(system)
 
@@ -55,11 +54,10 @@ def test_dmi_scalar(dmi_case):
     # 0.
     assert np.linalg.norm(system.m.mean()) < 1
 
-    self.calculator.delete(system)
+    dmi_case.calculator.delete(system)
 
 
 def test_dmi_dict(dmi_case):
-    self = dmi_case
     name = "dmi_dict"
 
     D = {"r1": 0, "r2": 1e-3, "default": 2e-3}
@@ -68,17 +66,19 @@ def test_dmi_dict(dmi_case):
     system = mm.System(name=name)
     system.energy = mm.DMI(D=D, crystalclass="Cnv_z")
 
-    mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
-    system.m = df.Field(mesh, nvdim=3, value=self.random_m, norm=Ms)
+    mesh = df.Mesh(
+        region=dmi_case.region, cell=dmi_case.cell, subregions=dmi_case.subregions
+    )
+    system.m = df.Field(mesh, nvdim=3, value=dmi_case.random_m, norm=Ms)
 
-    if hasattr(self.calculator, "RelaxDriver"):
+    if hasattr(dmi_case.calculator, "RelaxDriver"):
         system.dynamics = mm.Damping(alpha=0.5)
-        md = self.calculator.RelaxDriver()
+        md = dmi_case.calculator.RelaxDriver()
         with pytest.raises(RuntimeError):
             md.drive(system)
         system.energy += mm.Exchange(A=1e-21)
     else:
-        md = self.calculator.MinDriver()
+        md = dmi_case.calculator.MinDriver()
     md.drive(system)
 
     assert np.linalg.norm(system.m["r1"].mean()) > 1
@@ -86,13 +86,12 @@ def test_dmi_dict(dmi_case):
     # the average should be 0.
     assert np.linalg.norm(system.m["r2"].mean()) < 1
 
-    self.calculator.delete(system)
+    dmi_case.calculator.delete(system)
 
 
 @pytest.mark.filterwarnings("ignore:Use of `Cnv` is deprecated:FutureWarning")
 @pytest.mark.filterwarnings("ignore:Use of `D2d` is deprecated:FutureWarning")
 def test_dmi_crystalclass(dmi_case):
-    self = dmi_case
     name = "dmi_crystalclass"
 
     D = 1e-3
@@ -114,26 +113,27 @@ def test_dmi_crystalclass(dmi_case):
         system.energy = mm.DMI(D=D, crystalclass=crystalclass)
 
         if crystalclass.endswith(("x", "y")):
-            mesh = df.Mesh(p1=(0, 0, -100e-9), p2=(1e-9, 1e-9, 100e-9), cell=self.cell)
+            mesh = df.Mesh(
+                p1=(0, 0, -100e-9), p2=(1e-9, 1e-9, 100e-9), cell=dmi_case.cell
+            )
         else:
-            mesh = df.Mesh(region=self.region, cell=self.cell)
+            mesh = df.Mesh(region=dmi_case.region, cell=dmi_case.cell)
 
-        system.m = df.Field(mesh, nvdim=3, value=self.random_m, norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=dmi_case.random_m, norm=Ms)
 
-        md = self.calculator.MinDriver()
+        md = dmi_case.calculator.MinDriver()
         md.drive(system)
 
         # There are 4N cells in the mesh. Because of that the
         # average should be 0.
         assert np.linalg.norm(system.m.mean()) < 1
 
-    self.calculator.delete(system)
+    dmi_case.calculator.delete(system)
 
 
 @pytest.mark.filterwarnings("ignore:Use of `Cnv` is deprecated:FutureWarning")
 @pytest.mark.filterwarnings("ignore:Use of `D2d` is deprecated:FutureWarning")
 def test_dmi_crystalclass_init(dmi_case):
-    self = dmi_case
     name = "dmi_crystalclass"
 
     D = 1e-3
@@ -157,14 +157,16 @@ def test_dmi_crystalclass_init(dmi_case):
         system.energy = mm.DMI(D=D, crystalclass=crystalclass)
 
         if crystalclass.endswith(("x", "y")):
-            mesh = df.Mesh(p1=(0, 0, -100e-9), p2=(1e-9, 1e-9, 100e-9), cell=self.cell)
+            mesh = df.Mesh(
+                p1=(0, 0, -100e-9), p2=(1e-9, 1e-9, 100e-9), cell=dmi_case.cell
+            )
         else:
-            mesh = df.Mesh(region=self.region, cell=self.cell)
+            mesh = df.Mesh(region=dmi_case.region, cell=dmi_case.cell)
 
-        system.m = df.Field(mesh, nvdim=3, value=self.random_m, norm=Ms)
+        system.m = df.Field(mesh, nvdim=3, value=dmi_case.random_m, norm=Ms)
 
-        md = self.calculator.MinDriver()
-        if hasattr(self.calculator, "RelaxDriver"):
+        md = dmi_case.calculator.MinDriver()
+        if hasattr(dmi_case.calculator, "RelaxDriver"):
             system.energy += mm.Exchange(A=1e-21)
             if crystalclass not in mumax3_cc:
                 with pytest.raises(ValueError):
@@ -174,4 +176,4 @@ def test_dmi_crystalclass_init(dmi_case):
         else:
             md.drive(system)
 
-    self.calculator.delete(system)
+    dmi_case.calculator.delete(system)

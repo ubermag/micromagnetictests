@@ -23,7 +23,6 @@ def dynamics_case(calculator):
 
 
 def test_dynamics_scalar_scalar(dynamics_case):
-    self = dynamics_case
     name = "dynamics_scalar_scalar"
 
     H = (0, 0, 1e6)
@@ -31,25 +30,24 @@ def test_dynamics_scalar_scalar(dynamics_case):
     gamma0 = 2.211e5
     Ms = 1e6
 
-    mesh = df.Mesh(region=self.region, n=self.n)
+    mesh = df.Mesh(region=dynamics_case.region, n=dynamics_case.n)
 
     system = mm.System(name=name)
     system.energy = mm.Zeeman(H=H)
     system.dynamics = mm.Precession(gamma0=gamma0) + mm.Damping(alpha=alpha)
     system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = dynamics_case.calculator.TimeDriver()
     td.drive(system, t=0.2e-9, n=50)
 
     # Alpha is zero, nothing should change.
     value = system.m(mesh.region.center)
     assert np.linalg.norm(np.subtract(np.divide(value, Ms), (0, 0, 1))) < 1e-5
 
-    self.calculator.delete(system)
+    dynamics_case.calculator.delete(system)
 
 
 def test_dynamics_scalar_dict(dynamics_case):
-    self = dynamics_case
     name = "dynamics_scalar_dict"
 
     H = (0, 0, 1e6)
@@ -57,14 +55,18 @@ def test_dynamics_scalar_dict(dynamics_case):
     alpha = {"r1": 0, "r2": 1}
     Ms = 1e6
 
-    mesh = df.Mesh(region=self.region, n=self.n, subregions=self.subregions)
+    mesh = df.Mesh(
+        region=dynamics_case.region,
+        n=dynamics_case.n,
+        subregions=dynamics_case.subregions,
+    )
 
     system = mm.System(name=name)
     system.energy = mm.Zeeman(H=H)
     system.dynamics = mm.Precession(gamma0=gamma0) + mm.Damping(alpha=alpha)
     system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = dynamics_case.calculator.TimeDriver()
     td.drive(system, t=0.2e-9, n=50)
 
     # alpha=0 region
@@ -75,14 +77,13 @@ def test_dynamics_scalar_dict(dynamics_case):
     value = system.m((1e-9, 4e-9, 3e-9))
     assert np.linalg.norm(np.subtract(np.divide(value, Ms), (0, 0, 1))) < 1e-5
 
-    self.calculator.delete(system)
+    dynamics_case.calculator.delete(system)
 
 
 def test_dynamics_field_field(dynamics_case):
-    self = dynamics_case
     name = "dynamics_field_field"
 
-    mesh = df.Mesh(region=self.region, n=self.n)
+    mesh = df.Mesh(region=dynamics_case.region, n=dynamics_case.n)
 
     def alpha_fun(pos):
         x, y, z = pos
@@ -108,7 +109,7 @@ def test_dynamics_field_field(dynamics_case):
     system.dynamics = mm.Precession(gamma0=gamma0) + mm.Damping(alpha=alpha)
     system.m = df.Field(mesh, nvdim=3, value=(0, 0.1, 1), norm=Ms)
 
-    td = self.calculator.TimeDriver()
+    td = dynamics_case.calculator.TimeDriver()
     td.drive(system, t=0.2e-9, n=50)
 
     # alpha=0 and gamma=0 region
@@ -119,4 +120,4 @@ def test_dynamics_field_field(dynamics_case):
     value = system.m((1e-9, 4e-9, 3e-9))
     assert np.linalg.norm(np.subtract(np.divide(value, Ms), (0, 0, 1))) < 1e-5
 
-    self.calculator.delete(system)
+    dynamics_case.calculator.delete(system)

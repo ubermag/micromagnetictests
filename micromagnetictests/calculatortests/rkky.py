@@ -32,7 +32,6 @@ def m_init(pos):
 
 
 def test_rkky_scalar(rkky_case):
-    self = rkky_case
     name = "rkky_scalar"
 
     sigma = -1e4
@@ -42,10 +41,12 @@ def test_rkky_scalar(rkky_case):
     system = mm.System(name=name)
     system.energy = mm.RKKY(sigma=sigma, sigma2=sigma2, subregions=["r1", "r3"])
 
-    mesh = df.Mesh(region=self.region, n=self.n, subregions=self.subregions)
+    mesh = df.Mesh(
+        region=rkky_case.region, n=rkky_case.n, subregions=rkky_case.subregions
+    )
     system.m = df.Field(mesh, nvdim=3, value=m_init, norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = rkky_case.calculator.MinDriver()
     md.drive(system)
 
     # AFM
@@ -65,4 +66,4 @@ def test_rkky_scalar(rkky_case):
     m2 = system.m.orientation((0, 1.5e-9, 0))
     assert abs(np.dot(m1, m2) - 1) < 1e-3
 
-    self.calculator.delete(system)
+    rkky_case.calculator.delete(system)

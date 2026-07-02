@@ -23,10 +23,9 @@ def cubic_anisotropy_case(calculator):
 
 
 def test_cubic_anisotropy_scalar_vector_vector(cubic_anisotropy_case):
-    self = cubic_anisotropy_case
     name = "cubicanisotropy_scalar_vector_vector"
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=cubic_anisotropy_case.region, cell=cubic_anisotropy_case.cell)
 
     K = 1e5
     u1 = (0, 0, 1)
@@ -45,7 +44,7 @@ def test_cubic_anisotropy_scalar_vector_vector(cubic_anisotropy_case):
 
     system.m = df.Field(mesh, nvdim=3, value=m_fun, norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = cubic_anisotropy_case.calculator.MinDriver()
     md.drive(system)
 
     value = system.m((-1e-9, 2e-9, 2e-9))
@@ -54,14 +53,13 @@ def test_cubic_anisotropy_scalar_vector_vector(cubic_anisotropy_case):
     value = system.m((1e-9, 2e-9, 2e-9))
     assert np.linalg.norm(np.subtract(value, (0, Ms, 0))) < 1e-3
 
-    self.calculator.delete(system)
+    cubic_anisotropy_case.calculator.delete(system)
 
 
 def test_cubic_anisotropy_field_vector_vector(cubic_anisotropy_case):
-    self = cubic_anisotropy_case
     name = "cubicanisotropy_field_vector_vector"
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=cubic_anisotropy_case.region, cell=cubic_anisotropy_case.cell)
 
     def K_fun(pos):
         x, y, z = pos
@@ -79,7 +77,7 @@ def test_cubic_anisotropy_field_vector_vector(cubic_anisotropy_case):
     system.energy = mm.CubicAnisotropy(K=K, u1=u1, u2=u2)
     system.m = df.Field(mesh, nvdim=3, value=(0, 0.3, 1), norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = cubic_anisotropy_case.calculator.MinDriver()
     md.drive(system)
 
     value = system.m((-2e-9, 1e-9, 1e-9))
@@ -88,14 +86,13 @@ def test_cubic_anisotropy_field_vector_vector(cubic_anisotropy_case):
     value = system.m((2e-9, 2e-9, 2e-9))
     assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
-    self.calculator.delete(system)
+    cubic_anisotropy_case.calculator.delete(system)
 
 
 def test_cubic_anisotropy_field_field_field(cubic_anisotropy_case):
-    self = cubic_anisotropy_case
     name = "cubicanisotropy_field_field_field"
 
-    mesh = df.Mesh(region=self.region, cell=self.cell)
+    mesh = df.Mesh(region=cubic_anisotropy_case.region, cell=cubic_anisotropy_case.cell)
 
     def K_fun(pos):
         x, y, z = pos
@@ -127,7 +124,7 @@ def test_cubic_anisotropy_field_field_field(cubic_anisotropy_case):
     system.energy = mm.CubicAnisotropy(K=K, u1=u1, u2=u2)
     system.m = df.Field(mesh, nvdim=3, value=(0, 0.3, 1), norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = cubic_anisotropy_case.calculator.MinDriver()
     md.drive(system)
 
     value = system.m((0, 0, 0))
@@ -139,14 +136,17 @@ def test_cubic_anisotropy_field_field_field(cubic_anisotropy_case):
     value = system.m((-3e-9, 2e-9, 2e-9))
     assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
-    self.calculator.delete(system)
+    cubic_anisotropy_case.calculator.delete(system)
 
 
 def test_cubic_anisotropy_dict_vector_vector(cubic_anisotropy_case):
-    self = cubic_anisotropy_case
     name = "cubicanisotropy_dict_vector_vector"
 
-    mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
+    mesh = df.Mesh(
+        region=cubic_anisotropy_case.region,
+        cell=cubic_anisotropy_case.cell,
+        subregions=cubic_anisotropy_case.subregions,
+    )
 
     K = {"r1": 0, "r2": 1e5}
     u1 = (0, 0, 1)
@@ -157,7 +157,7 @@ def test_cubic_anisotropy_dict_vector_vector(cubic_anisotropy_case):
     system.energy = mm.CubicAnisotropy(K=K, u1=u1, u2=u2)
     system.m = df.Field(mesh, nvdim=3, value=(0, 0.3, 1), norm=Ms)
 
-    md = self.calculator.MinDriver()
+    md = cubic_anisotropy_case.calculator.MinDriver()
     md.drive(system)
 
     value = system.m((-2e-9, 1e-9, 1e-9))
@@ -166,4 +166,4 @@ def test_cubic_anisotropy_dict_vector_vector(cubic_anisotropy_case):
     value = system.m((2e-9, 2e-9, 2e-9))
     assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
-    self.calculator.delete(system)
+    cubic_anisotropy_case.calculator.delete(system)
