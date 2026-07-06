@@ -1,291 +1,55 @@
 """Calculator tests."""
 
-from .compute import (
-    compute_case,
-    test_compute_dmi,
-    test_compute_effective_field,
-    test_compute_energy,
-    test_compute_energy_density,
-    test_compute_invalid_func,
-    test_compute_slonczewski,
-    test_compute_zhang_li,
-)
-from .cubicanisotropy import (
-    cubic_anisotropy_case,
-    test_cubic_anisotropy_dict_vector_vector,
-    test_cubic_anisotropy_field_field_field,
-    test_cubic_anisotropy_field_vector_vector,
-    test_cubic_anisotropy_scalar_vector_vector,
-)
-from .damping import (
-    damping_case,
-    test_damping_dict,
-    test_damping_field,
-    test_damping_scalar,
-)
-from .demag import (
-    demag_case,
-    test_demag_demag,
-    test_demag_demag_1_pbc,
-    test_demag_demag_2_pbc,
-    test_demag_demag_3_pbc,
-    test_demag_demag_asymptotic_radius,
-)
-from .dirname import test_dirname
-from .dmi import (
-    dmi_case,
-    test_dmi_crystalclass,
-    test_dmi_crystalclass_init,
-    test_dmi_dict,
-    test_dmi_scalar,
-)
-from .dynamics import (
-    dynamics_case,
-    test_dynamics_field_field,
-    test_dynamics_scalar_dict,
-    test_dynamics_scalar_scalar,
-)
-from .energy import (
-    energy_case,
-    test_energy_exchange_cubicanisotropy,
-    test_energy_exchange_dmi_zeeman,
-    test_energy_exchange_dmi_zeeman_uniaxialanisotropy_demag,
-    test_energy_exchange_uniaxialanisotropy,
-    test_energy_exchange_zeeman,
-    test_energy_zeeman_zeeman,
-)
-from .exchange import (
-    exchange_case,
-    test_exchange_dict,
-    test_exchange_field,
-    test_exchange_scalar,
-)
-from .fixedsubregions import (
-    fixed_subregions_case,
-    test_fixed_subregions_fixed_subregions,
-)
-from .hysteresisdriver import (
-    Ms,
-    system,
-    test_hysteresis_check_for_energy,
-    test_simple_hysteresis_loop,
-    test_stepped_hysteresis_loop,
-)
-from .info_file import test_info_file
-from .mesh import (
-    mesh_case,
-    test_mesh_multi_nopbc,
-    test_mesh_multi_pbc,
-    test_mesh_single_nopbc,
-    test_mesh_single_pbc,
-)
-from .mindriver import (
-    min_driver_case,
-    test_min_driver_check_for_energy,
-    test_min_driver_evolver_driver,
-    test_min_driver_evolver_nodriver,
-    test_min_driver_noevolver_driver,
-    test_min_driver_noevolver_nodriver,
-    test_min_driver_output_files,
-    test_min_driver_wrong_evolver,
-)
-from .multiple_drives import test_multiple_drives, test_multiple_drives_compute
-from .outputformat import test_format
-from .outputstep import test_outputstep
-from .precession import (
-    precession_case,
-    test_precession_dict,
-    test_precession_field,
-    test_precession_scalar,
-)
-from .relaxdriver import test_relax_check_for_energy, test_relaxdriver
-from .rkky import rkky_case, test_rkky_scalar
-from .schedule import test_schedule
-from .skyrmion import test_skyrmion
-from .slonczewski import (
-    slonczewski_case,
-    test_slonczewski_dict_values,
-    test_slonczewski_field_values,
-    test_slonczewski_single_values,
-    test_slonczewski_single_values_finite_temperature,
-)
-from .stdprob3 import test_stdprob3
-from .stdprob4 import test_stdprob4
-from .stdprob5 import test_stdprob5
-from .threads import test_threads_threads, threads_case
-from .timedriver import (
-    test_time_driver_check_for_energy_and_dynamics,
-    test_time_driver_drive_exception,
-    test_time_driver_euler_evolver_nodriver,
-    test_time_driver_nodamping,
-    test_time_driver_noevolver_driver,
-    test_time_driver_noevolver_nodriver,
-    test_time_driver_noevolver_nodriver_finite_temperature,
-    test_time_driver_noprecession,
-    test_time_driver_output_files,
-    test_time_driver_rungekutta_evolver_nodriver,
-    test_time_driver_therm_heun_evolver_nodriver,
-    test_time_driver_theta_evolver_nodriver,
-    test_time_driver_wrong_evolver,
-    time_driver_case,
-)
-from .uniaxialanisotropy import (
-    test_uniaxial_anisotropy_dict_vector,
-    test_uniaxial_anisotropy_field_dict,
-    test_uniaxial_anisotropy_field_field,
-    test_uniaxial_anisotropy_field_vector,
-    test_uniaxial_anisotropy_higher_order_scalar_vector,
-    test_uniaxial_anisotropy_scalar_field,
-    test_uniaxial_anisotropy_scalar_vector,
-    uniaxial_anisotropy_case,
-)
-from .zeeman import (
-    test_zeeman_dict,
-    test_zeeman_field,
-    test_zeeman_time_dict,
-    test_zeeman_time_field,
-    test_zeeman_time_vector,
-    test_zeeman_vector,
-    zeeman_case,
-)
-from .zhangli import (
-    test_zhang_li_dict_scalar_u,
-    test_zhang_li_dict_vector_u,
-    test_zhang_li_field_scalar_u,
-    test_zhang_li_field_vector_u,
-    test_zhang_li_scalar_u,
-    test_zhang_li_time_func_scalar_u,
-    test_zhang_li_time_tcl_scalar_u,
-    test_zhang_li_vector_u,
-    zhang_li_case,
+from importlib import import_module
+
+_MODULES = (
+    "compute",
+    "cubicanisotropy",
+    "damping",
+    "demag",
+    "dirname",
+    "dmi",
+    "dynamics",
+    "energy",
+    "exchange",
+    "fixedsubregions",
+    "hysteresisdriver",
+    "info_file",
+    "mesh",
+    "mindriver",
+    "multiple_drives",
+    "outputformat",
+    "outputstep",
+    "precession",
+    "relaxdriver",
+    "rkky",
+    "schedule",
+    "skyrmion",
+    "slonczewski",
+    "stdprob3",
+    "stdprob4",
+    "stdprob5",
+    "threads",
+    "timedriver",
+    "uniaxialanisotropy",
+    "zeeman",
+    "zhangli",
 )
 
-__all__ = [
-    "compute_case",
-    "test_compute_energy",
-    "test_compute_energy_density",
-    "test_compute_effective_field",
-    "test_compute_invalid_func",
-    "test_compute_dmi",
-    "test_compute_slonczewski",
-    "test_compute_zhang_li",
-    "cubic_anisotropy_case",
-    "test_cubic_anisotropy_scalar_vector_vector",
-    "test_cubic_anisotropy_field_vector_vector",
-    "test_cubic_anisotropy_field_field_field",
-    "test_cubic_anisotropy_dict_vector_vector",
-    "damping_case",
-    "test_damping_scalar",
-    "test_damping_dict",
-    "test_damping_field",
-    "demag_case",
-    "test_demag_demag",
-    "test_demag_demag_asymptotic_radius",
-    "test_demag_demag_1_pbc",
-    "test_demag_demag_2_pbc",
-    "test_demag_demag_3_pbc",
-    "test_dirname",
-    "dmi_case",
-    "test_dmi_scalar",
-    "test_dmi_dict",
-    "test_dmi_crystalclass",
-    "test_dmi_crystalclass_init",
-    "dynamics_case",
-    "test_dynamics_scalar_scalar",
-    "test_dynamics_scalar_dict",
-    "test_dynamics_field_field",
-    "energy_case",
-    "test_energy_exchange_zeeman",
-    "test_energy_exchange_uniaxialanisotropy",
-    "test_energy_exchange_cubicanisotropy",
-    "test_energy_exchange_dmi_zeeman",
-    "test_energy_exchange_dmi_zeeman_uniaxialanisotropy_demag",
-    "test_energy_zeeman_zeeman",
-    "exchange_case",
-    "test_exchange_scalar",
-    "test_exchange_dict",
-    "test_exchange_field",
-    "fixed_subregions_case",
-    "test_fixed_subregions_fixed_subregions",
-    "Ms",
-    "system",
-    "test_simple_hysteresis_loop",
-    "test_stepped_hysteresis_loop",
-    "test_hysteresis_check_for_energy",
-    "test_info_file",
-    "mesh_case",
-    "test_mesh_single_nopbc",
-    "test_mesh_multi_nopbc",
-    "test_mesh_single_pbc",
-    "test_mesh_multi_pbc",
-    "min_driver_case",
-    "test_min_driver_noevolver_nodriver",
-    "test_min_driver_evolver_nodriver",
-    "test_min_driver_noevolver_driver",
-    "test_min_driver_evolver_driver",
-    "test_min_driver_output_files",
-    "test_min_driver_wrong_evolver",
-    "test_min_driver_check_for_energy",
-    "test_multiple_drives",
-    "test_multiple_drives_compute",
-    "test_format",
-    "test_outputstep",
-    "precession_case",
-    "test_precession_scalar",
-    "test_precession_dict",
-    "test_precession_field",
-    "test_relaxdriver",
-    "test_relax_check_for_energy",
-    "rkky_case",
-    "test_rkky_scalar",
-    "test_schedule",
-    "test_skyrmion",
-    "slonczewski_case",
-    "test_slonczewski_single_values",
-    "test_slonczewski_single_values_finite_temperature",
-    "test_slonczewski_dict_values",
-    "test_slonczewski_field_values",
-    "test_stdprob3",
-    "test_stdprob4",
-    "test_stdprob5",
-    "threads_case",
-    "test_threads_threads",
-    "time_driver_case",
-    "test_time_driver_noevolver_nodriver",
-    "test_time_driver_rungekutta_evolver_nodriver",
-    "test_time_driver_euler_evolver_nodriver",
-    "test_time_driver_theta_evolver_nodriver",
-    "test_time_driver_therm_heun_evolver_nodriver",
-    "test_time_driver_noevolver_nodriver_finite_temperature",
-    "test_time_driver_noevolver_driver",
-    "test_time_driver_noprecession",
-    "test_time_driver_nodamping",
-    "test_time_driver_output_files",
-    "test_time_driver_drive_exception",
-    "test_time_driver_wrong_evolver",
-    "test_time_driver_check_for_energy_and_dynamics",
-    "uniaxial_anisotropy_case",
-    "test_uniaxial_anisotropy_scalar_vector",
-    "test_uniaxial_anisotropy_field_vector",
-    "test_uniaxial_anisotropy_scalar_field",
-    "test_uniaxial_anisotropy_field_field",
-    "test_uniaxial_anisotropy_dict_vector",
-    "test_uniaxial_anisotropy_field_dict",
-    "test_uniaxial_anisotropy_higher_order_scalar_vector",
-    "zeeman_case",
-    "test_zeeman_vector",
-    "test_zeeman_time_vector",
-    "test_zeeman_dict",
-    "test_zeeman_time_dict",
-    "test_zeeman_field",
-    "test_zeeman_time_field",
-    "zhang_li_case",
-    "test_zhang_li_scalar_u",
-    "test_zhang_li_time_func_scalar_u",
-    "test_zhang_li_time_tcl_scalar_u",
-    "test_zhang_li_dict_scalar_u",
-    "test_zhang_li_dict_vector_u",
-    "test_zhang_li_field_scalar_u",
-    "test_zhang_li_field_vector_u",
-    "test_zhang_li_vector_u",
-]
+
+def _is_test_or_fixture(name, obj):
+    return name.startswith("test_") or hasattr(obj, "_fixture_function_marker")
+
+
+for _module_name in _MODULES:
+    _module = import_module(f"{__name__}.{_module_name}")
+    globals().update(
+        {
+            name: obj
+            for name, obj in vars(_module).items()
+            if _is_test_or_fixture(name, obj)
+        }
+    )
+    globals().pop(_module_name, None)
+
+del import_module, _is_test_or_fixture, _module, _module_name
