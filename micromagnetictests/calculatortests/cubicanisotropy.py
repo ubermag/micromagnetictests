@@ -1,159 +1,169 @@
+from types import SimpleNamespace
+
 import discretisedfield as df
 import micromagneticmodel as mm
 import numpy as np
 import pytest
 
 
-class TestCubicAnisotropy:
-    @pytest.fixture(autouse=True)
-    def _setup_calculator(self, calculator):
-        self.calculator = calculator
+@pytest.fixture
+def cubic_anisotropy_case(calculator):
+    case = SimpleNamespace()
+    case.calculator = calculator
+    p1 = (-7e-9, 0, 0)
+    p2 = (7e-9, 5e-9, 4e-9)
+    case.region = df.Region(p1=p1, p2=p2)
+    case.cell = (1e-9, 1e-9, 2e-9)
+    case.subregions = {
+        "r1": df.Region(p1=(-7e-9, 0, 0), p2=(0, 5e-9, 4e-9)),
+        "r2": df.Region(p1=(0, 0, 0), p2=(7e-9, 5e-9, 4e-9)),
+    }
 
-    def setup_method(self):
-        p1 = (-7e-9, 0, 0)
-        p2 = (7e-9, 5e-9, 4e-9)
-        self.region = df.Region(p1=p1, p2=p2)
-        self.cell = (1e-9, 1e-9, 2e-9)
-        self.subregions = {
-            "r1": df.Region(p1=(-7e-9, 0, 0), p2=(0, 5e-9, 4e-9)),
-            "r2": df.Region(p1=(0, 0, 0), p2=(7e-9, 5e-9, 4e-9)),
-        }
+    return case
 
-    def test_scalar_vector_vector(self):
-        name = "cubicanisotropy_scalar_vector_vector"
 
-        mesh = df.Mesh(region=self.region, cell=self.cell)
+def test_cubic_anisotropy_scalar_vector_vector(cubic_anisotropy_case):
+    name = "cubicanisotropy_scalar_vector_vector"
 
-        K = 1e5
-        u1 = (0, 0, 1)
-        u2 = (0, 1, 0)
-        Ms = 1e6
+    mesh = df.Mesh(region=cubic_anisotropy_case.region, cell=cubic_anisotropy_case.cell)
 
-        system = mm.System(name=name)
-        system.energy = mm.CubicAnisotropy(K=K, u1=u1, u2=u2)
+    K = 1e5
+    u1 = (0, 0, 1)
+    u2 = (0, 1, 0)
+    Ms = 1e6
 
-        def m_fun(pos):
-            x, y, z = pos
-            if x <= 0:
-                return (0, 0.2, 1)
-            else:
-                return (0, 1, 0.2)
+    system = mm.System(name=name)
+    system.energy = mm.CubicAnisotropy(K=K, u1=u1, u2=u2)
 
-        system.m = df.Field(mesh, nvdim=3, value=m_fun, norm=Ms)
+    def m_fun(pos):
+        x, y, z = pos
+        if x <= 0:
+            return (0, 0.2, 1)
+        else:
+            return (0, 1, 0.2)
 
-        md = self.calculator.MinDriver()
-        md.drive(system)
+    system.m = df.Field(mesh, nvdim=3, value=m_fun, norm=Ms)
 
-        value = system.m((-1e-9, 2e-9, 2e-9))
-        assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+    md = cubic_anisotropy_case.calculator.MinDriver()
+    md.drive(system)
 
-        value = system.m((1e-9, 2e-9, 2e-9))
-        assert np.linalg.norm(np.subtract(value, (0, Ms, 0))) < 1e-3
+    value = system.m((-1e-9, 2e-9, 2e-9))
+    assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
-        self.calculator.delete(system)
+    value = system.m((1e-9, 2e-9, 2e-9))
+    assert np.linalg.norm(np.subtract(value, (0, Ms, 0))) < 1e-3
 
-    def test_field_vector_vector(self):
-        name = "cubicanisotropy_field_vector_vector"
+    cubic_anisotropy_case.calculator.delete(system)
 
-        mesh = df.Mesh(region=self.region, cell=self.cell)
 
-        def K_fun(pos):
-            x, y, z = pos
-            if x <= 0:
-                return 0
-            else:
-                return 1e5
+def test_cubic_anisotropy_field_vector_vector(cubic_anisotropy_case):
+    name = "cubicanisotropy_field_vector_vector"
 
-        K = df.Field(mesh, nvdim=1, value=K_fun)
-        u1 = (0, 0, 1)
-        u2 = (0, 1, 0)
-        Ms = 1e6
+    mesh = df.Mesh(region=cubic_anisotropy_case.region, cell=cubic_anisotropy_case.cell)
 
-        system = mm.System(name=name)
-        system.energy = mm.CubicAnisotropy(K=K, u1=u1, u2=u2)
-        system.m = df.Field(mesh, nvdim=3, value=(0, 0.3, 1), norm=Ms)
+    def K_fun(pos):
+        x, y, z = pos
+        if x <= 0:
+            return 0
+        else:
+            return 1e5
 
-        md = self.calculator.MinDriver()
-        md.drive(system)
+    K = df.Field(mesh, nvdim=1, value=K_fun)
+    u1 = (0, 0, 1)
+    u2 = (0, 1, 0)
+    Ms = 1e6
 
-        value = system.m((-2e-9, 1e-9, 1e-9))
-        assert np.linalg.norm(np.cross(value, (0, 0.3 * Ms, Ms))) < 1e-3
+    system = mm.System(name=name)
+    system.energy = mm.CubicAnisotropy(K=K, u1=u1, u2=u2)
+    system.m = df.Field(mesh, nvdim=3, value=(0, 0.3, 1), norm=Ms)
 
-        value = system.m((2e-9, 2e-9, 2e-9))
-        assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+    md = cubic_anisotropy_case.calculator.MinDriver()
+    md.drive(system)
 
-        self.calculator.delete(system)
+    value = system.m((-2e-9, 1e-9, 1e-9))
+    assert np.linalg.norm(np.cross(value, (0, 0.3 * Ms, Ms))) < 1e-3
 
-    def test_field_field_field(self):
-        name = "cubicanisotropy_field_field_field"
+    value = system.m((2e-9, 2e-9, 2e-9))
+    assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
-        mesh = df.Mesh(region=self.region, cell=self.cell)
+    cubic_anisotropy_case.calculator.delete(system)
 
-        def K_fun(pos):
-            x, y, z = pos
-            if -2e-9 <= x <= 2e-9:
-                return 0
-            else:
-                return 1e5
 
-        def u1_fun(pos):
-            x, y, z = pos
-            if x <= 0:
-                return (0, 1, 0)
-            else:
-                return (0, 0, 1)
+def test_cubic_anisotropy_field_field_field(cubic_anisotropy_case):
+    name = "cubicanisotropy_field_field_field"
 
-        def u2_fun(pos):
-            x, y, z = pos
-            if x <= 0:
-                return (0, 0, 1)
-            else:
-                return (0, 1, 0)
+    mesh = df.Mesh(region=cubic_anisotropy_case.region, cell=cubic_anisotropy_case.cell)
 
-        K = df.Field(mesh, nvdim=1, value=K_fun)
-        u1 = df.Field(mesh, nvdim=3, value=u1_fun)
-        u2 = df.Field(mesh, nvdim=3, value=u2_fun)
-        Ms = 1e6
+    def K_fun(pos):
+        x, y, z = pos
+        if -2e-9 <= x <= 2e-9:
+            return 0
+        else:
+            return 1e5
 
-        system = mm.System(name=name)
-        system.energy = mm.CubicAnisotropy(K=K, u1=u1, u2=u2)
-        system.m = df.Field(mesh, nvdim=3, value=(0, 0.3, 1), norm=Ms)
+    def u1_fun(pos):
+        x, y, z = pos
+        if x <= 0:
+            return (0, 1, 0)
+        else:
+            return (0, 0, 1)
 
-        md = self.calculator.MinDriver()
-        md.drive(system)
+    def u2_fun(pos):
+        x, y, z = pos
+        if x <= 0:
+            return (0, 0, 1)
+        else:
+            return (0, 1, 0)
 
-        value = system.m((0, 0, 0))
-        assert np.linalg.norm(np.cross(value, (0, 0.3 * Ms, Ms))) < 1e-3
+    K = df.Field(mesh, nvdim=1, value=K_fun)
+    u1 = df.Field(mesh, nvdim=3, value=u1_fun)
+    u2 = df.Field(mesh, nvdim=3, value=u2_fun)
+    Ms = 1e6
 
-        value = system.m((3e-9, 2e-9, 2e-9))
-        assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+    system = mm.System(name=name)
+    system.energy = mm.CubicAnisotropy(K=K, u1=u1, u2=u2)
+    system.m = df.Field(mesh, nvdim=3, value=(0, 0.3, 1), norm=Ms)
 
-        value = system.m((-3e-9, 2e-9, 2e-9))
-        assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+    md = cubic_anisotropy_case.calculator.MinDriver()
+    md.drive(system)
 
-        self.calculator.delete(system)
+    value = system.m((0, 0, 0))
+    assert np.linalg.norm(np.cross(value, (0, 0.3 * Ms, Ms))) < 1e-3
 
-    def test_dict_vector_vector(self):
-        name = "cubicanisotropy_dict_vector_vector"
+    value = system.m((3e-9, 2e-9, 2e-9))
+    assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
-        mesh = df.Mesh(region=self.region, cell=self.cell, subregions=self.subregions)
+    value = system.m((-3e-9, 2e-9, 2e-9))
+    assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
 
-        K = {"r1": 0, "r2": 1e5}
-        u1 = (0, 0, 1)
-        u2 = (0, 1, 0)
-        Ms = 1e6
+    cubic_anisotropy_case.calculator.delete(system)
 
-        system = mm.System(name=name)
-        system.energy = mm.CubicAnisotropy(K=K, u1=u1, u2=u2)
-        system.m = df.Field(mesh, nvdim=3, value=(0, 0.3, 1), norm=Ms)
 
-        md = self.calculator.MinDriver()
-        md.drive(system)
+def test_cubic_anisotropy_dict_vector_vector(cubic_anisotropy_case):
+    name = "cubicanisotropy_dict_vector_vector"
 
-        value = system.m((-2e-9, 1e-9, 1e-9))
-        assert np.linalg.norm(np.cross(value, (0, 0.3 * Ms, Ms))) < 1e-3
+    mesh = df.Mesh(
+        region=cubic_anisotropy_case.region,
+        cell=cubic_anisotropy_case.cell,
+        subregions=cubic_anisotropy_case.subregions,
+    )
 
-        value = system.m((2e-9, 2e-9, 2e-9))
-        assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+    K = {"r1": 0, "r2": 1e5}
+    u1 = (0, 0, 1)
+    u2 = (0, 1, 0)
+    Ms = 1e6
 
-        self.calculator.delete(system)
+    system = mm.System(name=name)
+    system.energy = mm.CubicAnisotropy(K=K, u1=u1, u2=u2)
+    system.m = df.Field(mesh, nvdim=3, value=(0, 0.3, 1), norm=Ms)
+
+    md = cubic_anisotropy_case.calculator.MinDriver()
+    md.drive(system)
+
+    value = system.m((-2e-9, 1e-9, 1e-9))
+    assert np.linalg.norm(np.cross(value, (0, 0.3 * Ms, Ms))) < 1e-3
+
+    value = system.m((2e-9, 2e-9, 2e-9))
+    assert np.linalg.norm(np.subtract(value, (0, 0, Ms))) < 1e-3
+
+    cubic_anisotropy_case.calculator.delete(system)
